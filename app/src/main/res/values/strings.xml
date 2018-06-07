@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">MessengerBot</string>
+    <string name="channel_name">MessengerBot Notifications</string>
+    <string name="channel_description">Notifications of MessengerBot</string>
+    <string name="action_clearlogs">Reset Log</string>
+    <string name="blacklist_room">Room(Enter to separate)</string>
+    <string name="blacklist_name">Name(Enter to separate)</string>
+    <string name="blacklist_apply">Apply end exit</string>
+    <string name="noti_read_permission">Notification Read Access</string>
+    <string name="no_noti_read_permission">No Notification Read Access</string>
+    <string name="settings_kakaotalk_location">Messenger</string>
+    <string name="settings_kakaotalk_location_normal">Standard Kakaotalk/Samsung DualMessenger</string>
+    <string name="settings_kakaotalk_location_parallel">Parallel Space(Not works yet)</string>
+    <string name="settings_compatibility">Compatibility</string>
+    <string name="settings_compatibility_jellbreak">JellBreak Bot</string>
+    <string name="settings_manage_blacklist">Manage Blacklist</string>
+    <string name="settings_others">Others</string>
+    <string name="settings_others_offOnRuntimeError">Automatically turn off bot on runtime error(Recommended)</string>
+    <string name="settings_others_onDeleteBackup">Backup database automatically when you call DataBase.removeDataBase</string>
+    <string name="settings_specificLog">Specific Log</string>
+    <string name="settings_snackbar_applied">Some settings will be applied after re-compile</string>
+    <string name="settings_resetSession">When re-compile, reset rooms session</string>
+    <string name="settings_showAd">See ad to help developer</string>
+    <string name="snackbar_script_saved">Saved</string>
+    <string name="snackbar_script_save_failed">Saving Failed</string>
+    <string name="snackbar_compiling">Compiling…</string>
+    <string name="snackbar_compiled">Compiled</string>
+    <string name="snackbar_compileStart">Start Compile</string>
+    <string name="chk_groupchat">GroupChat</string>
+
+    <string name="wait_for_ad">Please wait for a moment to load ad…</string>
+<string name="thanks_for_helping">Thanks for helping!</string>
+    <string name="btn_help">Help</string>
+    <string name="help">(English Help is outdated. It would be updated later)
+    \nMake your own Kakaotalk Bot!\n
+    Before you start, you should know how to code in JavaScript\n
+    You can reply the room by calling replier.reply(String) in response function\n\n
+    Api.getContext() : get this application\'s context\n
+    Api.reload() or Api.compile() : re-compile all the script\n
+    Api.reload("Script.js") or Api.compile("Script.js") : re-compile the script\n
+    Api.prepare("Script.js") : compile only if the script has never been compiled. throws error on compile failure, returns 0 when the script doesn\'t exists, returns 1 on compile success, and returns 2 if the script has ever been compiled.\n
+    Api.off() : turn off your bot\n
+    Api.replyRoom(room,message,hideToast=false) : send message to specific room\n
+    Api.canReply(room) : check if bot can reply to room\n
+    Utils.getWebText(url:String) : get website\'s HTML\n\n
+    Log.error(string,viewToast=true) : add error log to log screen (if viewToast is true, it makes Toast popup)\n
+    Log.info(string) : add info to log screen\n
+    Log.debug(string) : add debug log to log screen\n\n
+    AppData.putInt/Boolean/String(String key,int/boolean/String data) : save data to appdata\n
+    AppData.getInt/Boolean/String() : load data from appdata\n
+    AppData.clear() : clear the appdata\n
+    AppData.remove(String key) : remove data from appdata\n\n
+    DataBase.setDataBase(String fileName,String content) : save data to file\n
+    DataBase.getDataBase(String fileName) : get data from file\n
+    DataBase.removeDataBase(String fileName) : delete file\n\n
+    Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
+    Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed</string>
+    <string name="settings_kakaotalk_location_facebookMessenger" translatable="false">Facebook Messenger</string>
+    <string name="settings_kakaotalk_location_Line" translatable="false">Line</string>
+    <string name="script_autoloaded">Applied edited script to editor</string>
+    <string name="tutorial_openAnotherApp">Long press to open in another app</string>
+    <string name="tutorial_saveAndCompile">Long press to Save and Compile</string>
+    <string name="alert_newScript_title">New Script</string>
+    <string name="alert_newScript_message">Type file name:</string>
+    <string name="already_compiling">The script is already being compiled</string>
+    <string name="compile_all">Compile All</string>
+    <string name="off_all">Turn off All</string>
+    <string name="alert_set_noti_access_message">Touch OK to go settings</string>
+    <string name="settings_ignore_api_off">Ignore Api.off()</string>
+    <string name="copied_to_clipboard">Copied to Clipboard</string>
+    <string name="settings_allow_bridge">Allow Bridge to access this script\'s scope</string>
+    <string name="settings_optimization">Optimization (interpreter=0)</string>
+    <string name="public_settings_jsouptimeout">HTML Parsing Timeout(ms)</string>
+    <string name="public_settings_autocompile">Automatically compile scripts when you get first message but no scripts have been compiled</string>
+
+</resources>

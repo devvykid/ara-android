@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scriptedit_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="end"
+    android:orientation="vertical">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_weight="0.05"
+        android:clickable="true"
+        android:focusable="true"
+        android:longClickable="true"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scriptEdit_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.95"
+            android:clipToPadding="false"
+            android:fillViewport="false"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollbars="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fillViewport="false"
+                android:scrollbars="horizontal">
+
+                <com.xfl.kakaotalkbot.NumberedEditText
+                    android:id="@+id/JSCodeEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_weight="0.95"
+                    android:autoText="true"
+                    android:defaultFocusHighlightEnabled="true"
+
+
+                    android:freezesText="false"
+                    android:gravity="top"
+                    android:hint=""
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:isScrollContainer="true"
+                    android:minWidth="300dp"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="always"
+                    android:paddingLeft="30dp"
+                    android:scrollHorizontally="true"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="horizontal"
+                    android:textSize="14sp" />
+            </HorizontalScrollView>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

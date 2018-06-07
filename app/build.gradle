@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.xfl.kakaotalkbot"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 32
+        versionName "2.3"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+}
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith('dex')
+    }.each { dx ->
+        if (dx.additionalParameters == null) {
+            dx.additionalParameters = ['--multi-dex']
+        } else {
+            dx.additionalParameters += '--multi-dex'
+        }
+    }
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.0.+'
+    compile 'com.google.android.gms:play-services-ads:15.0.0'
+
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.jakewharton.android.repackaged:dalvik-dx:7.1.0_r7'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'org.mozilla:rhino:1.7.9'
+
+    compile 'com.faendir.rhino:rhino-android:1.5'
+    compile 'org.jsoup:jsoup:1.10.1'
+    implementation 'com.adcolony:sdk:3.3.2'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.google.ads.mediation:adcolony:3.3.2.0'
+
+
+
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:isScrollContainer="false"
+            android:lineSpacingExtra="4sp"
+            android:nestedScrollingEnabled="false"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
+            android:text="@string/help"
+            android:textColor="@android:color/black"
+            tools:layout_editor_absoluteX="75dp"
+            tools:layout_editor_absoluteY="108dp" />
+    </android.support.v4.widget.NestedScrollView>
+
+</android.widget.LinearLayout>

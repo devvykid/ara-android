@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">MessengerBot</string>
+    <string name="channel_name">메신저봇 알림</string>
+    <string name="channel_description">메신저봇의 알림</string>
+    <string name="action_clearlogs">로그 초기화</string>
+    <string name="blacklist_room">방(엔터로 구분)</string>
+    <string name="blacklist_name">이름(엔터로 구분)</string>
+    <string name="blacklist_apply">적용하고 나가기</string>
+    <string name="noti_read_permission">알림읽기권한</string>
+    <string name="no_noti_read_permission">알림읽기권한이 없습니다.</string>
+    <string name="settings_kakaotalk_location">메신저</string>
+    <string name="settings_kakaotalk_location_normal">일반 카카오톡/삼성 듀얼메신저</string>
+    <string name="settings_kakaotalk_location_parallel">Parallel Space(미구현)</string>
+    <string name="settings_compatibility">호환성</string>
+    <string name="settings_compatibility_jellbreak">JellBreak봇 호환</string>
+    <string name="settings_manage_blacklist">블랙리스트 관리</string>
+    <string name="settings_others">기타</string>
+    <string name="settings_others_offOnRuntimeError">런타임 에러시, 자동으로 봇의 전원을 끕니다(권장)</string>
+    <string name="settings_others_onDeleteBackup">DataBase.removeDataBase호출시, 자동으로 데이터베이스를 백업합니다</string>
+    <string name="settings_specificLog">상세 로그</string>
+    <string name="settings_snackbar_applied">일부 설정은 재컴파일 이후 적용됩니다</string>
+    <string name="settings_resetSession">재컴파일시, 방들의 세션을 초기화합니다</string>
+    <string name="settings_showAd">광고를 보아 개발자 돕기</string>
+    <string name="snackbar_script_saved">저장되었습니다</string>
+    <string name="snackbar_script_save_failed">저장실패</string>
+    <string name="snackbar_compiling">컴파일중…</string>
+    <string name="snackbar_compiled">컴파일 하였습니다</string>
+    <string name="snackbar_compileStart">컴파일 시작</string>
+    <string name="chk_groupchat">GroupChat</string>
+
+    <string name="wait_for_ad">광고 로딩중입니다. 잠시만 기다려주세요…</string>
+    <string name="thanks_for_helping">도와주셔서 감사합니다!</string>
+    <string name="btn_help">도움말</string>
+    <string name="help">당신만의 카카오톡 봇을 만들어 보세요!\n
+    시작하기 전에, 당신은 JavaScript로 코딩하는 방법을 아셔야 합니다.\n
+    response 함수 내에서 replier.reply(String)을 호출하는것으로 답장할수 있습니다.\n\n
+    Api.getContext() : 앱의 컨텍스트를 가져옵니다\n
+    Api.reload() 또는 Api.compile(): 모든 스크립트를 재컴파일합니다.\n
+    Api.reload("스크립트.js") 또는 Api.compile("스크립트.js"): 특정 스크립트를 재컴파일합니다.\n
+    Api.prepare("스크립트.js") : 해당 스크립트가 한번도 컴파일 된 적이 없을 경우에만 컴파일합니다. 컴파일 실패시 에러를 throw하고,스크립트가 존재하지 않을 시 0, 컴파일 성공시 1, 한번이라도 컴파일 된 적이 있을 시 2를 반환합니다.\n
+    Api.off() : 모든 스크립트의 전원을 끕니다.\n
+    Api.off("스크립트.js") : 특정 스크립트의 전원을 끕니다.\n
+    Api.on() : 모든 스크립트의 전원을 켭니다.\n
+    Api.on("스크립트.js") : 특정 스크립트의 전원을 켭니다.\n
+    Api.isOn("스크립트.js") : 특정 스크립트의 전원 상태를 반환합니다.\n
+    Api.replyRoom(room,message,hideToast=false) : 특정한 방에 메시지를 보냅니다. hideToast가 true일 경우 방 세션이 없어도 토스트를 띄우지 않습니다.\n
+    Api.canReply(room,message) : 특정 방에 전송 가능한지 확인합니다.\n\n
+    Utils.getWebText(url:String) : 웹사이트의 HTML을 가져옵니다.\n\n
+    Log.error(string,viewToast=true) : 로그 화면에 에러 로그를 추가합니다. (viewToast가 true일경우, 토스트 팝업을 표시합니다.)\n
+    Log.info(string) : 로그 화면에 정보를 추가합니다.\n
+    Log.debug(string) : 로그 화면에 디버그 로그를 추가합니다.\n
+    로그는 각각 Log.e,Log.i,Log.d로도 사용할 수 있습니다.\n\n
+    AppData.putInt/Boolean/String(String key,int/boolean/String data) : 앱 데이터에 데이터를 저장합니다.\n
+    AppData.getInt/Boolean/String() : 앱 데이터에서 데이터를 불러옵니다.\n
+    AppData.clear() : 앱 데이터를 초기화합니다.\n
+    AppData.remove(String key) : 앱 데이터에서 데이터를 지웁니다.\n
+    DataBase.setDataBase(String fileName,String content) : 파일에 데이터를 씁니다.\n
+    DataBase.getDataBase(String fileName) : 파일에서 데이터를 불러옵니다.\n
+    DataBase.removeDataBase(String fileName) : 파일을 삭제합니다.\n\n
+    Bridge.getScopeOf(String scriptName) : 해당 스크립트의 스코프를 가져옵니다. 이를통해 다른 스크립트에 접근이 가능합니다.\n
+    Bridge.isAllowed(String scriptName) : 스크립트 접근 허용 여부를 반환합니다.</string>
+    <string name="script_autoloaded">변경사항 적용됨</string>
+    <string name="tutorial_openAnotherApp">길게 눌러서 다른 앱으로 열기</string>
+    <string name="tutorial_saveAndCompile">길게 눌러서 저장후 컴파일</string>
+    <string name="alert_newScript_title">새 스크립트</string>
+    <string name="alert_newScript_message">파일 이름을 입력하세요</string>
+    <string name="already_compiling">이미 컴파일중입니다.</string>
+    <string name="compile_all">모두 컴파일</string>
+    <string name="off_all">모두 종료</string>
+    <string name="alert_set_noti_access_message">OK를 터치하면 설정창으로 이동합니다</string>
+    <string name="settings_ignore_api_off">Api.off() 무시하기</string>
+    <string name="copied_to_clipboard">복사하였습니다</string>
+    <string name="settings_allow_bridge">Bridge를 통한 스코프 접근을 허용합니다</string>
+    <string name="settings_optimization">최적화(인터프리터=0)</string>
+    <string name="public_settings_jsouptimeout">HTML 파싱 시간제한(단위: ms)</string>
+    <string name="public_settings_autocompile">메시지를 처음 수신했지만 어떤 스크립트도 컴파일 되지 않았을때, 자동으로 컴파일합니다.</string>
+</resources>
