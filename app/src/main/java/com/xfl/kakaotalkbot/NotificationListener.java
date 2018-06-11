@@ -28,7 +28,9 @@ import org.mozilla.javascript.ScriptableObject;
 
 import java.io.File;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,12 +91,12 @@ public class NotificationListener extends NotificationListenerService {
 
     public static void callResponder(final String scriptName, String room, String msg, String sender, boolean isGroupChat, ImageDB imageDB, String packName, Notification.Action session, boolean isDebugMode) {
 
-        try {
-
-            final ScriptableObject execScope = container.get(scriptName).execScope;
-            final Function responder = container.get(scriptName).responder;
 
 
+                final ScriptableObject execScope = container.get(scriptName).execScope;
+                final Function responder = container.get(scriptName).responder;
+
+                try {
            /* if(!sessionsPath.exists())sessionsPath.mkdirs();
             File sessionFile=new File(sessionsPath.getAbsolutePath()+File.separator+room);
             sessionFile.setWritable(true);
@@ -102,34 +104,48 @@ public class NotificationListener extends NotificationListenerService {
             ObjectOutput oOut=new ObjectOutputStream(sOut);*/
 
 
-            if (!isDebugMode) {
-                if (Rooms.indexOf(room) == -1) {
-                    //sessionFile.createNewFile();
-                    //oOut.writeObject(session);
-                    //oOut.flush();
-                    // oOut.close();
-                    Log.d("Sessions", "added Session");
-                    SavedSessions.add(session);
-                    Rooms.add(room);
-                    SessionsNum++;
-                } else if (!session.equals(SavedSessions.get(Rooms.indexOf(room)))) {
-                    // oOut.writeObject(session);
-                    //oOut.flush();
-                    //oOut.close();
-                    Log.d("Sessions", "changed Session");
-                    SavedSessions.set(Rooms.indexOf(room), session);
+                if (!isDebugMode) {
+                    if (Rooms.indexOf(room) == -1) {
+                        //sessionFile.createNewFile();
+                        //oOut.writeObject(session);
+                        //oOut.flush();
+                        // oOut.close();
+                        Log.d("Sessions", "added Session");
+                        SavedSessions.add(session);
+                        Rooms.add(room);
+                        SessionsNum++;
+                    } else if (!session.equals(SavedSessions.get(Rooms.indexOf(room)))) {
+                        // oOut.writeObject(session);
+                        //oOut.flush();
+                        //oOut.close();
+                        Log.d("Sessions", "changed Session");
+                        SavedSessions.set(Rooms.indexOf(room), session);
 
+                    }
                 }
+            }catch(Throwable e){
+                    StringBuilder stack = new StringBuilder();
+                    stack.append("\n");
+
+                    for (StackTraceElement element : e.getStackTrace()) {
+                        stack.append("at ").append(element.toString());
+                        stack.append("\n");
+                    }
+
+                Toast.makeText(MainApplication.getContext(),MainApplication.getContext().getResources().getString(R.string.internal_error),Toast.LENGTH_LONG).show();
+                    final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error)+"\n"+stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
+                    LoggerScreen.appendLogText(Html.fromHtml("<font color=RED>"+formed+"</font><br><br>"));
             }
-
-
+        try {
             Context.enter();
             Context parseContext = new RhinoAndroidHelper().enterContext();
             parseContext.setWrapFactory(new PrimitiveWrapFactory());
+            parseContext.setLanguageVersion(Context.VERSION_ES6);
             parseContext.setOptimizationLevel(container.get(scriptName).optimization);
             Api.isDebugMode = isDebugMode;
 
             MainApplication.getContext().getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply();
+
             responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
 
 
@@ -211,6 +227,7 @@ public class NotificationListener extends NotificationListenerService {
         try {
             parseContext = new RhinoAndroidHelper().enterContext();
             parseContext.setWrapFactory(new PrimitiveWrapFactory());
+            parseContext.setLanguageVersion(Context.VERSION_ES6);
             parseContext.setOptimizationLevel(optimization);
         } catch (Exception e) {
             if (!isManual) {

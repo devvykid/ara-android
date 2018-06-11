@@ -175,6 +175,7 @@ public class ScriptSelectActivity extends AppCompatActivity {
         msg.add(11, "Api.papagoTranslate에서 에러를 반환하지 않고 이전 번역 결과를 반환하는 오류를 수정했습니다. 이제 4번째 인자를 true로 하면 에러를 String으로 반환하고, false로 하면 throw합니다." +
                 "\n디버그화면과 샌드박스화면에 기록 지우기 버튼이 추가되었습니다." +
                 "\n공용설정에 자동컴파일 관련 설정이 추가되었습니다.");
+        msg.add(12,"자바스크립트 버전을 ES6으로 변경했습니다.\n이제 앱 내부 오류를 따로 구분하여 출력합니다.\n드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)\n네이버 카페가 개설될 예정입니다.");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;
@@ -597,10 +598,19 @@ public class ScriptSelectActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_go_public_settings) {
-            Intent intent = new Intent(getApplicationContext(), PublicSettingsScreen.class);
-            startActivity(intent);
+        Intent intent;
+        switch(id){
+            case R.id.action_go_public_settings:
+
+                intent = new Intent(getApplicationContext(), PublicSettingsScreen.class);
+                startActivity(intent);
+                break;
+            case R.id.action_open_cafe:
+                intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://m.cafe.naver.com/msgbot"));
+                startActivity(intent);
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

@@ -34,13 +34,20 @@ public class DebugModeScreen extends AppCompatActivity {
     static List<UserMessage> messageList = new ArrayList<>();
 
     String scriptName;
-    RecyclerView mMessageRecycler;
-    MessageListAdapter mMessageAdapter;
+    static RecyclerView mMessageRecycler;
+    static MessageListAdapter mMessageAdapter;
 
 
     public static void appendReply(final String value) {
 
         messageList.add(new UserMessage("BOT", value));
+        NotificationListener.UIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMessageAdapter.notifyItemInserted(messageList.size() - 1);
+                mMessageRecycler.scrollToPosition(messageList.size() - 1);
+            }
+        });
 
 
     }
@@ -89,12 +96,8 @@ public class DebugModeScreen extends AppCompatActivity {
                     }
                 });
                 thr.start();
-                try {
-                    thr.join();
-                } catch (Exception e) {
-                }
-                mMessageAdapter.notifyItemInserted(messageList.size() - 1);
-                mMessageRecycler.scrollToPosition(messageList.size() - 1);
+
+
 
                 msgTxt.setText("");
             }

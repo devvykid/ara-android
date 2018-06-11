@@ -58,6 +58,7 @@ public class SessionCacheReplier {
 
     public boolean reply(final String room, final String value, final boolean hideToast) {
         if (NotificationListener.debugRoom != null && this.room.equals(NotificationListener.debugRoom)) {
+
             DebugModeScreen.appendReply(value);
             return true;
         } else {

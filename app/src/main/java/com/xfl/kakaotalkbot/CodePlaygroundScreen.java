@@ -46,6 +46,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
             parseContext = RhinoAndroidHelper.prepareContext();
 
             parseContext.setOptimizationLevel(-1);
+            
             parseContext.setLanguageVersion(org.mozilla.javascript.Context.VERSION_ES6);
             scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
             parseContext.setWrapFactory(new PrimitiveWrapFactory());
@@ -77,6 +78,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_codeplayground);
+        parseContext = RhinoAndroidHelper.prepareContext();
         final EditText msgTxt = findViewById(R.id.sand_edittext_chatbox);
         final Button sendBtn = findViewById(R.id.sand_button_chatbox_send);
         mMessageRecycler = findViewById(R.id.sand_recyclerview_message_list);
@@ -93,23 +95,19 @@ public class CodePlaygroundScreen extends AppCompatActivity {
                 int newMsgPosition = messageList.size() - 1;
                 mMessageAdapter.notifyItemInserted(newMsgPosition);
                 mMessageRecycler.scrollToPosition(newMsgPosition);
-                final StringBuilder stringBuilder = new StringBuilder();
+
                 Thread thr = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Context.enter();
-                        stringBuilder.append(runScript(msgTxt.getText().toString()));
+                        appendReply(runScript(msgTxt.getText().toString()));
                         Context.exit();
 
                     }
                 });
                 thr.start();
 
-                try {
-                    thr.join();
-                } catch (Exception e) {
-                }
-                appendReply(stringBuilder.toString());
+
 
                 msgTxt.setText("");
             }
@@ -146,17 +144,24 @@ public class CodePlaygroundScreen extends AppCompatActivity {
         });*/
     }
 
-    private void appendReply(String str) {
-        messageList.add(new UserMessage("BOT", str));
+    private void appendReply(final String str) {
 
-        mMessageAdapter.notifyItemInserted(messageList.size() - 1);
-        mMessageRecycler.scrollToPosition(messageList.size() - 1);
+        NotificationListener.UIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                messageList.add(new UserMessage("BOT", str));
+                mMessageAdapter.notifyItemInserted(messageList.size() - 1);
+                mMessageRecycler.scrollToPosition(messageList.size() - 1);
+            }
+        });
+
     }
 
     private String runScript(String str) {
 
-        parseContext = RhinoAndroidHelper.prepareContext();
+
         parseContext.setWrapFactory(new PrimitiveWrapFactory());
+        parseContext.setLanguageVersion(Context.VERSION_ES6);
         parseContext.setOptimizationLevel(-1);
 
         return responder.call(parseContext, execScope, execScope, new Object[]{str}).toString();
