@@ -38,63 +38,74 @@
             android:text="Switch"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-
-        <ImageButton
-
-            android:id="@+id/btn_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:tint="#000000"
-            app:srcCompat="@drawable/ic_menu_refresh" />
-
-        <ImageButton
-            android:id="@+id/btn_editscript"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
-
-        <ImageButton
-            android:id="@+id/btn_debug"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:tint="#000000"
-            app:srcCompat="@drawable/ic_lock_bugreport" />
-
-        <ImageButton
-            android:id="@+id/btn_log"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:tint="#000000"
-            app:srcCompat="@drawable/ic_doc_document" />
-
-        <ImageButton
-            android:id="@+id/btn_manage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:tint="#000000"
-            app:srcCompat="@drawable/ic_menu_manage" />
 
     </LinearLayout>
 
-    <Space
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadingEdgeLength="20dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+
+                android:id="@+id/btn_reload"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:tint="#000000"
+                app:srcCompat="@drawable/ic_menu_refresh" />
+
+            <ImageButton
+                android:id="@+id/btn_editscript"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <ImageButton
+                android:id="@+id/btn_debug"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:tint="#000000"
+                app:srcCompat="@drawable/ic_lock_bugreport" />
+
+            <ImageButton
+                android:id="@+id/btn_log"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:tint="#000000"
+                app:srcCompat="@drawable/ic_doc_document" />
+
+            <ImageButton
+                android:id="@+id/btn_manage"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:tint="#000000"
+                app:srcCompat="@drawable/ic_menu_manage" />
+
+            <ImageButton
+                android:id="@+id/btn_scriptActivity"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                app:srcCompat="@drawable/ic_menu_slideshow" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </LinearLayout>

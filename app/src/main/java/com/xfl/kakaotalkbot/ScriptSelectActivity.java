@@ -175,7 +175,9 @@ public class ScriptSelectActivity extends AppCompatActivity {
         msg.add(11, "Api.papagoTranslate에서 에러를 반환하지 않고 이전 번역 결과를 반환하는 오류를 수정했습니다. 이제 4번째 인자를 true로 하면 에러를 String으로 반환하고, false로 하면 throw합니다." +
                 "\n디버그화면과 샌드박스화면에 기록 지우기 버튼이 추가되었습니다." +
                 "\n공용설정에 자동컴파일 관련 설정이 추가되었습니다.");
-        msg.add(12,"자바스크립트 버전을 ES6으로 변경했습니다.\n이제 앱 내부 오류를 따로 구분하여 출력합니다.\n드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)\n네이버 카페가 개설될 예정입니다.");
+        msg.add(12,"자바스크립트 버전을 ES6으로 변경했습니다.\n이제 앱 내부 오류를 따로 구분하여 출력합니다.\n드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)\n네이버 카페가 개설되었습니다.");
+        msg.add(13,"컴파일이 되지 않았을때 디버그 화면에 메시지 전송 시 튕기는 오류를 수정했습니다.\n이제 스크립트에 response함수가 없어도 오류가 나지 않습니다. 대신, 컴파일 후 스위치를 켤 때 경고가 표시됩니다.");
+        msg.add(14,"약간의 최적화를 적용했습니다.\n일부 오류를 수정했습니다.\nreplier.reply(방,메시지)가 추가되었습니다.\n스크립트별 액티비티가 추가되었습니다.(구현 방법 예시는 새 스크립트를 만들어서 볼 수 있습니다.)");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;
@@ -390,6 +392,7 @@ public class ScriptSelectActivity extends AppCompatActivity {
                 final ImageButton manage = view.findViewById(R.id.btn_manage);
                 final ImageButton debug = view.findViewById(R.id.btn_debug);
                 final ImageButton log = view.findViewById(R.id.btn_log);
+                final ImageButton scriptActivity = view.findViewById(R.id.btn_scriptActivity);
                 final ProgressBar progressBar = view.findViewById(R.id.progressBar2);
 
                 progressBarMap.put(k.getName(), progressBar);
@@ -402,6 +405,9 @@ public class ScriptSelectActivity extends AppCompatActivity {
                 swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if(b&&NotificationListener.container.get(fk.getName())!=null&&NotificationListener.container.get(fk.getName()).responder==null){
+                            Toast.makeText(ScriptSelectActivity.this,ScriptSelectActivity.this.getResources().getString(R.string.switch_redundant),Toast.LENGTH_LONG).show();
+                        }
                         getApplicationContext().getSharedPreferences("bot" + fk.getName(), 0).edit().putBoolean("on", b).apply();
                         noti(ctx);
                     }
@@ -498,6 +504,14 @@ public class ScriptSelectActivity extends AppCompatActivity {
                     }
                 });
 
+                scriptActivity.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(getApplicationContext(),ScriptActivity.class);
+                        intent.putExtra("scriptName",fk.getName());
+                        startActivity(intent);
+                    }
+                });
 
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 

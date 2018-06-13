@@ -77,4 +77,6 @@
     <string name="internal_error">앱 내부 오류가 발생하였습니다. 로그창 이미지를 zudevxf@gmail.com로 보내주시면 감사하겠습니다.</string>
     <string name="action_open_cafe">네이버 카페 열기</string>
     <string name="public_settings">공용 설정</string>
+    <string name="please_compile_first">우선, 컴파일을 해주세요</string>
+    <string name="switch_redundant">스크립트에 response 함수가 없기 때문에 이 스크립트를 켜는것은 무의미합니다.</string>
 </resources>

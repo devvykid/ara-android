@@ -4,10 +4,12 @@ package com.xfl.kakaotalkbot;
 import android.app.Notification;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
+import android.os.BaseBundle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.Html;
@@ -145,8 +147,8 @@ public class NotificationListener extends NotificationListenerService {
             Api.isDebugMode = isDebugMode;
 
             MainApplication.getContext().getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply();
-
-            responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
+            if(responder!=null)
+                responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
 
 
             Context.exit();
@@ -277,23 +279,38 @@ public class NotificationListener extends NotificationListenerService {
 
 
             script_real.exec(parseContext, scope);
-
-            responder = (Function) scope.get("response", scope);
-            Function onStartCompile;
-
+            if(scope.has("response",scope)){
+                responder = (Function) scope.get("response", scope);
+            }else{
+                responder=null;
+            }
+            Function onStartCompile=null;
+            Function onCreate=null;
+            Function onStop=null;
+            Function onResume=null;
+            Function onPause=null;
             if (scope.has("onStartCompile", scope)) {
                 onStartCompile = (Function) scope.get("onStartCompile", scope);
-            } else {
-                onStartCompile = null;
             }
-
-
+            if(scope.has("onCreate",scope)){
+                onCreate=(Function)scope.get("onCreate",scope);
+            }
+            if(scope.has("onStop",scope)){
+                onStop=(Function)scope.get("onStop",scope);
+            }
+            if(scope.has("onResume",scope)){
+                onResume=(Function)scope.get("onResume",scope);
+            }
+            if(scope.has("onPause",scope)){
+                onPause=(Function)scope.get("onPause",scope);
+            }
             container.put(scriptName, new ScriptsManager()
                     .setExecScope(execScope)
                     .setResponder(responder)
                     .setOnStartCompile(onStartCompile)
                     .setOptimization(optimization)
                     .setScope(scope)
+                    .setScriptActivity(onCreate,onStop,onResume,onPause)
             );
             Context.exit();
 
@@ -359,6 +376,7 @@ public class NotificationListener extends NotificationListenerService {
     public void onNotificationPosted(final StatusBarNotification sbn) {
 
         super.onNotificationPosted(sbn);
+        final String packName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;
         Log.d("extras", extras.toString());
         try {
@@ -366,6 +384,15 @@ public class NotificationListener extends NotificationListenerService {
             Log.d("Package", sbn.getPackageName());
         } catch (NullPointerException e) {
         }
+        if(!(packName.equals("jp.naver.line.android")
+                ||packName.equals("com.facebook.orca")
+                ||packName.equals("com.lbe.parallel.intl")
+                ||packName.equals("com.kakao.talk")
+                ||packName.equals("org.telegram.messenger"))
+                ){
+            return;
+        }
+
         if (isCompiling.size() <= 0 && MainApplication.getContext().getSharedPreferences("publicSettings", 0).getBoolean("autoCompile", true)) {//hasEverCompiled
             new Thread(new Runnable() {
                 @Override
@@ -387,7 +414,7 @@ public class NotificationListener extends NotificationListenerService {
                                 });
                                 if (isCompiling.get(k.getName()) == null) {
                                     initializeScript(k.getName(), true);
-                                    onNotificationPosted(sbn);
+
                                 }
                                 UIHandler.post(new Runnable() {
                                     @Override
@@ -399,13 +426,13 @@ public class NotificationListener extends NotificationListenerService {
                             }
                         }
                     }
-
+                    onNotificationPosted(sbn);
                 }
             }).start();
 
         }
         String PREF_SETTINGS;
-        final String packName = sbn.getPackageName();
+
         try {
             if (Build.VERSION.SDK_INT <= 23)
                 if (((ApplicationInfo) extras.get("android.rebuild.applicationInfo")).packageName.contains("com.kakao.talk")) {
@@ -421,81 +448,63 @@ public class NotificationListener extends NotificationListenerService {
         Notification.WearableExtender wExt = new Notification.WearableExtender(sbn.getNotification());
         if (container.size() <= 0) return;
         Set<String> keySet = container.keySet();
-        for (String key : keySet) {
-            if (!getApplicationContext().getSharedPreferences("bot" + key, 0).getBoolean("on", false))
-                continue;
+        for (Notification.Action act : wExt.getActions()) {
 
-            PREF_SETTINGS = "settings" + key;
+            Log.d("actions", act.title.toString());
+            Log.d("actionsExtra", act.getExtras().toString());
 
-            isAvailable = (packName.equals("jp.naver.line.android")
-                    && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useLine", false))
-                    || (packName.equals("com.facebook.orca")
-                    && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useFacebookMessenger", false))
-                    || (packName.equals("com.lbe.parallel.intl")
-                    && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useParallelSpace", false))
-                    || (packName.equals("com.kakao.talk")
-                    && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useNormal", true));
+            if (act.getRemoteInputs() != null && act.getRemoteInputs().length > 0) {
+
+                if (act.title.toString().toLowerCase().contains("reply") ||
+                        act.title.toString().contains("답장") || act.title.toString().contains("返信") || act.title.toString().contains("답글")) {
+
+                    String room, sender, msg;
 
 
-            if (isAvailable) {
-                Log.d("isAvailable", "true");
-
-                for (Notification.Action act : wExt.getActions()) {
-
-                    Log.d("actions", act.title.toString());
-                    Log.d("actionsExtra", act.getExtras().toString());
-
-                    if (act.getRemoteInputs() != null && act.getRemoteInputs().length > 0) {
-
-                        if (act.title.toString().toLowerCase().contains("reply") ||
-                                act.title.toString().contains("답장") || act.title.toString().contains("返信") || act.title.toString().contains("답글")) {
-
-                            String room, sender, msg;
+                    boolean isGroupChat = extras.get("android.text") instanceof SpannableString;
 
 
-                            boolean isGroupChat = extras.get("android.text") instanceof SpannableString;
+                    if (Build.VERSION.SDK_INT > 23) {
+                        if (extras.get("android.largeIcon") instanceof Bitmap)
+                            photo = (Bitmap) extras.get("android.largeIcon");
+                        room = extras.getString("android.summaryText");
 
+                        sender = extras.get("android.title").toString();
+                        msg = extras.get("android.text").toString();
 
-                            if (Build.VERSION.SDK_INT > 23) {
-                                if (extras.get("android.largeIcon") instanceof Bitmap)
-                                    photo = (Bitmap) extras.get("android.largeIcon");
-                                room = extras.getString("android.summaryText");
+                        if (room == null) {
+                            room = sender;
+                            isGroupChat = false;
+                        } else {
+                            isGroupChat = true;
+                        }
+                        if (packName.equals("com.facebook.orca")) {
+                            if (!(extras.get("android.text") instanceof String)) {
+                                String html = Html.toHtml((Spanned) extras.get("android.text"));
 
-                                sender = extras.get("android.title").toString();
-                                msg = extras.get("android.text").toString();
-
-                                if (room == null) {
-                                    room = sender;
-                                    isGroupChat = false;
-                                } else {
-                                    isGroupChat = true;
-                                }
-                                if (packName.equals("com.facebook.orca")) {
-                                    if (!(extras.get("android.text") instanceof String)) {
-                                        String html = Html.toHtml((Spanned) extras.get("android.text"));
-
-                                        sender = Html.fromHtml(html.split("<b>")[1].split("</b>")[0]).toString();
-                                        msg = Html.fromHtml(html.split("</b>")[1].split("</p>")[0].substring(1)).toString();
-                                        isGroupChat = true;
-                                    } else {
-                                        isGroupChat = false;
-                                    }
-                                }
+                                sender = Html.fromHtml(html.split("<b>")[1].split("</b>")[0]).toString();
+                                msg = Html.fromHtml(html.split("</b>")[1].split("</p>")[0].substring(1)).toString();
+                                isGroupChat = true;
                             } else {
-                                room = extras.getString("android.title");
-                                if (!(extras.get("android.text") instanceof String)) {
-                                    String html = Html.toHtml((Spanned) extras.get("android.text"));
-                                    sender = Html.fromHtml(html.split("<b>")[1].split("</b>")[0]).toString();
-                                    msg = Html.fromHtml(html.split("</b>")[1].split("</p>")[0].substring(1)).toString();
-                                } else {
-                                    sender = room;
-                                    msg = extras.get("android.text").toString();
-                                }
+                                isGroupChat = false;
                             }
-                            Log.d("room", room);
-                            Log.d("msg", msg);
-                            Log.d("sender", sender);
-                            Log.d("isGroupChat", isGroupChat + "");
+                        }
+
+                    } else {
+                        room = extras.getString("android.title");
+                        if (!(extras.get("android.text") instanceof String)) {
+                            String html = Html.toHtml((Spanned) extras.get("android.text"));
+                            sender = Html.fromHtml(html.split("<b>")[1].split("</b>")[0]).toString();
+                            msg = Html.fromHtml(html.split("</b>")[1].split("</p>")[0].substring(1)).toString();
+                        } else {
+                            sender = room;
+                            msg = extras.get("android.text").toString();
+                        }
+                    }
+                    Log.d("room", room);
+                    Log.d("msg", msg);
+                    Log.d("sender", sender);
+                    Log.d("isGroupChat", isGroupChat + "");
                             /*if (MainApplication.getContext().getSharedPreferences(PREF_SETTINGS, 0).getBoolean("specificLog", false)) {
                                 com.xfl.kakaotalkbot.Log.debug("App: " + packName);
                                 com.xfl.kakaotalkbot.Log.debug("room: " + room);
@@ -504,14 +513,35 @@ public class NotificationListener extends NotificationListenerService {
                                 com.xfl.kakaotalkbot.Log.debug("isGroupChat: " + isGroupChat);
                             }
 */
-                            if (banNameArr != null && banRoomArr != null) {
-                                for (String k : banNameArr) {
-                                    if (k.equals(sender)) return;
-                                }
-                                for (String k : banRoomArr) {
-                                    if (k.equals(sender)) return;
-                                }
-                            }
+                    if (banNameArr != null && banRoomArr != null) {
+                        for (String k : banNameArr) {
+                            if (k.equals(sender)) return;
+                        }
+                        for (String k : banRoomArr) {
+                            if (k.equals(sender)) return;
+                        }
+                    }
+                    for (String key : keySet) {
+                        if (!getApplicationContext().getSharedPreferences("bot" + key, 0).getBoolean("on", false))
+                            continue;
+
+                        PREF_SETTINGS = "settings" + key;
+
+                        isAvailable = (packName.equals("jp.naver.line.android")
+                                && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useLine", false))
+                                || (packName.equals("com.facebook.orca")
+                                && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useFacebookMessenger", false))
+                                || (packName.equals("com.lbe.parallel.intl")
+                                && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useParallelSpace", false))
+                                || (packName.equals("com.kakao.talk")
+                                && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useNormal", true))
+                                || (packName.equals("org.telegram.messenger")
+                                && context.getSharedPreferences(PREF_SETTINGS,0).getBoolean("useTelegram",false));
+//TODO: isAvailable에 패키지 추가하면 위에있는 패키지 목록도 갱신해야함
+
+                        if (isAvailable) {
+                            Log.d("isAvailable", "true");
+
                             final String froom = room;
                             final String fmsg = msg;
                             final String fsender = sender;
@@ -531,13 +561,17 @@ public class NotificationListener extends NotificationListenerService {
                             });
 
                             thr.start();
-                            break;
-
                         }
                     }
+
+                    break;
+
                 }
             }
         }
+
+
+
 
 
     }

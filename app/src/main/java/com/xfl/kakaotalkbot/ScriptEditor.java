@@ -1,6 +1,7 @@
 package com.xfl.kakaotalkbot;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,11 +10,25 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.faendir.rhino_android.RhinoAndroidHelper;
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.ImporterTopLevel;
+import org.mozilla.javascript.Script;
+import org.mozilla.javascript.ScriptableObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +53,7 @@ public class ScriptEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_scripteditor);
 
-
+        final TextView debug=findViewById(R.id.debug);
         scriptEdit = (EditText) findViewById(R.id.JSCodeEdit);
 
 
@@ -104,12 +119,91 @@ public class ScriptEditor extends AppCompatActivity {
                 return true;
             }
         });
+        /*scriptEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+Thread thr;
+            @Override
+            public void afterTextChanged(final Editable s) {
+                if(thr!=null&&thr.isAlive())thr.interrupt();
+                thr=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final String res = preCompile();
+                            if(res==null){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        s.setSpan(new ForegroundColorSpan(Color.BLACK),0,s.toString().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    }
+                                });
+                                return;
+                            }
+                            int line = Integer.parseInt(res.split("#")[1].split("\\)")[0]);
+                            String[] str = s.toString().split("\n");
+                            int indexStart = 0;
+                            int indexEnd = 0;
+                            int i;
+                            for (i = 0; i < line; i++) {
+                                indexStart += str[i].length()+1;
+                            }
+
+                           // indexStart++;
+                            indexEnd = indexStart + str[i].length();
+                            final int fS = indexStart;
+                            final int fE = indexEnd;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    debug.setText(res);
+                                    s.setSpan(new ForegroundColorSpan(Color.RED), fS, fE, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                }
+                            });
+                        }catch(Throwable e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thr.start();
+            }
+        });*/
         loadScript();
 
 
     }
+/*private String preCompile(){
+        try {
+            Context parseContext = new RhinoAndroidHelper().enterContext();
+            parseContext.setWrapFactory(new PrimitiveWrapFactory());
+            parseContext.setLanguageVersion(Context.VERSION_ES6);
+            parseContext.setOptimizationLevel(-1);
+            ScriptableObject scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
+            Script script_real = parseContext.compileString(getScript(),scriptName,0,null);
+            Api.scriptName = scriptName;
+            ScriptableObject.defineClass(scope, Api.class);
+            ScriptableObject.defineClass(scope, DataBase.class);
+            ScriptableObject.defineClass(scope, Utils.class);
+            ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
+            ScriptableObject.defineClass(scope, AppData.class);
+            ScriptableObject.defineClass(scope, Bridge.class);
+            script_real.exec(parseContext, scope);
 
+            Function func=(Function) scope.get("response", scope);
+            Context.exit();
+        }catch(Throwable e){
+            return e.getMessage();
+        }
+        return null;
+}*/
     public void save() {
         script.setWritable(true);
 
@@ -168,6 +262,7 @@ public class ScriptEditor extends AppCompatActivity {
         try {
             final String str = FileManager.read(script);
             if (str.isEmpty()) {
+
                 scriptEdit.setText("const scriptName=\"" + scriptName + "\";\n\n" +
                         "function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName){\n" +
                         "    /*(이 내용은 길잡이일 뿐이니 지우셔도 무방합니다)\n" +
@@ -181,7 +276,16 @@ public class ScriptEditor extends AppCompatActivity {
                         "     *Api,Utils객체에 대해서는 설정의 도움말 참조*/" +
                         "\n    \n}\n\nfunction onStartCompile(){\n" +
                         "    /*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.\n" +
-                        "     *제안하는 용도: 리로드시 자동 백업*/\n    \n}"
+                        "     *제안하는 용도: 리로드시 자동 백업*/\n    \n}\n\n" +
+                        "//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.\n" +
+                        "function onCreate(savedInstanceState,activity) {\n" +
+                        "    var layout=new android.widget.LinearLayout(activity);\n" +
+                        "    layout.setOrientation(android.widget.LinearLayout.HORIZONTAL);\n" +
+                        "    var txt=new android.widget.TextView(activity);\n" +
+                        "    txt.setText(\"액티비티 사용 예시입니다.\");\n" +
+                        "    layout.addView(txt);\n" +
+                        "    activity.setContentView(layout);\n" +
+                        "}\nfunction onResume(activity) {}\nfunction onPause(activity) {}\nfunction onStop(activity) {}"
                 );
             } else {
                 if (!str.equals(lastSave)) {

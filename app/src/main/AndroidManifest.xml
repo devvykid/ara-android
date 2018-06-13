@@ -65,6 +65,10 @@
             android:name=".SettingsScreen"
             android:label="Script Setting"
             />
+        <activity
+            android:name=".ScriptActivity"
+            android:label="Script Activity"
+            />
         <activity android:name=".ScriptEditor"
             android:label="Script Editor"
             android:theme="@style/AppTheme.NoActionBar"/>

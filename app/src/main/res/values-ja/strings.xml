@@ -75,4 +75,6 @@
     <string name="internal_error">App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
     <string name="action_open_cafe">Open Naver Cafe</string>
     <string name="public_settings">Public Settings</string>
+    <string name="please_compile_first">Please compile first</string>
+    <string name="switch_redundant">Since this script doesn\'t include response function, turning on this is redundant.</string>
 </resources>

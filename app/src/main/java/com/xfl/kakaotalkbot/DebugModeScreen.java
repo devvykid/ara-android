@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.xfl.kakaotalkbot.MessageUI.MessageListAdapter;
 import com.xfl.kakaotalkbot.MessageUI.UserMessage;
@@ -75,7 +76,12 @@ public class DebugModeScreen extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (TextUtils.isEmpty(msgTxt.getText().toString())) return;
+                if(NotificationListener.container.get(scriptName)==null){
+                    Toast.makeText(DebugModeScreen.this,DebugModeScreen.this.getResources().getString(R.string.please_compile_first),Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (room.getText().toString().isEmpty()) {
                     room.setText("DEBUGROOM");
                 }
@@ -88,6 +94,7 @@ public class DebugModeScreen extends AppCompatActivity {
                 mMessageAdapter.notifyItemInserted(newMsgPosition);
                 mMessageRecycler.scrollToPosition(newMsgPosition);
                 NotificationListener.debugRoom = room.getText().toString();
+
                 Thread thr = new Thread(new Runnable() {
                     @Override
                     public void run() {

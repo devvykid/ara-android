@@ -41,7 +41,7 @@ public class SettingsScreen extends AppCompatActivity {
         final CheckBox chkParallelSpace = findViewById(R.id.chk_useParallelSpace);
         final CheckBox chkFacebookMessenger = findViewById(R.id.chk_useFacebookMessenger);
         final CheckBox chkLine = findViewById(R.id.chk_useLine);
-
+        final CheckBox chkTelegram=findViewById(R.id.chk_useTelegram);
 
         final CheckBox chkJBBotCompat = findViewById(R.id.chk_JBBotCompat);
         final CheckBox chkOffOnRuntimeError = findViewById(R.id.chk_OffOnRuntimeError);
@@ -57,7 +57,7 @@ public class SettingsScreen extends AppCompatActivity {
         chkParallelSpace.setChecked(pref.getBoolean("useParallelSpace", false));
         chkFacebookMessenger.setChecked(pref.getBoolean("useFacebookMessenger", false));
         chkLine.setChecked(pref.getBoolean("useLine", false));
-
+        chkTelegram.setChecked(pref.getBoolean("useTelegram",false));
 
         chkOffOnRuntimeError.setChecked(pref.getBoolean("offOnRuntimeError", true));
         chkJBBotCompat.setChecked(pref.getBoolean("JBBot", false));
@@ -75,7 +75,7 @@ public class SettingsScreen extends AppCompatActivity {
                 pref.edit().putBoolean("useParallelSpace", chkParallelSpace.isChecked()).apply();
                 pref.edit().putBoolean("useFacebookMessenger", chkFacebookMessenger.isChecked()).apply();
                 pref.edit().putBoolean("useLine", chkLine.isChecked()).apply();
-
+                pref.edit().putBoolean("useTelegram",chkTelegram.isChecked()).apply();
 
                 pref.edit().putBoolean("JBBot", chkJBBotCompat.isChecked()).apply();
                 pref.edit().putBoolean("offOnRuntimeError", chkOffOnRuntimeError.isChecked()).apply();
