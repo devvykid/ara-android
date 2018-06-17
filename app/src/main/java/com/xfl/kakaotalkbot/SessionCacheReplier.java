@@ -55,9 +55,11 @@ public class SessionCacheReplier {
         this.session = NotificationListener.getSession(this.room);
         replyTo(value);
     }
-    public boolean reply(final String room, final String value){
-        return reply(room,value,false);
+
+    public boolean reply(final String room, final String value) {
+        return reply(room, value, false);
     }
+
     public boolean reply(final String room, final String value, final boolean hideToast) {
         if (NotificationListener.debugRoom != null && this.room.equals(NotificationListener.debugRoom)) {
 

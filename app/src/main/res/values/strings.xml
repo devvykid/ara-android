@@ -77,5 +77,10 @@
     <string name="public_settings">Public Settings</string>
     <string name="please_compile_first">Please compile first</string>
     <string name="switch_redundant">Since this script doesn\'t include response function, turning on this is redundant.</string>
+    <string name="bot_activate">Activate</string>
+    <string name="unify_params">Use unified parameters. Not recommended for beginners of JavaScript</string>
+    <string name="delete_script">Delete Script</string>
+    <string name="alert_delete_script">Are you sure?</string>
+    <string name="alert_delete_script_hint">Please type \'Delete Script\'</string>
 
 </resources>

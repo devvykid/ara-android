@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -55,14 +56,15 @@ public class ScriptSelectActivity extends AppCompatActivity {
     private File[] lastFiles;
     private File basePath = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot");
 
-    public static void refreshProgressBar(String scriptName, boolean b, boolean setColor) {
+    public static void refreshProgressBar(String scriptName, boolean b, boolean changeColor) {
         if (progressBarMap.get(scriptName) == null) return;
         if (b) {
             progressBarMap.get(scriptName).setVisibility(View.VISIBLE);
         } else {
             progressBarMap.get(scriptName).setVisibility(View.GONE);
-            if (setColor && switchMap.get(scriptName) != null)
+            if (changeColor && switchMap.get(scriptName) != null)
                 switchMap.get(scriptName).setTextColor(MainApplication.getContext().getResources().getColor(R.color.fully_compiled));
+
         }
     }
 
@@ -89,14 +91,16 @@ public class ScriptSelectActivity extends AppCompatActivity {
 
         Set<String> keySet = switchMap.keySet();
         boolean b = false;
-        for (String k : keySet) {
-            if (switchMap.get(k).isChecked()) {
-                b = true;
-                stringBuilder.append(k).append("\n");
+        if(MainApplication.getContext().getSharedPreferences("bot",0).getBoolean("activate",true)) {
+            for (String k : keySet) {
+                if (switchMap.get(k).isChecked()) {
+                    b = true;
+                    stringBuilder.append(k).append("\n");
+                }
+
+
             }
-
-
-        }
+        }//else b = false is redundant
         NotificationManager notificationManager =
                 (NotificationManager) MainApplication.getContext().getSystemService(NOTIFICATION_SERVICE);
         Notification.Builder noti = new Notification.Builder(MainApplication.getContext()).setStyle(new Notification.BigTextStyle()
@@ -178,6 +182,13 @@ public class ScriptSelectActivity extends AppCompatActivity {
         msg.add(12,"자바스크립트 버전을 ES6으로 변경했습니다.\n이제 앱 내부 오류를 따로 구분하여 출력합니다.\n드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)\n네이버 카페가 개설되었습니다.");
         msg.add(13,"컴파일이 되지 않았을때 디버그 화면에 메시지 전송 시 튕기는 오류를 수정했습니다.\n이제 스크립트에 response함수가 없어도 오류가 나지 않습니다. 대신, 컴파일 후 스위치를 켤 때 경고가 표시됩니다.");
         msg.add(14,"약간의 최적화를 적용했습니다.\n일부 오류를 수정했습니다.\nreplier.reply(방,메시지)가 추가되었습니다.\n스크립트별 액티비티가 추가되었습니다.(구현 방법 예시는 새 스크립트를 만들어서 볼 수 있습니다.)");
+        msg.add(15,"봇 이름의 컴파일 상태 색이 잘못 지정되는 문제를 해결했습니다.\n" +
+                "디버그룸에서 튕기는 오류를 해결했습니다.\n" +
+                "디버그룸 메시지의 최대 가로 크기를 확장했습니다.\n" +
+                "약간의 최적화를 적용했습니다.\n" +
+                "전체 봇 활성화/비활성화 버튼을 추가했습니다.\n" +
+                "UI를 개선했습니다.\n" +
+                "블랙리스트가 스크립트별로 구분되지 않는 문제를 해결했습니다.");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;
@@ -261,6 +272,17 @@ public class ScriptSelectActivity extends AppCompatActivity {
         basePath.mkdir();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_scriptselect);
+        Switch activate;
+        activate = findViewById(R.id.switch_activate);
+        activate.setChecked(MainApplication.getContext().getSharedPreferences("bot",0).getBoolean("activate",true));
+        activate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                getApplicationContext().getSharedPreferences("bot", 0).edit().putBoolean("activate", b).apply();
+                noti(MainApplication.getContext());
+            }
+        });
         linearLayout = findViewById(R.id.scriptSelectRecycler);
         FloatingActionButton addScript = findViewById(R.id.addScript);
         addScript.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +295,14 @@ public class ScriptSelectActivity extends AppCompatActivity {
 
 // EditText 삽입하기
                 final EditText et = new EditText(ScriptSelectActivity.this);
-                ad.setView(et);
+                final CheckBox chk = new CheckBox(ScriptSelectActivity.this);
+                final LinearLayout lin=new LinearLayout(ScriptSelectActivity.this);
+                lin.setOrientation(LinearLayout.VERTICAL);
+                chk.setText(R.string.unify_params);
+                chk.setChecked(false);
+                lin.addView(et);
+                lin.addView(chk);
+                ad.setView(lin);
 
 // 확인 버튼 설정
                 ad.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -290,6 +319,7 @@ public class ScriptSelectActivity extends AppCompatActivity {
                                 fileName += ".js";
                             }
                             new File(basePath.getPath() + File.separator + fileName).createNewFile();
+                            MainApplication.getContext().getSharedPreferences("settings" + fileName, 0).edit().putBoolean("useUnifiedParams",chk.isChecked()).apply();
                             initialize();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -372,7 +402,7 @@ public class ScriptSelectActivity extends AppCompatActivity {
         progressBarMap.clear();
         linearLayout.removeAllViews();
         CodePlaygroundScreen.initializeScript();
-
+        noti(MainApplication.getContext());
 
         final Context ctx = this;
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -543,8 +573,11 @@ public class ScriptSelectActivity extends AppCompatActivity {
         File[] files = basePath.listFiles();
         for (File k : files) {
             if (!k.getName().endsWith(".js")) continue;
-            if (!(MainApplication.getContext().getSharedPreferences("lastCompileSuccess", 0).getString(k.getName(), "").equals(FileManager.read(k)))) {
+            if (MainApplication.getContext().getSharedPreferences("lastCompileSuccess2", 0).getLong(k.getName(), 0)<k.lastModified()
+                    ||NotificationListener.container.get(k.getName())==null) {
                 switchMap.get(k.getName()).setTextColor(getResources().getColor(R.color.need_compile));
+            }else{
+                switchMap.get(k.getName()).setTextColor(getResources().getColor(R.color.fully_compiled));
             }
         }
 

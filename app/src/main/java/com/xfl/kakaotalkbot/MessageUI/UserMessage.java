@@ -4,11 +4,17 @@ public class UserMessage {
 
     String message;
     String sender;
+    boolean isBot;
     long createdAt;
 
-    public UserMessage(String sender, String message) {
-        this.sender = sender;
+    public UserMessage(boolean isBot, String message, String sender) {
+        this.isBot = isBot;
         this.message = message;
+        this.sender = sender;
+    }
+
+    public boolean getIsBot() {
+        return isBot;
     }
 
     public String getName() {

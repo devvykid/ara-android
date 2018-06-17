@@ -6,15 +6,16 @@ import org.mozilla.javascript.ScriptableObject;
 public class ScriptsManager {
     public static String scriptName;
     public static boolean isDebugMode;
-    public  Function responder;
-    public  ScriptableObject execScope;
-    public  Function onStartCompile;
+    public Function responder;
+    public ScriptableObject execScope;
+    public Function onStartCompile;
     public int optimization;
     private ScriptableObject scope;
     private Function onCreate;
     private Function onStop;
     private Function onResume;
     private Function onPause;
+
     @Deprecated
     public ScriptsManager(Function responder, ScriptableObject execScope, Function onStartCompile, ScriptableObject scope) {
         this.responder = responder;
@@ -54,11 +55,12 @@ public class ScriptsManager {
         this.scope = scope;
         return this;
     }
-    public ScriptsManager setScriptActivity(Function onCreate,Function onStop,Function onResume,Function onPause){
-        this.onCreate=onCreate;
-        this.onStop=onStop;
-        this.onResume=onResume;
-        this.onPause=onPause;
+
+    public ScriptsManager setScriptActivity(Function onCreate, Function onStop, Function onResume, Function onPause) {
+        this.onCreate = onCreate;
+        this.onStop = onStop;
+        this.onResume = onResume;
+        this.onPause = onPause;
         return this;
     }
 

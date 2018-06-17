@@ -1,15 +1,20 @@
 package com.xfl.kakaotalkbot;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -17,6 +22,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+
+import java.io.File;
 
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INVALID_REQUEST;
@@ -41,7 +48,7 @@ public class SettingsScreen extends AppCompatActivity {
         final CheckBox chkParallelSpace = findViewById(R.id.chk_useParallelSpace);
         final CheckBox chkFacebookMessenger = findViewById(R.id.chk_useFacebookMessenger);
         final CheckBox chkLine = findViewById(R.id.chk_useLine);
-        final CheckBox chkTelegram=findViewById(R.id.chk_useTelegram);
+        final CheckBox chkTelegram = findViewById(R.id.chk_useTelegram);
 
         final CheckBox chkJBBotCompat = findViewById(R.id.chk_JBBotCompat);
         final CheckBox chkOffOnRuntimeError = findViewById(R.id.chk_OffOnRuntimeError);
@@ -50,14 +57,17 @@ public class SettingsScreen extends AppCompatActivity {
         final CheckBox chkAllowBridge = findViewById(R.id.chk_allowBridge);
         final CheckBox chkResetSession = findViewById(R.id.chk_resetSession);
         final CheckBox chkSpecificLog = findViewById(R.id.chk_specificLog);
+        final CheckBox chkUseUnifiedParams=findViewById(R.id.chk_useUnifiedParams);
         final SeekBar optimization = findViewById(R.id.optimization);
+
+
         final Context context = this;
         final SharedPreferences pref = context.getSharedPreferences("settings" + scriptName, 0);
         chkNormal.setChecked(pref.getBoolean("useNormal", true));
         chkParallelSpace.setChecked(pref.getBoolean("useParallelSpace", false));
         chkFacebookMessenger.setChecked(pref.getBoolean("useFacebookMessenger", false));
         chkLine.setChecked(pref.getBoolean("useLine", false));
-        chkTelegram.setChecked(pref.getBoolean("useTelegram",false));
+        chkTelegram.setChecked(pref.getBoolean("useTelegram", false));
 
         chkOffOnRuntimeError.setChecked(pref.getBoolean("offOnRuntimeError", true));
         chkJBBotCompat.setChecked(pref.getBoolean("JBBot", false));
@@ -66,6 +76,7 @@ public class SettingsScreen extends AppCompatActivity {
         chkAllowBridge.setChecked(pref.getBoolean("allowBridge", true));
         chkResetSession.setChecked(pref.getBoolean("resetSession", false));
         chkSpecificLog.setChecked(pref.getBoolean("specificLog", false));
+        chkUseUnifiedParams.setChecked(pref.getBoolean("useUnifiedParams",false));
         optimization.setProgress(pref.getInt("optimization", -2) + 1);
         findViewById(R.id.fab_settings_apply).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +86,7 @@ public class SettingsScreen extends AppCompatActivity {
                 pref.edit().putBoolean("useParallelSpace", chkParallelSpace.isChecked()).apply();
                 pref.edit().putBoolean("useFacebookMessenger", chkFacebookMessenger.isChecked()).apply();
                 pref.edit().putBoolean("useLine", chkLine.isChecked()).apply();
-                pref.edit().putBoolean("useTelegram",chkTelegram.isChecked()).apply();
+                pref.edit().putBoolean("useTelegram", chkTelegram.isChecked()).apply();
 
                 pref.edit().putBoolean("JBBot", chkJBBotCompat.isChecked()).apply();
                 pref.edit().putBoolean("offOnRuntimeError", chkOffOnRuntimeError.isChecked()).apply();
@@ -84,6 +95,7 @@ public class SettingsScreen extends AppCompatActivity {
                 pref.edit().putBoolean("allowBridge", chkAllowBridge.isChecked()).apply();
                 pref.edit().putBoolean("resetSession", chkResetSession.isChecked()).apply();
                 pref.edit().putBoolean("specificLog", chkSpecificLog.isChecked()).apply();
+                pref.edit().putBoolean("useUnifiedParams", chkUseUnifiedParams.isChecked()).apply();
                 pref.edit().putInt("optimization", optimization.getProgress() - 1).apply();
 
                 Snackbar.make(view, R.string.settings_snackbar_applied, Snackbar.LENGTH_SHORT).show();
@@ -104,7 +116,46 @@ public class SettingsScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.btn_deleteScript).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder ad =new AlertDialog.Builder(SettingsScreen.this);
+                ad.setTitle(R.string.alert_delete_script);
+                final EditText et=new EditText(SettingsScreen.this);
+                et.setHint(R.string.alert_delete_script_hint);
+                FrameLayout container = new FrameLayout(SettingsScreen.this);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                et.setLayoutParams(params);
+                container.addView(et);
+                ad.setView(container);
+                ad.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(et.getText().toString().equals("Delete Script")){
 
+                            new File(MainApplication.basePath.getPath()+File.separator+scriptName).delete();
+                            Toast.makeText(SettingsScreen.this,"Deleted",Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            SettingsScreen.this.finish();
+                        }
+                    }
+                });
+                ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+
+                ad.show();
+
+            }
+        });
         final Button btnShowAd = findViewById(R.id.btn_showAd);
         btnShowAd.setOnClickListener(new View.OnClickListener() {
             @Override

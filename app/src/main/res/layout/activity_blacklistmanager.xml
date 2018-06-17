@@ -70,6 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".65"
-        android:text="@string/blacklist_apply" />
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:text="@string/blacklist_apply"
+        android:textColor="@android:color/white" />
 
 </android.widget.LinearLayout>

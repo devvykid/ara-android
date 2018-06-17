@@ -46,12 +46,12 @@ public class CodePlaygroundScreen extends AppCompatActivity {
             parseContext = RhinoAndroidHelper.prepareContext();
 
             parseContext.setOptimizationLevel(-1);
-            
+
             parseContext.setLanguageVersion(org.mozilla.javascript.Context.VERSION_ES6);
             scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
             parseContext.setWrapFactory(new PrimitiveWrapFactory());
             Script script_real = parseContext.compileString("function response(str){try{return eval(str)+'';}catch(e){return e.name+'\\n'+e.message;}}", "CodePlayground", 0, null);
-
+            Api.scriptName = "CodePlayground";
             ScriptableObject.defineClass(scope, Api.class);
             ScriptableObject.defineClass(scope, DataBase.class);
             ScriptableObject.defineClass(scope, Utils.class);
@@ -59,6 +59,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
             ScriptableObject.defineClass(scope, AppData.class);
             ScriptableObject.defineClass(scope, Bridge.class);
             execScope = scope;
+
             script_real.exec(parseContext, scope);
 
 
@@ -66,7 +67,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
             Toast.makeText(MainApplication.getContext(), "Ready", Toast.LENGTH_SHORT).show();
             Context.exit();
         } catch (final Exception e) {
-
+            e.printStackTrace();
 
             return;
 
@@ -91,7 +92,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
                 if (TextUtils.isEmpty(msgTxt.getText().toString())) return;
 
 
-                messageList.add(new UserMessage("USER", msgTxt.getText().toString()));
+                messageList.add(new UserMessage(false, msgTxt.getText().toString(), ""));
                 int newMsgPosition = messageList.size() - 1;
                 mMessageAdapter.notifyItemInserted(newMsgPosition);
                 mMessageRecycler.scrollToPosition(newMsgPosition);
@@ -106,7 +107,6 @@ public class CodePlaygroundScreen extends AppCompatActivity {
                     }
                 });
                 thr.start();
-
 
 
                 msgTxt.setText("");
@@ -149,7 +149,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
         NotificationListener.UIHandler.post(new Runnable() {
             @Override
             public void run() {
-                messageList.add(new UserMessage("BOT", str));
+                messageList.add(new UserMessage(true, str, ""));
                 mMessageAdapter.notifyItemInserted(messageList.size() - 1);
                 mMessageRecycler.scrollToPosition(messageList.size() - 1);
             }

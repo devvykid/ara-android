@@ -13,7 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -144,6 +145,14 @@
                 android:checked="true"
                 android:text="@string/settings_allow_bridge" />
 
+            <CheckBox
+                android:id="@+id/chk_useUnifiedParams"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@string/unify_params" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
@@ -168,19 +177,33 @@
                 android:id="@+id/btn_blacklistMng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_manage_blacklist" />
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="@string/settings_manage_blacklist"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_help" />
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="@string/btn_help"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_showAd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_showAd" />
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="@string/settings_showAd"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_deleteScript"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:text="@string/delete_script"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
 

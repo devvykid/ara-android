@@ -79,4 +79,9 @@
     <string name="public_settings">공용 설정</string>
     <string name="please_compile_first">우선, 컴파일을 해주세요</string>
     <string name="switch_redundant">스크립트에 response 함수가 없기 때문에 이 스크립트를 켜는것은 무의미합니다.</string>
+    <string name="bot_activate">활성화</string>
+    <string name="unify_params">통합된 매개변수를 사용합니다. JavaScript 초심자에게는 권장하지 않습니다.</string>
+    <string name="delete_script">스크립트 삭제</string>
+    <string name="alert_delete_script">정말 삭제합니까?</string>
+    <string name="alert_delete_script_hint">Delete Script를 입력하세요</string>
 </resources>

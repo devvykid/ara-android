@@ -33,19 +33,19 @@ public class DebugModeScreen extends AppCompatActivity {
 
     static Map<String, List<UserMessage>> savedMessageList = new HashMap<>();
     static List<UserMessage> messageList = new ArrayList<>();
-
-    String scriptName;
     static RecyclerView mMessageRecycler;
     static MessageListAdapter mMessageAdapter;
-
+    String scriptName;
 
     public static void appendReply(final String value) {
 
-        messageList.add(new UserMessage("BOT", value));
+        //messageList.add(new UserMessage("BOT", value));
+
         NotificationListener.UIHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageAdapter.notifyItemInserted(messageList.size() - 1);
+                mMessageAdapter.addItem(new UserMessage(true, value, "BOT"), mMessageAdapter.getItemCount());
+                //mMessageAdapter.notifyItemInserted(mMessageAdapter.getItemCount() - 1);
                 mMessageRecycler.scrollToPosition(messageList.size() - 1);
             }
         });
@@ -64,6 +64,9 @@ public class DebugModeScreen extends AppCompatActivity {
         final CheckBox chk_groupchat = findViewById(R.id.chk_groupchat);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         scriptName = getIntent().getExtras().getString("scriptName");
+        chk_groupchat.setChecked(MainApplication.getContext().getSharedPreferences("debugGroupChat", 0).getBoolean(scriptName, false));
+        room.setText(MainApplication.getContext().getSharedPreferences("debugRoom", 0).getString(scriptName, ""));
+        sender.setText(MainApplication.getContext().getSharedPreferences("debugSender", 0).getString(scriptName, ""));
         if (savedMessageList.get(scriptName) == null)
             savedMessageList.put(scriptName, new ArrayList<UserMessage>());
         messageList = savedMessageList.get(scriptName);
@@ -78,8 +81,8 @@ public class DebugModeScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (TextUtils.isEmpty(msgTxt.getText().toString())) return;
-                if(NotificationListener.container.get(scriptName)==null){
-                    Toast.makeText(DebugModeScreen.this,DebugModeScreen.this.getResources().getString(R.string.please_compile_first),Toast.LENGTH_SHORT).show();
+                if (NotificationListener.container.get(scriptName) == null) {
+                    Toast.makeText(DebugModeScreen.this, DebugModeScreen.this.getResources().getString(R.string.please_compile_first), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (room.getText().toString().isEmpty()) {
@@ -88,10 +91,13 @@ public class DebugModeScreen extends AppCompatActivity {
                 if (sender.getText().toString().isEmpty()) {
                     sender.setText("DEBUGSENDER");
                 }
-
-                messageList.add(new UserMessage("USER", msgTxt.getText().toString()));
-                int newMsgPosition = messageList.size() - 1;
-                mMessageAdapter.notifyItemInserted(newMsgPosition);
+                MainApplication.getContext().getSharedPreferences("debugGroupChat", 0).edit().putBoolean(scriptName, chk_groupchat.isChecked()).apply();
+                MainApplication.getContext().getSharedPreferences("debugSender", 0).edit().putString(scriptName, sender.getText().toString()).apply();
+                MainApplication.getContext().getSharedPreferences("debugRoom", 0).edit().putString(scriptName, room.getText().toString()).apply();
+                mMessageAdapter.addItem(new UserMessage(false, msgTxt.getText().toString(), sender.getText().toString()), mMessageAdapter.getItemCount());
+                //messageList.add(new UserMessage("USER", msgTxt.getText().toString()));
+                int newMsgPosition = mMessageAdapter.getItemCount() - 1;
+                //mMessageAdapter.notifyItemInserted(newMsgPosition);
                 mMessageRecycler.scrollToPosition(newMsgPosition);
                 NotificationListener.debugRoom = room.getText().toString();
 
@@ -103,7 +109,6 @@ public class DebugModeScreen extends AppCompatActivity {
                     }
                 });
                 thr.start();
-
 
 
                 msgTxt.setText("");

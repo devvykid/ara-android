@@ -9,27 +9,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="76dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/switch_activate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/bot_activate" />
 
         <Button
             android:id="@+id/notiAccessSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/noti_read_permission" />
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="@string/noti_read_permission"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/openSandbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sandbox" />
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="Sandbox"
+            android:textColor="@android:color/white" />
 
         <ScrollView
 
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
@@ -38,7 +51,8 @@
                 android:id="@+id/scriptSelectRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="80dp">
 
             </LinearLayout>
         </ScrollView>
@@ -46,13 +60,14 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addScript"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:clickable="true"
+        android:focusable="true"
         android:tint="#FFFFFF"
         app:srcCompat="@android:drawable/ic_input_add" />
 </android.support.design.widget.CoordinatorLayout>

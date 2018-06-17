@@ -4,12 +4,10 @@ package com.xfl.kakaotalkbot;
 import android.app.Notification;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
-import android.os.BaseBundle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.Html;
@@ -52,10 +50,10 @@ public class NotificationListener extends NotificationListenerService {
     public static Integer SessionsNum = 0;
     public static List<String> Rooms = new ArrayList<String>();
     public static List<Notification.Action> SavedSessions = new ArrayList<Notification.Action>();
-    private static File basePath = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot");
+    private static File basePath=MainApplication.basePath;
     static File sessionsPath = new File(basePath + File.separator + "Sessions");
-    private static String[] banNameArr;
-    private static String[] banRoomArr;
+    private static Map<String,String[]> banNameArr=new HashMap<>();
+    private static Map<String,String[]> banRoomArr=new HashMap<>();
     private static Map<String, com.xfl.kakaotalkbot.Log> logger = new HashMap<>();
     private static Map<String, Boolean> isCompiling = new HashMap<>();
     android.content.Context context;
@@ -91,14 +89,13 @@ public class NotificationListener extends NotificationListenerService {
 
     }
 
-    public static void callResponder(final String scriptName, String room, String msg, String sender, boolean isGroupChat, ImageDB imageDB, String packName, Notification.Action session, boolean isDebugMode) {
+    public static void callResponder(final String scriptName, final String room, final String msg, final String sender, final boolean isGroupChat, final ImageDB imageDB, final String packName, Notification.Action session, boolean isDebugMode) {
 
 
+        final ScriptableObject execScope = container.get(scriptName).execScope;
+        final Function responder = container.get(scriptName).responder;
 
-                final ScriptableObject execScope = container.get(scriptName).execScope;
-                final Function responder = container.get(scriptName).responder;
-
-                try {
+        try {
            /* if(!sessionsPath.exists())sessionsPath.mkdirs();
             File sessionFile=new File(sessionsPath.getAbsolutePath()+File.separator+room);
             sessionFile.setWritable(true);
@@ -106,38 +103,38 @@ public class NotificationListener extends NotificationListenerService {
             ObjectOutput oOut=new ObjectOutputStream(sOut);*/
 
 
-                if (!isDebugMode) {
-                    if (Rooms.indexOf(room) == -1) {
-                        //sessionFile.createNewFile();
-                        //oOut.writeObject(session);
-                        //oOut.flush();
-                        // oOut.close();
-                        Log.d("Sessions", "added Session");
-                        SavedSessions.add(session);
-                        Rooms.add(room);
-                        SessionsNum++;
-                    } else if (!session.equals(SavedSessions.get(Rooms.indexOf(room)))) {
-                        // oOut.writeObject(session);
-                        //oOut.flush();
-                        //oOut.close();
-                        Log.d("Sessions", "changed Session");
-                        SavedSessions.set(Rooms.indexOf(room), session);
+            if (!isDebugMode) {
+                if (Rooms.indexOf(room) == -1) {
+                    //sessionFile.createNewFile();
+                    //oOut.writeObject(session);
+                    //oOut.flush();
+                    // oOut.close();
+                    Log.d("Sessions", "added Session");
+                    SavedSessions.add(session);
+                    Rooms.add(room);
+                    SessionsNum++;
+                } else if (!session.equals(SavedSessions.get(Rooms.indexOf(room)))) {
+                    // oOut.writeObject(session);
+                    //oOut.flush();
+                    //oOut.close();
+                    Log.d("Sessions", "changed Session");
+                    SavedSessions.set(Rooms.indexOf(room), session);
 
-                    }
                 }
-            }catch(Throwable e){
-                    StringBuilder stack = new StringBuilder();
-                    stack.append("\n");
-
-                    for (StackTraceElement element : e.getStackTrace()) {
-                        stack.append("at ").append(element.toString());
-                        stack.append("\n");
-                    }
-
-                Toast.makeText(MainApplication.getContext(),MainApplication.getContext().getResources().getString(R.string.internal_error),Toast.LENGTH_LONG).show();
-                    final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error)+"\n"+stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
-                    LoggerScreen.appendLogText(Html.fromHtml("<font color=RED>"+formed+"</font><br><br>"));
             }
+        } catch (Throwable e) {
+            StringBuilder stack = new StringBuilder();
+            stack.append("\n");
+
+            for (StackTraceElement element : e.getStackTrace()) {
+                stack.append("at ").append(element.toString());
+                stack.append("\n");
+            }
+
+            Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.internal_error), Toast.LENGTH_LONG).show();
+            final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error) + "\n" + stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
+            LoggerScreen.appendLogText(Html.fromHtml("<font color=RED>" + formed + "</font><br><br>"));
+        }
         try {
             Context.enter();
             Context parseContext = new RhinoAndroidHelper().enterContext();
@@ -147,9 +144,13 @@ public class NotificationListener extends NotificationListenerService {
             Api.isDebugMode = isDebugMode;
 
             MainApplication.getContext().getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply();
-            if(responder!=null)
-                responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
-
+            if (responder != null) {
+                if (MainApplication.getContext().getSharedPreferences("settings" + scriptName, 0).getBoolean("useUnifiedParams", false)) {
+                    responder.call(parseContext,execScope,execScope,new Object[]{new ResponseParameters(room,msg,sender,isGroupChat,new SessionCacheReplier(room),imageDB,packName)});
+                }else {
+                    responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
+                }
+            }
 
             Context.exit();
         } catch (Throwable e) {
@@ -182,17 +183,13 @@ public class NotificationListener extends NotificationListenerService {
         android.content.Context ctx = MainApplication.getContext();
         String banRoom = ctx.getSharedPreferences("bot", 0).getString("banRoom" + scriptName, "");
         String banName = ctx.getSharedPreferences("bot", 0).getString("banName" + scriptName, "");
-        banRoomArr = banRoom.split("\n");
-        banNameArr = banName.split("\n");
-        for (String s : banRoomArr) {
-            Log.d("banRoom" + scriptName, s);
-        }
-        for (String s : banNameArr) {
-            Log.d("banName" + scriptName, s);
-        }
+        banRoomArr.put(scriptName,banRoom.split("\n"));
+
+        banNameArr.put(scriptName, banName.split("\n"));
+
     }
 
-    public static void initializeAll(final boolean isManual) {
+    public static void initializeAll(final boolean isManual) {//isManual: true on Api.reload
         basePath.mkdir();
         File[] files = basePath.listFiles();
         for (File k : files) {
@@ -275,34 +272,35 @@ public class NotificationListener extends NotificationListenerService {
             ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
             ScriptableObject.defineClass(scope, AppData.class);
             ScriptableObject.defineClass(scope, Bridge.class);
+
             execScope = scope;
 
 
             script_real.exec(parseContext, scope);
-            if(scope.has("response",scope)){
+            if (scope.has("response", scope)) {
                 responder = (Function) scope.get("response", scope);
-            }else{
-                responder=null;
+            } else {
+                responder = null;
             }
-            Function onStartCompile=null;
-            Function onCreate=null;
-            Function onStop=null;
-            Function onResume=null;
-            Function onPause=null;
+            Function onStartCompile = null;
+            Function onCreate = null;
+            Function onStop = null;
+            Function onResume = null;
+            Function onPause = null;
             if (scope.has("onStartCompile", scope)) {
                 onStartCompile = (Function) scope.get("onStartCompile", scope);
             }
-            if(scope.has("onCreate",scope)){
-                onCreate=(Function)scope.get("onCreate",scope);
+            if (scope.has("onCreate", scope)) {
+                onCreate = (Function) scope.get("onCreate", scope);
             }
-            if(scope.has("onStop",scope)){
-                onStop=(Function)scope.get("onStop",scope);
+            if (scope.has("onStop", scope)) {
+                onStop = (Function) scope.get("onStop", scope);
             }
-            if(scope.has("onResume",scope)){
-                onResume=(Function)scope.get("onResume",scope);
+            if (scope.has("onResume", scope)) {
+                onResume = (Function) scope.get("onResume", scope);
             }
-            if(scope.has("onPause",scope)){
-                onPause=(Function)scope.get("onPause",scope);
+            if (scope.has("onPause", scope)) {
+                onPause = (Function) scope.get("onPause", scope);
             }
             container.put(scriptName, new ScriptsManager()
                     .setExecScope(execScope)
@@ -310,7 +308,7 @@ public class NotificationListener extends NotificationListenerService {
                     .setOnStartCompile(onStartCompile)
                     .setOptimization(optimization)
                     .setScope(scope)
-                    .setScriptActivity(onCreate,onStop,onResume,onPause)
+                    .setScriptActivity(onCreate, onStop, onResume, onPause)
             );
             Context.exit();
 
@@ -348,11 +346,10 @@ public class NotificationListener extends NotificationListenerService {
             return false;
 
         }
-        try {
 
-            MainApplication.getContext().getSharedPreferences("lastCompileSuccess", 0).edit().putString(scriptName, FileManager.read(script)).apply();
-        } catch (Exception e) {
-        }
+
+        MainApplication.getContext().getSharedPreferences("lastCompileSuccess2", 0).edit().putLong(scriptName, new Date().getTime()).apply();
+
         UIHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -384,52 +381,57 @@ public class NotificationListener extends NotificationListenerService {
             Log.d("Package", sbn.getPackageName());
         } catch (NullPointerException e) {
         }
-        if(!(packName.equals("jp.naver.line.android")
-                ||packName.equals("com.facebook.orca")
-                ||packName.equals("com.lbe.parallel.intl")
-                ||packName.equals("com.kakao.talk")
-                ||packName.equals("org.telegram.messenger"))
-                ){
+        if (!(packName.equals("jp.naver.line.android")
+                || packName.equals("com.facebook.orca")
+                || packName.equals("com.lbe.parallel.intl")
+                || packName.equals("com.kakao.talk")
+                || packName.equals("org.telegram.messenger"))
+                ) {
             return;
         }
 
         if (isCompiling.size() <= 0 && MainApplication.getContext().getSharedPreferences("publicSettings", 0).getBoolean("autoCompile", true)) {//hasEverCompiled
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+            try {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    basePath.mkdir();
-                    final File[] files = basePath.listFiles();
-                    if (files == null) return;
-                    for (File k : files) {
-                        if (k.getName().endsWith(".js")) {
-                            if (MainApplication.getContext().getSharedPreferences("bot" + k.getName(), 0).getBoolean("on", false)) {
-                                final File fk = k;
+                        basePath.mkdir();
+                        final File[] files = basePath.listFiles();
+                        if (files == null) return;
+                        for (File k : files) {
+                            if (k.getName().endsWith(".js")) {
+                                if (MainApplication.getContext().getSharedPreferences("bot" + k.getName(), 0).getBoolean("on", false)) {
+                                    final File fk = k;
+                                    boolean bool=false;
+                                    UIHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ScriptSelectActivity.refreshProgressBar(fk.getName(), true, true);
+                                        }
+                                    });
+                                    if (isCompiling.get(k.getName()) == null) {
+                                        bool=initializeScript(k.getName(), true);
 
-                                UIHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ScriptSelectActivity.refreshProgressBar(fk.getName(), true, true);
                                     }
-                                });
-                                if (isCompiling.get(k.getName()) == null) {
-                                    initializeScript(k.getName(), true);
+                                    final boolean fbool=bool;
+                                    UIHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ScriptSelectActivity.refreshProgressBar(fk.getName(), false, fbool);
 
+                                        }
+                                    });
                                 }
-                                UIHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ScriptSelectActivity.refreshProgressBar(fk.getName(), false, true);
-
-                                    }
-                                });
                             }
                         }
+                        onNotificationPosted(sbn);
                     }
-                    onNotificationPosted(sbn);
-                }
-            }).start();
-
+                }).start();
+                return;
+            } catch (Throwable e) {
+                com.xfl.kakaotalkbot.Log.error("App Internal Error: " + e.toString(), true);
+            }
         }
         String PREF_SETTINGS;
 
@@ -513,18 +515,22 @@ public class NotificationListener extends NotificationListenerService {
                                 com.xfl.kakaotalkbot.Log.debug("isGroupChat: " + isGroupChat);
                             }
 */
-                    if (banNameArr != null && banRoomArr != null) {
-                        for (String k : banNameArr) {
-                            if (k.equals(sender)) return;
-                        }
-                        for (String k : banRoomArr) {
-                            if (k.equals(sender)) return;
-                        }
-                    }
+
                     for (String key : keySet) {
                         if (!getApplicationContext().getSharedPreferences("bot" + key, 0).getBoolean("on", false))
                             continue;
-
+                        String[] banNames=banNameArr.get(key);
+                        String[] banRooms=banRoomArr.get(key);
+                        if (banNames != null && banRooms!=null) {
+                            boolean banned=false;
+                            for (String k : banNames) {
+                                if (k.equals(sender)) banned=true;
+                            }
+                            for (String k : banRooms) {
+                                if (k.equals(room)) banned=true;
+                            }
+                            if(banned)continue;
+                        }
                         PREF_SETTINGS = "settings" + key;
 
                         isAvailable = (packName.equals("jp.naver.line.android")
@@ -536,7 +542,7 @@ public class NotificationListener extends NotificationListenerService {
                                 || (packName.equals("com.kakao.talk")
                                 && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useNormal", true))
                                 || (packName.equals("org.telegram.messenger")
-                                && context.getSharedPreferences(PREF_SETTINGS,0).getBoolean("useTelegram",false));
+                                && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useTelegram", false));
 //TODO: isAvailable에 패키지 추가하면 위에있는 패키지 목록도 갱신해야함
 
                         if (isAvailable) {
@@ -569,9 +575,6 @@ public class NotificationListener extends NotificationListenerService {
                 }
             }
         }
-
-
-
 
 
     }

@@ -33,6 +33,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         notifyItemRangeRemoved(0, size);
     }
 
+    public void addItem(UserMessage item, int position) {
+        mMessageList.add(position, item);
+        notifyItemInserted(position);
+    }
+
     @Override
     public int getItemCount() {
         return mMessageList.size();
@@ -43,7 +48,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         UserMessage message = mMessageList.get(position);
 
-        if (message.getName().equals("BOT")) {
+        if (message.getIsBot()) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_RECEIVED;
         } else {
@@ -100,16 +105,17 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText;
+        TextView senderText;
 
         SentMessageHolder(View itemView) {
             super(itemView);
-
+            senderText = itemView.findViewById(R.id.message_sender);
             messageText = itemView.findViewById(R.id.message_body);
         }
 
         void bind(UserMessage message) {
             messageText.setText(message.getText());
-
+            senderText.setText(message.getName());
             // Format the stored timestamp into a readable String using method.
 
         }

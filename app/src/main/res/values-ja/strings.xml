@@ -77,4 +77,9 @@
     <string name="public_settings">Public Settings</string>
     <string name="please_compile_first">Please compile first</string>
     <string name="switch_redundant">Since this script doesn\'t include response function, turning on this is redundant.</string>
+    <string name="bot_activate">活性化</string>
+    <string name="unify_params">Use unified parameters. Not recommended for beginners of JavaScript</string>
+    <string name="delete_script">スクリプトを削除</string>
+    <string name="alert_delete_script">本当に削除しますか？</string>
+    <string name="alert_delete_script_hint">半角で「Delete Script」を入力</string>
 </resources>

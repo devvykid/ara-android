@@ -1,7 +1,6 @@
 package com.xfl.kakaotalkbot;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,25 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.faendir.rhino_android.RhinoAndroidHelper;
-
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.ImporterTopLevel;
-import org.mozilla.javascript.Script;
-import org.mozilla.javascript.ScriptableObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,14 +39,13 @@ public class ScriptEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_scripteditor);
 
-        final TextView debug=findViewById(R.id.debug);
+        final TextView debug = findViewById(R.id.debug);
         scriptEdit = (EditText) findViewById(R.id.JSCodeEdit);
-
 
         scriptName = getIntent().getExtras().getString("scriptName");
         final FloatingActionButton fab = findViewById(R.id.fab);
 
-        final File scriptDir = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot");
+        final File scriptDir = MainApplication.basePath;
         if (!scriptDir.exists())
             scriptDir.mkdir();
 
@@ -72,7 +57,6 @@ public class ScriptEditor extends AppCompatActivity {
                 Toast.makeText(MainApplication.getContext(), "파일생성오류", Toast.LENGTH_SHORT).show();
             }
         }
-
 
         scrollView = findViewById(R.id.scriptEdit_scrollView);
         scrollView.post(new Runnable() {
@@ -180,30 +164,31 @@ Thread thr;
 
 
     }
-/*private String preCompile(){
-        try {
-            Context parseContext = new RhinoAndroidHelper().enterContext();
-            parseContext.setWrapFactory(new PrimitiveWrapFactory());
-            parseContext.setLanguageVersion(Context.VERSION_ES6);
-            parseContext.setOptimizationLevel(-1);
-            ScriptableObject scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
-            Script script_real = parseContext.compileString(getScript(),scriptName,0,null);
-            Api.scriptName = scriptName;
-            ScriptableObject.defineClass(scope, Api.class);
-            ScriptableObject.defineClass(scope, DataBase.class);
-            ScriptableObject.defineClass(scope, Utils.class);
-            ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
-            ScriptableObject.defineClass(scope, AppData.class);
-            ScriptableObject.defineClass(scope, Bridge.class);
-            script_real.exec(parseContext, scope);
 
-            Function func=(Function) scope.get("response", scope);
-            Context.exit();
-        }catch(Throwable e){
-            return e.getMessage();
-        }
-        return null;
-}*/
+    /*private String preCompile(){
+            try {
+                Context parseContext = new RhinoAndroidHelper().enterContext();
+                parseContext.setWrapFactory(new PrimitiveWrapFactory());
+                parseContext.setLanguageVersion(Context.VERSION_ES6);
+                parseContext.setOptimizationLevel(-1);
+                ScriptableObject scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
+                Script script_real = parseContext.compileString(getScript(),scriptName,0,null);
+                Api.scriptName = scriptName;
+                ScriptableObject.defineClass(scope, Api.class);
+                ScriptableObject.defineClass(scope, DataBase.class);
+                ScriptableObject.defineClass(scope, Utils.class);
+                ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
+                ScriptableObject.defineClass(scope, AppData.class);
+                ScriptableObject.defineClass(scope, Bridge.class);
+                script_real.exec(parseContext, scope);
+
+                Function func=(Function) scope.get("response", scope);
+                Context.exit();
+            }catch(Throwable e){
+                return e.getMessage();
+            }
+            return null;
+    }*/
     public void save() {
         script.setWritable(true);
 
@@ -260,11 +245,22 @@ Thread thr;
             throw new NullPointerException();
         }
         try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }).start();
             final String str = FileManager.read(script);
             if (str.isEmpty()) {
-
+                String param;
+                if(MainApplication.getContext().getSharedPreferences("settings"+scriptName,0).getBoolean("useUnifiedParams",false)){
+                    param="params";
+                }else{
+                    param="room, msg, sender, isGroupChat, replier, ImageDB, packageName";
+                }
                 scriptEdit.setText("const scriptName=\"" + scriptName + "\";\n\n" +
-                        "function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName){\n" +
+                        "function response("+param+"){\n" +
                         "    /*(이 내용은 길잡이일 뿐이니 지우셔도 무방합니다)\n" +
                         "     *room: 메시지를 받은 방 이름\n" +
                         "     *msg: 메시지 내용\n" +

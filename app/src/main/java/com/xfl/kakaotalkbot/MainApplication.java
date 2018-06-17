@@ -2,6 +2,9 @@ package com.xfl.kakaotalkbot;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
+
+import java.io.File;
 
 
 /**
@@ -10,7 +13,7 @@ import android.content.Context;
 
 public class MainApplication extends Application {
     private static Context sContext;
-
+    public static File basePath = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot");
     /**
      * Returns the application context
      *
