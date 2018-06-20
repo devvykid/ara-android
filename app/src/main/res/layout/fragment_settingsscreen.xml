@@ -177,25 +177,25 @@
                 android:id="@+id/btn_blacklistMng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_blue_light"
+                android:backgroundTint="@color/buttonBackground"
                 android:text="@string/settings_manage_blacklist"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/buttonText" />
 
             <Button
                 android:id="@+id/btn_help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_blue_light"
+                android:backgroundTint="@color/buttonBackground"
                 android:text="@string/btn_help"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/buttonText" />
 
             <Button
                 android:id="@+id/btn_showAd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_blue_light"
+                android:backgroundTint="@color/buttonBackground"
                 android:text="@string/settings_showAd"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/buttonText" />
 
             <Button
                 android:id="@+id/btn_deleteScript"

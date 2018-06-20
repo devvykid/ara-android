@@ -56,7 +56,11 @@
     DataBase.getDataBase(String fileName) : get data from file\n
     DataBase.removeDataBase(String fileName) : delete file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
-    Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed</string>
+    Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
+    \n
+    \n
+    MozillaのJavaScript Engine、Rhinoがこのアプリに使われました。\n
+    ライセンス: https://www.mozilla.org/en-US/MPL/2.0/</string>
     <string name="script_autoloaded">変更事項が適用されました</string>
     <string name="tutorial_openAnotherApp">長くターチして他のアプリで開く</string>
     <string name="tutorial_saveAndCompile">長くターチして保存＆コンパイル</string>
@@ -81,5 +85,5 @@
     <string name="unify_params">Use unified parameters. Not recommended for beginners of JavaScript</string>
     <string name="delete_script">スクリプトを削除</string>
     <string name="alert_delete_script">本当に削除しますか？</string>
-    <string name="alert_delete_script_hint">半角で「Delete Script」を入力</string>
+    <string name="alert_delete_script_hint">このスクリプトの名前を入力</string>
 </resources>

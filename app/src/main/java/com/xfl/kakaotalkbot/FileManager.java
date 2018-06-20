@@ -26,7 +26,7 @@ public class FileManager {
 
             return stringBuilder.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            MainApplication.reportInternalError(e);
         }
         return null;
     }

@@ -1,7 +1,6 @@
 package com.xfl.kakaotalkbot;
 
 
-
 public class ResponseParameters {
     public String room;
     public String msg;
@@ -10,16 +9,17 @@ public class ResponseParameters {
     public SessionCacheReplier replier;
     public ImageDB ImageDB;
     public String packageName;
-    public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB,String packName){
+
+    public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB, String packName) {
 
 
-        this.room=room;
-        this.msg=msg;
-        this.sender=sender;
-        this.isGroupChat=isGroupChat;
-        this.replier=replier;
-        this.ImageDB=imageDB;
-        this.packageName=packName;
+        this.room = room;
+        this.msg = msg;
+        this.sender = sender;
+        this.isGroupChat = isGroupChat;
+        this.replier = replier;
+        this.ImageDB = imageDB;
+        this.packageName = packName;
     }
     /*
     @JSGetter

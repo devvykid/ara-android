@@ -57,7 +57,7 @@ public class SettingsScreen extends AppCompatActivity {
         final CheckBox chkAllowBridge = findViewById(R.id.chk_allowBridge);
         final CheckBox chkResetSession = findViewById(R.id.chk_resetSession);
         final CheckBox chkSpecificLog = findViewById(R.id.chk_specificLog);
-        final CheckBox chkUseUnifiedParams=findViewById(R.id.chk_useUnifiedParams);
+        final CheckBox chkUseUnifiedParams = findViewById(R.id.chk_useUnifiedParams);
         final SeekBar optimization = findViewById(R.id.optimization);
 
 
@@ -76,7 +76,7 @@ public class SettingsScreen extends AppCompatActivity {
         chkAllowBridge.setChecked(pref.getBoolean("allowBridge", true));
         chkResetSession.setChecked(pref.getBoolean("resetSession", false));
         chkSpecificLog.setChecked(pref.getBoolean("specificLog", false));
-        chkUseUnifiedParams.setChecked(pref.getBoolean("useUnifiedParams",false));
+        chkUseUnifiedParams.setChecked(pref.getBoolean("useUnifiedParams", false));
         optimization.setProgress(pref.getInt("optimization", -2) + 1);
         findViewById(R.id.fab_settings_apply).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,9 +119,9 @@ public class SettingsScreen extends AppCompatActivity {
         findViewById(R.id.btn_deleteScript).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder ad =new AlertDialog.Builder(SettingsScreen.this);
+                AlertDialog.Builder ad = new AlertDialog.Builder(SettingsScreen.this);
                 ad.setTitle(R.string.alert_delete_script);
-                final EditText et=new EditText(SettingsScreen.this);
+                final EditText et = new EditText(SettingsScreen.this);
                 et.setHint(R.string.alert_delete_script_hint);
                 FrameLayout container = new FrameLayout(SettingsScreen.this);
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -134,10 +134,10 @@ public class SettingsScreen extends AppCompatActivity {
                 ad.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(et.getText().toString().equals("Delete Script")){
+                        if (et.getText().toString().equals(scriptName)) {
 
-                            new File(MainApplication.basePath.getPath()+File.separator+scriptName).delete();
-                            Toast.makeText(SettingsScreen.this,"Deleted",Toast.LENGTH_SHORT).show();
+                            new File(MainApplication.basePath.getPath() + File.separator + scriptName).delete();
+                            Toast.makeText(SettingsScreen.this, "Deleted", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                             SettingsScreen.this.finish();
                         }

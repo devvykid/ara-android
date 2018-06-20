@@ -38,20 +38,19 @@ public final class Api extends ScriptableObject {
 
     public static String scriptName;
 
-    private static Context ctx = MainApplication.getContext();
 
     @JSStaticFunction
-    public static final View getRootView() {
+    public static View getRootView() {
         return NotificationListener.getRootView();
     }
 
     @JSStaticFunction
-    public static final Context getContext() {
+    public static Context getContext() {
         return MainApplication.getContext();
     }
 
     @JSStaticFunction
-    public static final void UIThread(final org.mozilla.javascript.Function function, final Function onComplete) {
+    public static void UIThread(final org.mozilla.javascript.Function function, final Function onComplete) {
         final org.mozilla.javascript.Context parseCtx = new RhinoAndroidHelper().enterContext();
         parseCtx.setWrapFactory(new PrimitiveWrapFactory());
         final ScriptableObject excScope;
@@ -89,7 +88,7 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final void showToast(final String str, final int length) {
+    public static void showToast(final String str, final int length) {
         NotificationListener.UIHandler.post(new Runnable() {
 
             @Override
@@ -102,12 +101,12 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final boolean canReply(String room) {
-        return NotificationListener.getRoomNum(room) != -1;
+    public static boolean canReply(String room) {
+        return NotificationListener.hasSession(room) || room.equals(NotificationListener.debugRoom);
     }
 
     @JSStaticFunction
-    public static final boolean replyRoom(String room, String str, boolean hideToast) {
+    public static boolean replyRoom(String room, String str, boolean hideToast) {
         try {
             return new SessionCacheReplier(room).reply(room, str, hideToast);
 
@@ -119,7 +118,7 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final boolean off(final String scriptName) {
+    public static boolean off(final String scriptName) {
 
         if (scriptName.equals("undefined")) {
             NotificationListener.UIHandler.post(new Runnable() {
@@ -148,7 +147,7 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final boolean on(final String scriptName) {
+    public static boolean on(final String scriptName) {
 
         if (scriptName.equals("undefined")) {
             NotificationListener.UIHandler.post(new Runnable() {
@@ -175,12 +174,12 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final boolean isOn(final String scriptName) {
+    public static boolean isOn(final String scriptName) {
         return getContext().getSharedPreferences("bot" + scriptName, 0).getBoolean("on", false);
     }
 
     @JSStaticFunction
-    public static final boolean isCompiled(final String scriptName) {
+    public static boolean isCompiled(final String scriptName) {
         return NotificationListener.container.get(scriptName) != null;
     }
 
@@ -218,8 +217,8 @@ public final class Api extends ScriptableObject {
 
 
     @JSStaticFunction
-    public static final boolean makeNoti(final String title, final String content, final int id) {
-        Notification.Builder noti = new Notification.Builder(MainApplication.getContext());
+    public static boolean makeNoti(final String title, final String content, final int id) {
+
         final NotificationManager notificationManager =
                 (NotificationManager) MainApplication.getContext().getSystemService(NOTIFICATION_SERVICE);
         try {
@@ -238,9 +237,9 @@ public final class Api extends ScriptableObject {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         noti.setChannelId("com.xfl.kakaotalkbot.customNotification");
                         // Create the NotificationChannel
-                        CharSequence name = ctx.getString(R.string.channel_name);
-                        String description = ctx.getString(R.string.channel_description);
-                        int importance = NotificationManager.IMPORTANCE_MAX;
+                        CharSequence name = MainApplication.getContext().getString(R.string.channel_name);
+                        String description = MainApplication.getContext().getString(R.string.channel_description);
+
                         NotificationChannel mChannel = new NotificationChannel("com.xfl.kakaotalkbot.customNotification", name, NotificationManager.IMPORTANCE_HIGH);
                         mChannel.setDescription(description);
                         // Register the channel with the system; you can't change the importance
@@ -250,7 +249,7 @@ public final class Api extends ScriptableObject {
                     }
 
 
-                    notificationManager.notify(1, noti.build());
+                    notificationManager.notify(id, noti.build());
 
 
                 }
@@ -264,19 +263,19 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final int prepare(final String scriptName) {
+    public static int prepare(final String scriptName) {
         if (Api.isCompiled(scriptName)) return 2;
         if (Api.reload(scriptName)) return 1;
         else return 0;
     }
 
     @JSStaticFunction
-    public static final boolean compile(final String scriptName) {
+    public static boolean compile(final String scriptName) {
         return reload(scriptName);
     }
 
     @JSStaticFunction
-    public static final boolean reload(final String scriptName) {
+    public static boolean reload(final String scriptName) {
 
 
         if (scriptName.equals("undefined")) {
@@ -314,12 +313,12 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final String papagoTranslate(final String source, final String target, final String str, Boolean errorToString) {
+    public static String papagoTranslate(final String source, final String target, final String str, Boolean errorToString) {
         return doPapagoTranslate(source, target, str, errorToString);
     }
 
     @JSStaticFunction
-    private static final String doPapagoTranslate(final String source, final String target, final String str, final Boolean errorToString) {
+    private static String doPapagoTranslate(final String source, final String target, final String str, final Boolean errorToString) {
 
         String res = null;
 
@@ -349,7 +348,7 @@ public final class Api extends ScriptableObject {
 
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
                 String einputLine;
-                StringBuffer eresponse = new StringBuffer();
+                StringBuilder eresponse = new StringBuilder();
                 while ((einputLine = br.readLine()) != null) {
                     eresponse.append(einputLine);
                 }
@@ -357,7 +356,7 @@ public final class Api extends ScriptableObject {
 
             }
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -375,7 +374,7 @@ public final class Api extends ScriptableObject {
                 org.mozilla.javascript.Context.reportError(e.getMessage());
 
             }
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -383,7 +382,7 @@ public final class Api extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static final void gc() {
+    public static void gc() {
         System.gc();
     }
 

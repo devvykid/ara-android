@@ -22,17 +22,13 @@ import com.faendir.rhino_android.RhinoAndroidHelper;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.ImporterTopLevel;
-import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 
 import java.io.File;
 import java.io.FileReader;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,21 +39,18 @@ import java.util.Set;
 public class NotificationListener extends NotificationListenerService {
     public static String debugRoom;
     public static Map<String, ScriptsManager> container = new HashMap<>();
-    public static NativeArray scriptArray;
     public static Handler UIHandler = new Handler();
     public static ScriptableObject execScope = null;
     public static View rootView;
-    public static Integer SessionsNum = 0;
-    public static List<String> Rooms = new ArrayList<String>();
-    public static List<Notification.Action> SavedSessions = new ArrayList<Notification.Action>();
-    private static File basePath=MainApplication.basePath;
-    static File sessionsPath = new File(basePath + File.separator + "Sessions");
-    private static Map<String,String[]> banNameArr=new HashMap<>();
-    private static Map<String,String[]> banRoomArr=new HashMap<>();
-    private static Map<String, com.xfl.kakaotalkbot.Log> logger = new HashMap<>();
+    public static Map<String, Notification.Action> SavedSessions = new HashMap<>();
+    private static File basePath = MainApplication.basePath;
+    // static File sessionsPath = new File(basePath + File.separator + "Sessions");
+    private static Map<String, String[]> banNameArr = new HashMap<>();
+    private static Map<String, String[]> banRoomArr = new HashMap<>();
     private static Map<String, Boolean> isCompiling = new HashMap<>();
     android.content.Context context;
     Bitmap photo = null;
+    boolean firstCompiling = false;
 
     public static View getRootView() {
         return rootView;
@@ -69,11 +62,10 @@ public class NotificationListener extends NotificationListenerService {
 
     private static void resetSession() {
         try {
-            SessionsNum = 0;
 
             SavedSessions.clear();
-            Rooms.clear();
-            sessionsPath.delete();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,11 +73,11 @@ public class NotificationListener extends NotificationListenerService {
     }
 
     public static Notification.Action getSession(String room) {
-        return SavedSessions.get(getRoomNum(room));
+        return SavedSessions.get(room);
     }
 
-    public static Integer getRoomNum(String room) {
-        return Rooms.indexOf(room);
+    public static boolean hasSession(String room) {
+        return SavedSessions.get(room) != null;
 
     }
 
@@ -95,46 +87,11 @@ public class NotificationListener extends NotificationListenerService {
         final ScriptableObject execScope = container.get(scriptName).execScope;
         final Function responder = container.get(scriptName).responder;
 
-        try {
-           /* if(!sessionsPath.exists())sessionsPath.mkdirs();
-            File sessionFile=new File(sessionsPath.getAbsolutePath()+File.separator+room);
-            sessionFile.setWritable(true);
-            FileOutputStream sOut=new FileOutputStream(sessionFile);
-            ObjectOutput oOut=new ObjectOutputStream(sOut);*/
 
-
-            if (!isDebugMode) {
-                if (Rooms.indexOf(room) == -1) {
-                    //sessionFile.createNewFile();
-                    //oOut.writeObject(session);
-                    //oOut.flush();
-                    // oOut.close();
-                    Log.d("Sessions", "added Session");
-                    SavedSessions.add(session);
-                    Rooms.add(room);
-                    SessionsNum++;
-                } else if (!session.equals(SavedSessions.get(Rooms.indexOf(room)))) {
-                    // oOut.writeObject(session);
-                    //oOut.flush();
-                    //oOut.close();
-                    Log.d("Sessions", "changed Session");
-                    SavedSessions.set(Rooms.indexOf(room), session);
-
-                }
-            }
-        } catch (Throwable e) {
-            StringBuilder stack = new StringBuilder();
-            stack.append("\n");
-
-            for (StackTraceElement element : e.getStackTrace()) {
-                stack.append("at ").append(element.toString());
-                stack.append("\n");
-            }
-
-            Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.internal_error), Toast.LENGTH_LONG).show();
-            final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error) + "\n" + stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
-            LoggerScreen.appendLogText(Html.fromHtml("<font color=RED>" + formed + "</font><br><br>"));
+        if (!isDebugMode) {
+            SavedSessions.put(room, session);
         }
+
         try {
             Context.enter();
             Context parseContext = new RhinoAndroidHelper().enterContext();
@@ -146,8 +103,8 @@ public class NotificationListener extends NotificationListenerService {
             MainApplication.getContext().getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply();
             if (responder != null) {
                 if (MainApplication.getContext().getSharedPreferences("settings" + scriptName, 0).getBoolean("useUnifiedParams", false)) {
-                    responder.call(parseContext,execScope,execScope,new Object[]{new ResponseParameters(room,msg,sender,isGroupChat,new SessionCacheReplier(room),imageDB,packName)});
-                }else {
+                    responder.call(parseContext, execScope, execScope, new Object[]{new ResponseParameters(room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName)});
+                } else {
                     responder.call(parseContext, execScope, execScope, new Object[]{room, msg, sender, isGroupChat, new SessionCacheReplier(room), imageDB, packName});
                 }
             }
@@ -183,7 +140,7 @@ public class NotificationListener extends NotificationListenerService {
         android.content.Context ctx = MainApplication.getContext();
         String banRoom = ctx.getSharedPreferences("bot", 0).getString("banRoom" + scriptName, "");
         String banName = ctx.getSharedPreferences("bot", 0).getString("banName" + scriptName, "");
-        banRoomArr.put(scriptName,banRoom.split("\n"));
+        banRoomArr.put(scriptName, banRoom.split("\n"));
 
         banNameArr.put(scriptName, banName.split("\n"));
 
@@ -257,9 +214,9 @@ public class NotificationListener extends NotificationListenerService {
 
             parseContext.setLanguageVersion(Context.VERSION_ES6);
             scope = (ScriptableObject) parseContext.initStandardObjects(new ImporterTopLevel(parseContext));
-
-            Script script_real = parseContext.compileReader(new FileReader(script), scriptName, 0, null);
-
+            FileReader fileReader = new FileReader(script);
+            Script script_real = parseContext.compileReader(fileReader, scriptName, 0, null);
+            fileReader.close();
 
             // ScriptableObject.putProperty(scope, "DataBase", Context.javaToJS(new DataBase(), scope));
             // ScriptableObject.putProperty(scope, "Api", Context.javaToJS(new Api(), scope));
@@ -373,6 +330,7 @@ public class NotificationListener extends NotificationListenerService {
     public void onNotificationPosted(final StatusBarNotification sbn) {
 
         super.onNotificationPosted(sbn);
+        if (firstCompiling) return;
         final String packName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;
         Log.d("extras", extras.toString());
@@ -391,47 +349,47 @@ public class NotificationListener extends NotificationListenerService {
         }
 
         if (isCompiling.size() <= 0 && MainApplication.getContext().getSharedPreferences("publicSettings", 0).getBoolean("autoCompile", true)) {//hasEverCompiled
-            try {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        basePath.mkdir();
-                        final File[] files = basePath.listFiles();
-                        if (files == null) return;
-                        for (File k : files) {
-                            if (k.getName().endsWith(".js")) {
-                                if (MainApplication.getContext().getSharedPreferences("bot" + k.getName(), 0).getBoolean("on", false)) {
-                                    final File fk = k;
-                                    boolean bool=false;
-                                    UIHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ScriptSelectActivity.refreshProgressBar(fk.getName(), true, true);
-                                        }
-                                    });
-                                    if (isCompiling.get(k.getName()) == null) {
-                                        bool=initializeScript(k.getName(), true);
+            firstCompiling = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    basePath.mkdir();
+                    final File[] files = basePath.listFiles();
+                    if (files == null) return;
+                    for (File k : files) {
+                        if (k.getName().endsWith(".js")) {
+                            if (MainApplication.getContext().getSharedPreferences("bot" + k.getName(), 0).getBoolean("on", false)) {
+                                final File fk = k;
+                                boolean bool = false;
+                                UIHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ScriptSelectActivity.refreshProgressBar(fk.getName(), true, true);
+                                    }
+                                });
+                                if (isCompiling.get(k.getName()) == null) {
+                                    bool = initializeScript(k.getName(), true);
+
+                                }
+                                final boolean fbool = bool;
+                                UIHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ScriptSelectActivity.refreshProgressBar(fk.getName(), false, fbool);
 
                                     }
-                                    final boolean fbool=bool;
-                                    UIHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ScriptSelectActivity.refreshProgressBar(fk.getName(), false, fbool);
-
-                                        }
-                                    });
-                                }
+                                });
                             }
                         }
-                        onNotificationPosted(sbn);
                     }
-                }).start();
-                return;
-            } catch (Throwable e) {
-                com.xfl.kakaotalkbot.Log.error("App Internal Error: " + e.toString(), true);
-            }
+                    firstCompiling = false;
+//                        onNotificationPosted(sbn);
+                }
+            }).start();
+            return;
+
         }
         String PREF_SETTINGS;
 
@@ -443,7 +401,8 @@ public class NotificationListener extends NotificationListenerService {
                     if (extras.get("android.largeIcon") instanceof Bitmap)
                         photo = (Bitmap) extras.get("android.largeIcon");
                 }
-        } catch (NullPointerException e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
 
         boolean isAvailable;
@@ -467,8 +426,12 @@ public class NotificationListener extends NotificationListenerService {
 
 
                     if (Build.VERSION.SDK_INT > 23) {
-                        if (extras.get("android.largeIcon") instanceof Bitmap)
-                            photo = (Bitmap) extras.get("android.largeIcon");
+                        try {
+                            if (extras.get("android.largeIcon") instanceof Bitmap)
+                                photo = (Bitmap) extras.get("android.largeIcon");
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
                         room = extras.getString("android.summaryText");
 
                         sender = extras.get("android.title").toString();
@@ -519,17 +482,17 @@ public class NotificationListener extends NotificationListenerService {
                     for (String key : keySet) {
                         if (!getApplicationContext().getSharedPreferences("bot" + key, 0).getBoolean("on", false))
                             continue;
-                        String[] banNames=banNameArr.get(key);
-                        String[] banRooms=banRoomArr.get(key);
-                        if (banNames != null && banRooms!=null) {
-                            boolean banned=false;
+                        String[] banNames = banNameArr.get(key);
+                        String[] banRooms = banRoomArr.get(key);
+                        if (banNames != null && banRooms != null) {
+                            boolean banned = false;
                             for (String k : banNames) {
-                                if (k.equals(sender)) banned=true;
+                                if (k.equals(sender)) banned = true;
                             }
                             for (String k : banRooms) {
-                                if (k.equals(room)) banned=true;
+                                if (k.equals(room)) banned = true;
                             }
-                            if(banned)continue;
+                            if (banned) continue;
                         }
                         PREF_SETTINGS = "settings" + key;
 

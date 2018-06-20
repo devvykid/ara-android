@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "com.xfl.kakaotalkbot"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 36
-        versionName "2.7"
+        targetSdkVersion 28
+        versionCode 38
+        versionName "2.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }

@@ -118,9 +118,9 @@ public class DebugModeScreen extends AppCompatActivity {
 
     }
 
-    private void refreshView() {
+    /*private void refreshView() {
         mMessageAdapter.notifyItemInserted(messageList.size() - 1);
-    }
+    }*/
 
     @Override
     protected void onDestroy() {

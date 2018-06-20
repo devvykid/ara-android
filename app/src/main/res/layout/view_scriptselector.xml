@@ -34,6 +34,7 @@
             android:id="@+id/switch2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="12dp"
             android:layout_weight="1"
             android:text="Switch"
             android:textColor="@color/colorAccent"

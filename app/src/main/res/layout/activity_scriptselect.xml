@@ -26,17 +26,17 @@
             android:id="@+id/notiAccessSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_blue_light"
+            android:backgroundTint="@color/buttonBackground"
             android:text="@string/noti_read_permission"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/buttonText" />
 
         <Button
             android:id="@+id/openSandbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_blue_light"
+            android:backgroundTint="@color/buttonBackground"
             android:text="Sandbox"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/buttonText" />
 
         <ScrollView
 

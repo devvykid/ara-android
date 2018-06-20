@@ -69,7 +69,6 @@ public class CodePlaygroundScreen extends AppCompatActivity {
         } catch (final Exception e) {
             e.printStackTrace();
 
-            return;
 
         }
 

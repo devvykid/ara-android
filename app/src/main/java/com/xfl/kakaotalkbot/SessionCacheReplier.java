@@ -67,7 +67,7 @@ public class SessionCacheReplier {
             return true;
         } else {
             try {
-                if (NotificationListener.getRoomNum(room) != -1) {
+                if (NotificationListener.hasSession(room)) {
                     this.session = NotificationListener.getSession(room);
                     replyTo(value);
                     return true;

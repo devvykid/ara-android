@@ -5,7 +5,6 @@ import org.mozilla.javascript.ScriptableObject;
 
 public class ScriptsManager {
     public static String scriptName;
-    public static boolean isDebugMode;
     public Function responder;
     public ScriptableObject execScope;
     public Function onStartCompile;

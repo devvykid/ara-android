@@ -54,7 +54,11 @@
     DataBase.getDataBase(String fileName) : get data from file\n
     DataBase.removeDataBase(String fileName) : delete file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
-    Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed</string>
+    Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
+    \n
+    \n
+    Rhino, Mozilla\'s JavaScript Engine, is used in this application.\n
+    License: https://www.mozilla.org/en-US/MPL/2.0/</string>
     <string name="settings_kakaotalk_location_facebookMessenger" translatable="false">Facebook Messenger</string>
     <string name="settings_kakaotalk_location_Line" translatable="false">Line</string>
     <string name="script_autoloaded">Applied edited script to editor</string>
@@ -81,6 +85,6 @@
     <string name="unify_params">Use unified parameters. Not recommended for beginners of JavaScript</string>
     <string name="delete_script">Delete Script</string>
     <string name="alert_delete_script">Are you sure?</string>
-    <string name="alert_delete_script_hint">Please type \'Delete Script\'</string>
+    <string name="alert_delete_script_hint">Please type the name of this script</string>
 
 </resources>

@@ -6,4 +6,6 @@
     <color name="fully_compiled">#FF4081</color>
     <color name="need_compile">#FFAA00</color>
     <color name="white">#FFFFFF</color>
+    <color name="buttonBackground">#FFFFFF</color>
+    <color name="buttonText">#000000</color>
 </resources>

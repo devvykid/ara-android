@@ -3,7 +3,6 @@ package com.xfl.kakaotalkbot;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
@@ -40,7 +39,7 @@ public class ScriptEditor extends AppCompatActivity {
         setContentView(R.layout.fragment_scripteditor);
 
         final TextView debug = findViewById(R.id.debug);
-        scriptEdit = (EditText) findViewById(R.id.JSCodeEdit);
+        scriptEdit = findViewById(R.id.JSCodeEdit);
 
         scriptName = getIntent().getExtras().getString("scriptName");
         final FloatingActionButton fab = findViewById(R.id.fab);
@@ -254,13 +253,13 @@ Thread thr;
             final String str = FileManager.read(script);
             if (str.isEmpty()) {
                 String param;
-                if(MainApplication.getContext().getSharedPreferences("settings"+scriptName,0).getBoolean("useUnifiedParams",false)){
-                    param="params";
-                }else{
-                    param="room, msg, sender, isGroupChat, replier, ImageDB, packageName";
+                if (MainApplication.getContext().getSharedPreferences("settings" + scriptName, 0).getBoolean("useUnifiedParams", false)) {
+                    param = "params";
+                } else {
+                    param = "room, msg, sender, isGroupChat, replier, ImageDB, packageName";
                 }
                 scriptEdit.setText("const scriptName=\"" + scriptName + "\";\n\n" +
-                        "function response("+param+"){\n" +
+                        "function response(" + param + "){\n" +
                         "    /*(이 내용은 길잡이일 뿐이니 지우셔도 무방합니다)\n" +
                         "     *room: 메시지를 받은 방 이름\n" +
                         "     *msg: 메시지 내용\n" +

@@ -15,8 +15,14 @@ public class ImageDB {
     public String getProfileImage() {
         if (profilePic == null) return "[[NO_PROFILE_PICTURE]]";
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         profilePic.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
+        try {
+            byteArrayOutputStream.close();
+        } catch (Throwable e) {
+            MainApplication.reportInternalError(e);
+        }
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 

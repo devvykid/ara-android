@@ -23,7 +23,7 @@ public class DataBase extends ScriptableObject {
     static File dbDir = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot" + File.separator + "Database");
 
     @JSStaticFunction
-    public static final void setDataBase(String fileName, String data) {
+    public static void setDataBase(String fileName, String data) {
         try {
 
             if (MainApplication.getContext().getSharedPreferences("compatibility", 0).getBoolean("JBBot", false)) {
@@ -50,11 +50,12 @@ public class DataBase extends ScriptableObject {
             fOut.flush();
             fOut.close();
         } catch (Exception e) {
+            MainApplication.reportInternalError(e);
         }
     }
 
     @JSStaticFunction
-    public final static String getDataBase(String fileName) {
+    public static String getDataBase(String fileName) {
 
         ArrayList<String> result = new ArrayList<>();
         try {
@@ -85,13 +86,14 @@ public class DataBase extends ScriptableObject {
             fIn.close();
             return stringBuilder.toString();
         } catch (IOException e) {
+            MainApplication.reportInternalError(e);
         }
 
         return null;
     }
 
     @JSStaticFunction
-    public final static boolean removeDataBase(String fileName) {
+    public static boolean removeDataBase(String fileName) {
         if (!fileName.contains(".")) {
             fileName += ".txt";
         }
