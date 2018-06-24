@@ -193,7 +193,7 @@ public class ScriptSelectActivity extends AppCompatActivity {
                 "통합 매개변수 기능을 추가했습니다. 이 기능을 체크하실 경우 response함수를 room,msg등의 인자들을 하나의 객체로 모아 호출합니다.\n" +
                 "약간의 최적화를 적용했습니다.\n" +
                 "일부 UI를 개선했습니다.");
-        msg.add(17," ");
+        msg.add(17,"약간의 안정화를 적용했습니다.");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;

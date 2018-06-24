@@ -78,7 +78,7 @@
     <string name="settings_optimization">최적화(인터프리터=0)</string>
     <string name="public_settings_jsouptimeout">HTML 파싱 시간제한(단위: ms)</string>
     <string name="public_settings_autocompile">메시지를 처음 수신했지만 어떤 스크립트도 컴파일 되지 않았을때, 자동으로 컴파일합니다.</string>
-    <string name="internal_error">앱 내부 오류가 발생하였습니다. 로그창 이미지를 zudevxf@gmail.com로 보내주시면 감사하겠습니다.</string>
+    <string name="internal_error">메신저봇: 앱 내부 오류가 발생하였습니다. 로그창 이미지를 zudevxf@gmail.com로 보내주시면 감사하겠습니다.</string>
     <string name="action_open_cafe">네이버 카페 열기</string>
     <string name="public_settings">공용 설정</string>
     <string name="please_compile_first">우선, 컴파일을 해주세요</string>

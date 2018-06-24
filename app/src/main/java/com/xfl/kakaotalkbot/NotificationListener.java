@@ -330,6 +330,7 @@ public class NotificationListener extends NotificationListenerService {
     public void onNotificationPosted(final StatusBarNotification sbn) {
 
         super.onNotificationPosted(sbn);
+        if(!MainApplication.getContext().getSharedPreferences("bot",0).getBoolean("activate",true))return;
         if (firstCompiling) return;
         final String packName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;

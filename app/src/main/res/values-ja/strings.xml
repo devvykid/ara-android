@@ -76,7 +76,7 @@
     <string name="settings_optimization">最適化（インタープリター＝０）</string>
     <string name="public_settings_jsouptimeout">HTML Parsing Timeout(ms)</string>
     <string name="public_settings_autocompile">\@sring/public_settings_autocompile</string>
-    <string name="internal_error">App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
+    <string name="internal_error">MessengerBot: App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
     <string name="action_open_cafe">Open Naver Cafe</string>
     <string name="public_settings">Public Settings</string>
     <string name="please_compile_first">Please compile first</string>
