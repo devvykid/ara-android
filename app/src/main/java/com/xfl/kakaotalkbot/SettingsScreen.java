@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INVALID_REQUEST;
@@ -43,7 +46,21 @@ public class SettingsScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settingsscreen);
+        final List<CheckBox>packGroup=new ArrayList<>();
+        final Context context = this;
         final String scriptName = getIntent().getExtras().getString("scriptName");
+        final SharedPreferences pref = context.getSharedPreferences("settings" + scriptName, 0);
+        String customPackages=context.getSharedPreferences("publicSettings",0).getString("customPackages","");
+        for(String k : customPackages.split("\n")){
+            k=k.trim();
+            if(k.isEmpty())continue;
+            CheckBox chk=new CheckBox(this);
+
+            chk.setChecked(context.getSharedPreferences("customs" + scriptName, 0).getBoolean(k,false));
+            chk.setText(k);
+            ((LinearLayout)findViewById(R.id.linear_packages)).addView(chk);
+            packGroup.add(chk);
+        }
         final CheckBox chkNormal = findViewById(R.id.chk_useNormal);
         final CheckBox chkParallelSpace = findViewById(R.id.chk_useParallelSpace);
         final CheckBox chkFacebookMessenger = findViewById(R.id.chk_useFacebookMessenger);
@@ -61,8 +78,8 @@ public class SettingsScreen extends AppCompatActivity {
         final SeekBar optimization = findViewById(R.id.optimization);
 
 
-        final Context context = this;
-        final SharedPreferences pref = context.getSharedPreferences("settings" + scriptName, 0);
+
+
         chkNormal.setChecked(pref.getBoolean("useNormal", true));
         chkParallelSpace.setChecked(pref.getBoolean("useParallelSpace", false));
         chkFacebookMessenger.setChecked(pref.getBoolean("useFacebookMessenger", false));
@@ -87,7 +104,12 @@ public class SettingsScreen extends AppCompatActivity {
                 pref.edit().putBoolean("useFacebookMessenger", chkFacebookMessenger.isChecked()).apply();
                 pref.edit().putBoolean("useLine", chkLine.isChecked()).apply();
                 pref.edit().putBoolean("useTelegram", chkTelegram.isChecked()).apply();
-
+                for(String k : context.getSharedPreferences("customs" + scriptName, 0).getAll().keySet()) {
+                    context.getSharedPreferences("customs" + scriptName, 0).edit().putBoolean(k, false).apply();
+                }
+                for(CheckBox chk : packGroup){
+                    context.getSharedPreferences("customs" + scriptName, 0).edit().putBoolean(chk.getText().toString(),chk.isChecked()).apply();
+                }
                 pref.edit().putBoolean("JBBot", chkJBBotCompat.isChecked()).apply();
                 pref.edit().putBoolean("offOnRuntimeError", chkOffOnRuntimeError.isChecked()).apply();
                 pref.edit().putBoolean("onDeleteBackup", chkOnDeleteBackup.isChecked()).apply();

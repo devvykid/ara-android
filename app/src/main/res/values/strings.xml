@@ -76,6 +76,7 @@
     <string name="settings_optimization">Optimization (interpreter=0)</string>
     <string name="public_settings_jsouptimeout">HTML Parsing Timeout(ms)</string>
     <string name="public_settings_autocompile">Automatically compile scripts when you get first message but no scripts have been compiled</string>
+    <string name="public_settings_customPackages">Package names to read Notification (Enter to separate)</string>
     <string name="internal_error">MessengerBot: App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
     <string name="action_open_cafe">Open Naver Cafe</string>
     <string name="public_settings">Public Settings</string>

@@ -68,6 +68,25 @@
                 android:checked="true"
                 android:text="@string/public_settings_autocompile" />
 
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Custom Packages"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/txt_customPackages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/public_settings_customPackages"
+                android:inputType="textMultiLine|textPersonName"
+                android:singleLine="false" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />

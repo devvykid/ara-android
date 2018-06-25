@@ -345,7 +345,7 @@ public class NotificationListener extends NotificationListenerService {
                 || packName.equals("com.lbe.parallel.intl")
                 || packName.equals("com.kakao.talk")
                 || packName.equals("org.telegram.messenger"))
-                ) {
+                &&!MainApplication.getContext().getSharedPreferences("publicSettings",0).getString("customPackages","").contains(packName)) {
             return;
         }
 
@@ -507,6 +507,14 @@ public class NotificationListener extends NotificationListenerService {
                                 && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useNormal", true))
                                 || (packName.equals("org.telegram.messenger")
                                 && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useTelegram", false));
+                        if(!isAvailable) {
+                            for (String k : MainApplication.getContext().getSharedPreferences("customs" + key, 0).getAll().keySet()) {
+                                if (packName.equals(k) && MainApplication.getContext().getSharedPreferences("customs" + key, 0).getBoolean(k, false)) {
+                                    isAvailable = true;
+                                    break;
+                                }
+                            }
+                        }
 //TODO: isAvailable에 패키지 추가하면 위에있는 패키지 목록도 갱신해야함
 
                         if (isAvailable) {

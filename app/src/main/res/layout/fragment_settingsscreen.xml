@@ -25,50 +25,49 @@
                 android:textSize="18sp"
                 android:visibility="visible" />
 
-            <CheckBox
-                android:id="@+id/chk_useNormal"
+            <LinearLayout
+                android:id="@+id/linear_packages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:checked="true"
-                android:text="@string/settings_kakaotalk_location_normal"
-                android:textAlignment="viewStart" />
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
 
-            <CheckBox
-                android:id="@+id/chk_useParallelSpace"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:checked="false"
-                android:text="@string/settings_kakaotalk_location_parallel"
-                android:visibility="gone" />
+                <CheckBox
+                    android:id="@+id/chk_useNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/settings_kakaotalk_location_normal"
+                    android:textAlignment="viewStart" />
 
-            <CheckBox
-                android:id="@+id/chk_useFacebookMessenger"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="@string/settings_kakaotalk_location_facebookMessenger" />
+                <CheckBox
+                    android:id="@+id/chk_useFacebookMessenger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_kakaotalk_location_facebookMessenger" />
 
-            <CheckBox
-                android:id="@+id/chk_useLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="LINE" />
+                <CheckBox
+                    android:id="@+id/chk_useLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LINE" />
 
-            <CheckBox
-                android:id="@+id/chk_useTelegram"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="Telegram"
-                android:visibility="gone" />
+                <CheckBox
+                    android:id="@+id/chk_useParallelSpace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/settings_kakaotalk_location_parallel"
+                    android:visibility="gone" />
+
+                <CheckBox
+                    android:id="@+id/chk_useTelegram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Telegram"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

@@ -194,6 +194,8 @@ public class ScriptSelectActivity extends AppCompatActivity {
                 "약간의 최적화를 적용했습니다.\n" +
                 "일부 UI를 개선했습니다.");
         msg.add(17,"약간의 안정화를 적용했습니다.");
+        msg.add(18,"활성화 스위치가 작동하지 않는 문제를 해결했습니다.");
+        msg.add(19,"이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;
