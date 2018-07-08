@@ -172,7 +172,7 @@ public class NotificationListener extends NotificationListenerService {
         final File script = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot" + File.separator + scriptName);
 
         if (container.get(scriptName) != null) {
-            execScope = container.get(scriptName).execScope;
+            //execScope = container.get(scriptName).execScope;
         }
         Function responder;
 
@@ -222,14 +222,15 @@ public class NotificationListener extends NotificationListenerService {
             // ScriptableObject.putProperty(scope, "Api", Context.javaToJS(new Api(), scope));
             // ScriptableObject.putProperty(scope, "Utils", Context.javaToJS(new Utils(), scope));
             //ScriptableObject.putProperty(scope, "Log", Context.javaToJS(new com.xfl.kakaotalkbot.Log(), scope));
-            Api.scriptName = scriptName;
+
             ScriptableObject.defineClass(scope, Api.class);
             ScriptableObject.defineClass(scope, DataBase.class);
             ScriptableObject.defineClass(scope, Utils.class);
             ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
             ScriptableObject.defineClass(scope, AppData.class);
             ScriptableObject.defineClass(scope, Bridge.class);
-
+            ScriptableObject.defineClass(scope, Device.class);
+            ScriptableObject.defineClass(scope, FileStream.class);
             execScope = scope;
 
 
@@ -267,6 +268,7 @@ public class NotificationListener extends NotificationListenerService {
                     .setScope(scope)
                     .setScriptActivity(onCreate, onStop, onResume, onPause)
             );
+            Api.scriptName = scriptName;
             Context.exit();
 
             com.xfl.kakaotalkbot.Log.info(MainApplication.getContext().getResources().getString(R.string.snackbar_compiled));
@@ -330,7 +332,8 @@ public class NotificationListener extends NotificationListenerService {
     public void onNotificationPosted(final StatusBarNotification sbn) {
 
         super.onNotificationPosted(sbn);
-        if(!MainApplication.getContext().getSharedPreferences("bot",0).getBoolean("activate",true))return;
+        if (!MainApplication.getContext().getSharedPreferences("bot", 0).getBoolean("activate", true))
+            return;
         if (firstCompiling) return;
         final String packName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;
@@ -345,7 +348,7 @@ public class NotificationListener extends NotificationListenerService {
                 || packName.equals("com.lbe.parallel.intl")
                 || packName.equals("com.kakao.talk")
                 || packName.equals("org.telegram.messenger"))
-                &&!MainApplication.getContext().getSharedPreferences("publicSettings",0).getString("customPackages","").contains(packName)) {
+                && !MainApplication.getContext().getSharedPreferences("publicSettings", 0).getString("customPackages", "").contains(packName)) {
             return;
         }
 
@@ -507,7 +510,7 @@ public class NotificationListener extends NotificationListenerService {
                                 && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useNormal", true))
                                 || (packName.equals("org.telegram.messenger")
                                 && context.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("useTelegram", false));
-                        if(!isAvailable) {
+                        if (!isAvailable) {
                             for (String k : MainApplication.getContext().getSharedPreferences("customs" + key, 0).getAll().keySet()) {
                                 if (packName.equals(k) && MainApplication.getContext().getSharedPreferences("customs" + key, 0).getBoolean(k, false)) {
                                     isAvailable = true;

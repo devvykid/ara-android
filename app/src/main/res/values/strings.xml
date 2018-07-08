@@ -55,6 +55,23 @@
     DataBase.removeDataBase(String fileName) : delete file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
     Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
+    Device : contains device informations and provides file read/write\n
+          .getBuild()\n
+          .getAndroidVersionCode()\n
+          .getAndroidVersionName()\n
+          .getPhoneBrand()\n
+          .getPhoneModel()\n
+          .isCharging()\n
+          .getPlugType()\n
+          .getBatteryLevel()\n
+          .getBatteryHealth()\n
+          .getBatteryTemperature()\n
+          .getBatteryVoltage()\n
+          .getBatteryStatus()\n
+          .getBatteryIntent()\n
+    FileStream
+          .read(path): read file\n
+          .write(path,content): write file\n
     \n
     \n
     Rhino, Mozilla\'s JavaScript Engine, is used in this application.\n

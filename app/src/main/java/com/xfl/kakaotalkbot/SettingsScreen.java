@@ -46,19 +46,19 @@ public class SettingsScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settingsscreen);
-        final List<CheckBox>packGroup=new ArrayList<>();
+        final List<CheckBox> packGroup = new ArrayList<>();
         final Context context = this;
         final String scriptName = getIntent().getExtras().getString("scriptName");
         final SharedPreferences pref = context.getSharedPreferences("settings" + scriptName, 0);
-        String customPackages=context.getSharedPreferences("publicSettings",0).getString("customPackages","");
-        for(String k : customPackages.split("\n")){
-            k=k.trim();
-            if(k.isEmpty())continue;
-            CheckBox chk=new CheckBox(this);
+        String customPackages = context.getSharedPreferences("publicSettings", 0).getString("customPackages", "");
+        for (String k : customPackages.split("\n")) {
+            k = k.trim();
+            if (k.isEmpty()) continue;
+            CheckBox chk = new CheckBox(this);
 
-            chk.setChecked(context.getSharedPreferences("customs" + scriptName, 0).getBoolean(k,false));
+            chk.setChecked(context.getSharedPreferences("customs" + scriptName, 0).getBoolean(k, false));
             chk.setText(k);
-            ((LinearLayout)findViewById(R.id.linear_packages)).addView(chk);
+            ((LinearLayout) findViewById(R.id.linear_packages)).addView(chk);
             packGroup.add(chk);
         }
         final CheckBox chkNormal = findViewById(R.id.chk_useNormal);
@@ -76,8 +76,6 @@ public class SettingsScreen extends AppCompatActivity {
         final CheckBox chkSpecificLog = findViewById(R.id.chk_specificLog);
         final CheckBox chkUseUnifiedParams = findViewById(R.id.chk_useUnifiedParams);
         final SeekBar optimization = findViewById(R.id.optimization);
-
-
 
 
         chkNormal.setChecked(pref.getBoolean("useNormal", true));
@@ -104,11 +102,11 @@ public class SettingsScreen extends AppCompatActivity {
                 pref.edit().putBoolean("useFacebookMessenger", chkFacebookMessenger.isChecked()).apply();
                 pref.edit().putBoolean("useLine", chkLine.isChecked()).apply();
                 pref.edit().putBoolean("useTelegram", chkTelegram.isChecked()).apply();
-                for(String k : context.getSharedPreferences("customs" + scriptName, 0).getAll().keySet()) {
+                for (String k : context.getSharedPreferences("customs" + scriptName, 0).getAll().keySet()) {
                     context.getSharedPreferences("customs" + scriptName, 0).edit().putBoolean(k, false).apply();
                 }
-                for(CheckBox chk : packGroup){
-                    context.getSharedPreferences("customs" + scriptName, 0).edit().putBoolean(chk.getText().toString(),chk.isChecked()).apply();
+                for (CheckBox chk : packGroup) {
+                    context.getSharedPreferences("customs" + scriptName, 0).edit().putBoolean(chk.getText().toString(), chk.isChecked()).apply();
                 }
                 pref.edit().putBoolean("JBBot", chkJBBotCompat.isChecked()).apply();
                 pref.edit().putBoolean("offOnRuntimeError", chkOffOnRuntimeError.isChecked()).apply();
@@ -157,7 +155,8 @@ public class SettingsScreen extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (et.getText().toString().equals(scriptName)) {
-
+                            Api.off(scriptName);
+                            Api.unload(scriptName);
                             new File(MainApplication.basePath.getPath() + File.separator + scriptName).delete();
                             Toast.makeText(SettingsScreen.this, "Deleted", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();

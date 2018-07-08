@@ -104,6 +104,13 @@ public class Log extends ScriptableObject {
         ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply();
     }
 
+    public static void internalError(final String str) {
+        errorLength++;
+        ctx.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength).apply();
+        logStack += str;
+        LoggerScreen.appendLogText(Html.fromHtml(str));
+        ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply();
+    }
 
     @JSStaticFunction
     public static void clear() {

@@ -58,6 +58,8 @@ public class CodePlaygroundScreen extends AppCompatActivity {
             ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log.class);
             ScriptableObject.defineClass(scope, AppData.class);
             ScriptableObject.defineClass(scope, Bridge.class);
+            ScriptableObject.defineClass(scope, Device.class);
+            ScriptableObject.defineClass(scope, FileStream.class);
             execScope = scope;
 
             script_real.exec(parseContext, scope);

@@ -3,7 +3,7 @@ package com.xfl.kakaotalkbot;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
-import android.text.Html;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -43,9 +43,10 @@ public class MainApplication extends Application {
             stack.append("at ").append(element.toString());
             stack.append("\n");
         }
-        final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error) + "\n" + stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
-        LoggerScreen.appendLogText(Html.fromHtml("<font color=RED>" + formed + "</font><br><br>"));
+        final String formed = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(new Date()) + (MainApplication.getContext().getResources().getString(R.string.internal_error) + "\n" + e.toString() + stack.toString()).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
 
+        com.xfl.kakaotalkbot.Log.internalError("<font color=RED>" + formed + "</font><br><br>");
+        Log.e("App Internal Error", "", e);
 
     }
 

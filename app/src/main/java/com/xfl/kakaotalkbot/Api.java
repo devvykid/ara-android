@@ -55,8 +55,8 @@ public final class Api extends ScriptableObject {
         parseCtx.setWrapFactory(new PrimitiveWrapFactory());
         final ScriptableObject excScope;
 
-        parseCtx.setOptimizationLevel(NotificationListener.container.get(scriptName).optimization);
-        excScope = NotificationListener.container.get(scriptName).execScope;
+        //parseCtx.setOptimizationLevel(NotificationListener.container.get(scriptName).optimization);
+        excScope = NotificationListener.execScope;
 
 
         NotificationListener.UIHandler.post(new Runnable() {
@@ -195,7 +195,7 @@ public final class Api extends ScriptableObject {
             }
         }
 
-        return org.mozilla.javascript.Context.enter().newArray(NotificationListener.container.get(scriptName).execScope, list.toArray());
+        return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope, list.toArray());
 
     }
     /*@JSStaticFunction
@@ -273,7 +273,13 @@ public final class Api extends ScriptableObject {
     public static boolean compile(final String scriptName) {
         return reload(scriptName);
     }
-
+    @JSStaticFunction
+    public static boolean unload(final String scriptName){
+        if(scriptName.equals("undefined"))return false;
+        if(!NotificationListener.container.containsKey(scriptName))return false;
+        NotificationListener.container.remove(scriptName);
+        return true;
+    }
     @JSStaticFunction
     public static boolean reload(final String scriptName) {
 

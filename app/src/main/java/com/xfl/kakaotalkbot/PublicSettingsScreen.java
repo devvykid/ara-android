@@ -21,10 +21,10 @@ public class PublicSettingsScreen extends AppCompatActivity {
         final SharedPreferences pref = getSharedPreferences("publicSettings", 0);
         final EditText jsoupTimeout = findViewById(R.id.jsouptimeout);
         final CheckBox chkAutoCompile = findViewById(R.id.chk_autoCompile);
-        final EditText customPackages=findViewById(R.id.txt_customPackages);
+        final EditText customPackages = findViewById(R.id.txt_customPackages);
         final FloatingActionButton fab = findViewById(R.id.fab_public_settings_apply);
         jsoupTimeout.setText(String.format(Locale.US, "%d", pref.getInt("jsoupTimeout", 10000)));
-        customPackages.setText(pref.getString("customPackages",""));
+        customPackages.setText(pref.getString("customPackages", ""));
         chkAutoCompile.setChecked(pref.getBoolean("autoCompile", true));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +38,7 @@ public class PublicSettingsScreen extends AppCompatActivity {
                     Toast.makeText(PublicSettingsScreen.this, "시간제한은 0~2147483647사이의 값으로 입력해주세요", Toast.LENGTH_SHORT).show();
 
                 }
-                pref.edit().putString("customPackages",customPackages.getText().toString()).apply();
+                pref.edit().putString("customPackages", customPackages.getText().toString()).apply();
                 pref.edit().putBoolean("autoCompile", chkAutoCompile.isChecked()).apply();
                 Snackbar.make(v, "Saved", Snackbar.LENGTH_SHORT).show();
             }

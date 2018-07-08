@@ -193,9 +193,11 @@ public class ScriptSelectActivity extends AppCompatActivity {
                 "통합 매개변수 기능을 추가했습니다. 이 기능을 체크하실 경우 response함수를 room,msg등의 인자들을 하나의 객체로 모아 호출합니다.\n" +
                 "약간의 최적화를 적용했습니다.\n" +
                 "일부 UI를 개선했습니다.");
-        msg.add(17,"약간의 안정화를 적용했습니다.");
-        msg.add(18,"활성화 스위치가 작동하지 않는 문제를 해결했습니다.");
-        msg.add(19,"이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)");
+        msg.add(17, "약간의 안정화를 적용했습니다.");
+        msg.add(18, "활성화 스위치가 작동하지 않는 문제를 해결했습니다.");
+        msg.add(19, "이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)");
+        msg.add(20,"DB가 없을때 DataBase.removeDataBase를 호출하면 발생하는 오류를 해결했습니다.\n Api.UIThread가 작동하지 않는 오류를 해결했습니다.\nDevice객체를 추가했습니다.\n봇이 켜진 상태로 설정에서 스크립트 삭제시 봇이 계속 구동되는 문제를 해결했습니다. 단, 다른 파일 탐색기에서 삭제하는것은 주의해주세요.\nApi.unload(\"스크립트이름.js\"): 해당 스크립트의 컴파일 상태를 제거합니다.");
+        msg.add(21,"Device에 파일읽기쓰기를 넣으면 추후에 보안 관련 분류가 어려워질 것 같아 FileStream.read, FileStream.write로 대체했습니다.\nDevice.getBatteryStatus를 수정했습니다.\nDevice.getBatteryIntent를 추가했습니다.\n잦은 업데이트 죄송합니다. 업데이트에 좀 더 신중해지도록 하겠습니다.");
         StringBuilder result = new StringBuilder();
         for (int i = lastVersion + 1 - 21; i <= version - 21; i++) {
             if (i > msg.size() - 1) break;

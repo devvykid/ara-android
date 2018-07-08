@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 /**
  * Created by XFL on 2/20/2018.
@@ -57,7 +56,6 @@ public class DataBase extends ScriptableObject {
     @JSStaticFunction
     public static String getDataBase(String fileName) {
 
-        ArrayList<String> result = new ArrayList<>();
         try {
             if (!fileName.contains(".")) {
                 fileName += ".txt";
@@ -97,10 +95,12 @@ public class DataBase extends ScriptableObject {
         if (!fileName.contains(".")) {
             fileName += ".txt";
         }
+        File file = new File(dbDir, fileName);
+        if (!file.exists()) return false;
         if (MainApplication.getContext().getSharedPreferences("settings", 0).getBoolean("onDeleteBackup", true)) {
             setDataBase(fileName + ".bak", getDataBase(fileName));
         }
-        File file = new File(dbDir, fileName);
+
         return file.delete();
     }
 
