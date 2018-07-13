@@ -26,7 +26,7 @@ class Utils : ScriptableObject() {
 
         @JSStaticFunction
         fun getWebText(str: String): String? {
-            val timeout = MainApplication.context.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
+            val timeout = MainApplication.context!!.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
             return try {
                 Jsoup.connect(str).ignoreContentType(true).timeout(timeout).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
                         .referrer("http://www.google.com")
@@ -41,7 +41,7 @@ class Utils : ScriptableObject() {
 
         @JSStaticFunction
         fun parse(str: String): Document? {
-            val timeout = MainApplication.context.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
+            val timeout = MainApplication.context!!.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
             return try {
                 Jsoup.connect(str).ignoreContentType(true).timeout(timeout).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
                         .referrer("http://www.google.com")

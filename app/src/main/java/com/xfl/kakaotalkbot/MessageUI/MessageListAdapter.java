@@ -92,7 +92,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Context ctx = MainApplication.getContext();
+                Context ctx = MainApplication.getContextForJava();
                 Toast.makeText(ctx, ctx.getResources().getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show();
                 String str = ((TextView) v.findViewById(R.id.message_body)).getText().toString();
                 ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);

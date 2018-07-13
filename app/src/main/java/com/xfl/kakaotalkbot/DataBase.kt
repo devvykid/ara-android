@@ -51,12 +51,10 @@ class DataBase : ScriptableObject() {
                 val file = File(dbDir, fileName)
 
                 file.createNewFile()
-                val fOut = FileOutputStream(file)
-                val fOutWriter = OutputStreamWriter(fOut)
-                fOutWriter.write(data!!)
-                fOutWriter.close()
-                fOut.flush()
-                fOut.close()
+                file.bufferedWriter().use{
+                    out-> out.write(data)
+                }
+
             } catch (e: Exception) {
                 MainApplication.reportInternalError(e)
             }
@@ -65,36 +63,10 @@ class DataBase : ScriptableObject() {
 
         @JSStaticFunction
         fun getDataBase(fileName: String): String? {
-            var fileName = fileName
+            var fileName=fileName
 
             try {
-                if (!fileName.contains(".")) {
-                    fileName += ".txt"
-                }
-                val file = File(dbDir, fileName)
-                var fIn: FileInputStream? = null
-                try {
-                    fIn = FileInputStream(file)
-                } catch (e: FileNotFoundException) {
-
-                    return null
-                }
-
-                val myInReader = InputStreamReader(fIn)
-                val bufferedReader = BufferedReader(myInReader)
-                val stringBuilder = StringBuilder()
-                var crt: Int
-
-
-                while ((crt = bufferedReader.read()) != -1) {
-                    stringBuilder.append(crt.toChar())
-                }
-
-                bufferedReader.close()
-                myInReader.close()
-
-                fIn.close()
-                return stringBuilder.toString()
+                return FileManager.read(File(fileName))
             } catch (e: IOException) {
                 MainApplication.reportInternalError(e)
             }

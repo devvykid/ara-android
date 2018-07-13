@@ -34,7 +34,10 @@ class MainApplication : Application() {
          */
         var context: Context? = null
             private set
-
+        @JvmStatic
+fun getContextForJava():Context{
+    return context!!
+}
         fun reportInternalError(e: Throwable) {
 
             NotificationListener.UIHandler!!.post { Toast.makeText(MainApplication.context, MainApplication.context!!.resources.getString(R.string.internal_error), Toast.LENGTH_LONG).show() }

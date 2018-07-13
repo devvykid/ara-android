@@ -122,6 +122,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         msg.add(19, "이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)")
         msg.add(20, "DB가 없을때 DataBase.removeDataBase를 호출하면 발생하는 오류를 해결했습니다.\n Api.UIThread가 작동하지 않는 오류를 해결했습니다.\nDevice객체를 추가했습니다.\n봇이 켜진 상태로 설정에서 스크립트 삭제시 봇이 계속 구동되는 문제를 해결했습니다. 단, 다른 파일 탐색기에서 삭제하는것은 주의해주세요.\nApi.unload(\"스크립트이름.js\"): 해당 스크립트의 컴파일 상태를 제거합니다.")
         msg.add(21, "Device에 파일읽기쓰기를 넣으면 추후에 보안 관련 분류가 어려워질 것 같아 FileStream.read, FileStream.write로 대체했습니다.\nDevice.getBatteryStatus를 수정했습니다.\nDevice.getBatteryIntent를 추가했습니다.\n잦은 업데이트 죄송합니다. 업데이트에 좀 더 신중해지도록 하겠습니다.")
+        msg.add(22,"");
         val result = StringBuilder()
         for (i in lastVersion + 1 - 21..version - 21) {
             if (i > msg.size - 1) break
@@ -183,8 +184,8 @@ class ScriptSelectActivity : AppCompatActivity() {
         if (!granted) {
             val ad = AlertDialog.Builder(this@ScriptSelectActivity)
 
-            ad.setTitle(MainApplication.context.resources.getString(R.string.no_noti_read_permission))       // 제목 설정
-            ad.setMessage(MainApplication.context.resources.getString(R.string.alert_set_noti_access_message))   // 내용 설정
+            ad.setTitle(MainApplication.context!!!!.resources.getString(R.string.no_noti_read_permission))       // 제목 설정
+            ad.setMessage(MainApplication.context!!.resources.getString(R.string.alert_set_noti_access_message))   // 내용 설정
 
             // 확인 버튼 설정
             ad.setPositiveButton("OK") { dialog, which ->
@@ -199,18 +200,18 @@ class ScriptSelectActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scriptselect)
         val activate: Switch
         activate = findViewById(R.id.switch_activate)
-        activate.isChecked = MainApplication.context.getSharedPreferences("bot", 0).getBoolean("activate", true)
+        activate.isChecked = MainApplication.context!!.getSharedPreferences("bot", 0).getBoolean("activate", true)
         activate.setOnCheckedChangeListener { compoundButton, b ->
             applicationContext.getSharedPreferences("bot", 0).edit().putBoolean("activate", b).apply()
-            noti(MainApplication.context)
+            noti(MainApplication.context!!)
         }
         linearLayout = findViewById(R.id.scriptSelectRecycler)
         val addScript = findViewById<FloatingActionButton>(R.id.addScript)
         addScript.setOnClickListener(View.OnClickListener {
             val ad = AlertDialog.Builder(this@ScriptSelectActivity)
 
-            ad.setTitle(MainApplication.context.resources.getString(R.string.alert_newScript_title))       // 제목 설정
-            ad.setMessage(MainApplication.context.resources.getString(R.string.alert_newScript_message))   // 내용 설정
+            ad.setTitle(MainApplication.context!!.resources.getString(R.string.alert_newScript_title))       // 제목 설정
+            ad.setMessage(MainApplication.context!!.resources.getString(R.string.alert_newScript_message))   // 내용 설정
 
             // EditText 삽입하기
             val et = EditText(this@ScriptSelectActivity)
@@ -234,7 +235,7 @@ class ScriptSelectActivity : AppCompatActivity() {
                         fileName += ".js"
                     }
                     File(basePath.path + File.separator + fileName).createNewFile()
-                    MainApplication.context.getSharedPreferences("settings$fileName", 0).edit().putBoolean("useUnifiedParams", chk.isChecked).apply()
+                    MainApplication.context!!.getSharedPreferences("settings$fileName", 0).edit().putBoolean("useUnifiedParams", chk.isChecked).apply()
                     initialize()
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -302,7 +303,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         progressBarMap.clear()
         linearLayout!!.removeAllViews()
         CodePlaygroundScreen.initializeScript()
-        noti(MainApplication.context)
+        noti(MainApplication.context!!)
 
         val ctx = this
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -331,7 +332,7 @@ class ScriptSelectActivity : AppCompatActivity() {
                 swit.isChecked = applicationContext.getSharedPreferences("bot" + k.name, 0).getBoolean("on", false)
                 swit.text = k.name
                 swit.setOnCheckedChangeListener { compoundButton, b ->
-                    if (b && NotificationListener.container[k.name] != null && NotificationListener.container[k.name]?.responder == null) {
+                    if (b && NotificationListener.container[k.name] != null && NotificationListener.container[k.name]?.getResponder() == null) {
                         Toast.makeText(this@ScriptSelectActivity, this@ScriptSelectActivity.resources.getString(R.string.switch_redundant), Toast.LENGTH_LONG).show()
                     }
                     applicationContext.getSharedPreferences("bot" + k.name, 0).edit().putBoolean("on", b).apply()
@@ -339,7 +340,7 @@ class ScriptSelectActivity : AppCompatActivity() {
                 }
                 reload.setOnClickListener {
                     Thread(Runnable {
-                        NotificationListener.UIHandler.post {
+                        NotificationListener.UIHandler!!.post {
                             //compiling = true;
                             progressBar.visibility = View.VISIBLE
                         }
@@ -353,7 +354,7 @@ class ScriptSelectActivity : AppCompatActivity() {
                                         }
                                     });
                                 } else {*/
-                        NotificationListener.UIHandler.post {
+                        NotificationListener.UIHandler!!.post {
                             //compiling = false;
                             progressBar.visibility = View.GONE
                             if (bool)
@@ -433,7 +434,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         val files = basePath.listFiles()
         for (k in files) {
             if (!k.name.endsWith(".js")) continue
-            if (MainApplication.context.getSharedPreferences("lastCompileSuccess2", 0).getLong(k.name, 0) < k.lastModified() || NotificationListener.container[k.name] == null) {
+            if (MainApplication.context!!.getSharedPreferences("lastCompileSuccess2", 0).getLong(k.name, 0) < k.lastModified() || NotificationListener.container[k.name] == null) {
                 switchMap[k.name]!!.setTextColor(resources.getColor(R.color.need_compile))
             } else {
                 switchMap[k.name]!!.setTextColor(resources.getColor(R.color.fully_compiled))
@@ -505,7 +506,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             } else {
                 progressBarMap[scriptName]!!.setVisibility(View.GONE)
                 if (changeColor && switchMap[scriptName] != null)
-                    switchMap[scriptName]!!.setTextColor(MainApplication.context.resources.getColor(R.color.fully_compiled))
+                    switchMap[scriptName]!!.setTextColor(MainApplication.context!!.resources.getColor(R.color.fully_compiled))
 
             }
         }
@@ -515,16 +516,16 @@ class ScriptSelectActivity : AppCompatActivity() {
                 switchMap[scriptName]!!.isChecked=b
             }
 
-            MainApplication.context.getSharedPreferences("bot$scriptName", 0).edit().putBoolean("on", b).apply()
+            MainApplication.context!!.getSharedPreferences("bot$scriptName", 0).edit().putBoolean("on", b).apply()
         }
 
         fun putOnAll(b: Boolean) {
             val keySet = switchMap.keys
             for (k in keySet) {
-                if (MainApplication.context.getSharedPreferences("settings$k", 0).getBoolean("ignoreApiOff", false))
+                if (MainApplication.context!!.getSharedPreferences("settings$k", 0).getBoolean("ignoreApiOff", false))
                     continue
                 switchMap[k]!!.isChecked=b
-                MainApplication.context.getSharedPreferences("bot$k", 0).edit().putBoolean("on", b).apply()
+                MainApplication.context!!.getSharedPreferences("bot$k", 0).edit().putBoolean("on", b).apply()
             }
         }
 
@@ -533,7 +534,7 @@ class ScriptSelectActivity : AppCompatActivity() {
 
             val keySet = switchMap.keys
             var b = false
-            if (MainApplication.context.getSharedPreferences("bot", 0).getBoolean("activate", true)) {
+            if (MainApplication.context!!.getSharedPreferences("bot", 0).getBoolean("activate", true)) {
                 for (k in keySet) {
                     if (switchMap[k]!!.isChecked) {
                         b = true
@@ -543,8 +544,8 @@ class ScriptSelectActivity : AppCompatActivity() {
 
                 }
             }//else b = false is redundant
-            val notificationManager = MainApplication.context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val noti = Notification.Builder(MainApplication.context).setStyle(Notification.BigTextStyle()
+            val notificationManager = MainApplication.context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val noti = Notification.Builder(MainApplication.context!!).setStyle(Notification.BigTextStyle()
                     .bigText(stringBuilder.toString()))
             noti.setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(ctx.resources.getString(R.string.app_name))

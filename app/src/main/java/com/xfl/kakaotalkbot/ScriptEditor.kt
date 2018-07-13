@@ -51,15 +51,15 @@ class ScriptEditor : AppCompatActivity() {
             try {
                 script!!.createNewFile()
             } catch (e: Exception) {
-                Toast.makeText(MainApplication.context, "파일생성오류", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MainApplication.context!!, "파일생성오류", Toast.LENGTH_SHORT).show()
             }
 
         }
 
         scrollView = findViewById(R.id.scriptEdit_scrollView)
-        scrollView.post { scrollView.scrollY = MainApplication.context.getSharedPreferences("editor", 0).getInt("scrollState", 0) }
+        scrollView.post { scrollView.scrollY = MainApplication.context!!.getSharedPreferences("editor", 0).getInt("scrollState", 0) }
 
-        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY -> MainApplication.context.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply() })
+        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY -> MainApplication.context!!.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply() })
 
 
         fab.setOnClickListener {
@@ -69,12 +69,12 @@ class ScriptEditor : AppCompatActivity() {
                 Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_saveAndCompile), Toast.LENGTH_SHORT).show()
             }
             save()
-            Toast.makeText(MainApplication.context, R.string.snackbar_script_saved, Toast.LENGTH_SHORT).show()
+            Toast.makeText(MainApplication.context!!, R.string.snackbar_script_saved, Toast.LENGTH_SHORT).show()
         }
         fab.setOnLongClickListener {
             save()
-            Toast.makeText(MainApplication.context, R.string.snackbar_compileStart, Toast.LENGTH_SHORT).show()
-            Thread(Runnable { NotificationListener.initializeScript(scriptName, true) }).start()
+            Toast.makeText(MainApplication.context!!, R.string.snackbar_compileStart, Toast.LENGTH_SHORT).show()
+            Thread(Runnable { NotificationListener.initializeScript(scriptName!!, true) }).start()
 
             true
         }
@@ -182,7 +182,7 @@ Thread thr;
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(MainApplication.context, R.string.snackbar_script_save_failed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(MainApplication.context!!, R.string.snackbar_script_save_failed, Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -221,10 +221,10 @@ Thread thr;
         }
         try {
             Thread(Runnable { }).start()
-            val str = FileManager.read(script)
+            val str = FileManager.read(script!!)
             if (str!!.isEmpty()) {
                 val param: String
-                if (MainApplication.context.getSharedPreferences("settings" + scriptName!!, 0).getBoolean("useUnifiedParams", false)) {
+                if (MainApplication.context!!.getSharedPreferences("settings" + scriptName!!, 0).getBoolean("useUnifiedParams", false)) {
                     param = "params"
                 } else {
                     param = "room, msg, sender, isGroupChat, replier, ImageDB, packageName"
@@ -280,6 +280,6 @@ Thread thr;
 
     public override fun onDestroy() {
         super.onDestroy()
-        MainApplication.context.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply()
+        MainApplication.context!!.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply()
     }
 }

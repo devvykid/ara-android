@@ -64,7 +64,7 @@ class SessionCacheReplier(private val room: String)//this.session = session;
                     true
                 } else {
                     if (!hideToast) {
-                        NotificationListener.UIHandler.post { Toast.makeText(MainApplication.context, "아직 " + room + "방의 정보를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show() }
+                        NotificationListener.UIHandler!!.post { Toast.makeText(MainApplication.context, "아직 " + room + "방의 정보를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show() }
                     }
 
                     false

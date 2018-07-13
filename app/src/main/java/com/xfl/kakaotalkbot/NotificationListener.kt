@@ -48,7 +48,7 @@ class NotificationListener : NotificationListenerService() {
     override fun onNotificationPosted(sbn: StatusBarNotification) {
 
         super.onNotificationPosted(sbn)
-        if (!MainApplication.context!!!!.getSharedPreferences("bot", 0).getBoolean("activate", true))
+        if (!MainApplication.context!!.getSharedPreferences("bot", 0).getBoolean("activate", true))
             return
         if (firstCompiling) return
         val packName = sbn.packageName
@@ -64,7 +64,7 @@ class NotificationListener : NotificationListenerService() {
                         || packName == "com.facebook.orca"
                         || packName == "com.lbe.parallel.intl"
                         || packName == "com.kakao.talk"
-                        || packName == "org.telegram.messenger") && !MainApplication.context!!!!.getSharedPreferences("publicSettings", 0).getString("customPackages", "")!!.contains(packName)) {
+                        || packName == "org.telegram.messenger") && !MainApplication.context!!.getSharedPreferences("publicSettings", 0).getString("customPackages", "")!!.contains(packName)) {
             return
         }
 
@@ -222,7 +222,7 @@ class NotificationListener : NotificationListenerService() {
 
                             val fisGroupChat = isGroupChat
 
-                            val imageDB = ImageDB(photo)
+                            val imageDB = ImageDB(photo!!)
 
 
                             val thr = Thread(Runnable { callResponder(key, room, msg, sender, fisGroupChat, imageDB, packName, act, false) })

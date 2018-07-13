@@ -18,7 +18,7 @@ class ScriptActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scriptName = intent.extras!!.getString("scriptName")
-        manager = NotificationListener.container[scriptName]
+        manager = NotificationListener.container[scriptName!!]
 
         if (manager == null) {
             Toast.makeText(this, resources.getString(R.string.please_compile_first), Toast.LENGTH_SHORT).show()
