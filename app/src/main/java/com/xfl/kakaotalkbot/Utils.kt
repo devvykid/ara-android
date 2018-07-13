@@ -24,6 +24,7 @@ class Utils : ScriptableObject() {
     companion object {
         internal var result: StringBuilder? = null
 
+        @JvmStatic
         @JSStaticFunction
         fun getWebText(str: String): String? {
             val timeout = MainApplication.context!!.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
@@ -39,6 +40,7 @@ class Utils : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun parse(str: String): Document? {
             val timeout = MainApplication.context!!.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
@@ -55,20 +57,24 @@ class Utils : ScriptableObject() {
         }
 
         val androidVersionCode: Int
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = Build.VERSION.SDK_INT
 
         val androidVersionName: String
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = Build.VERSION.RELEASE
 
 
         val phoneBrand: String
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = Build.BRAND
 
         val phoneModel: String
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = Build.DEVICE
     }
 

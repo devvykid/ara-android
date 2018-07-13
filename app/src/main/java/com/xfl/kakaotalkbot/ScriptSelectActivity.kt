@@ -5,7 +5,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ContentResolver
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,29 +20,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.ScrollView
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
-
+import android.view.*
+import android.widget.*
 import java.io.File
 import java.io.IOException
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 
 class ScriptSelectActivity : AppCompatActivity() {
@@ -122,7 +103,9 @@ class ScriptSelectActivity : AppCompatActivity() {
         msg.add(19, "이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)")
         msg.add(20, "DB가 없을때 DataBase.removeDataBase를 호출하면 발생하는 오류를 해결했습니다.\n Api.UIThread가 작동하지 않는 오류를 해결했습니다.\nDevice객체를 추가했습니다.\n봇이 켜진 상태로 설정에서 스크립트 삭제시 봇이 계속 구동되는 문제를 해결했습니다. 단, 다른 파일 탐색기에서 삭제하는것은 주의해주세요.\nApi.unload(\"스크립트이름.js\"): 해당 스크립트의 컴파일 상태를 제거합니다.")
         msg.add(21, "Device에 파일읽기쓰기를 넣으면 추후에 보안 관련 분류가 어려워질 것 같아 FileStream.read, FileStream.write로 대체했습니다.\nDevice.getBatteryStatus를 수정했습니다.\nDevice.getBatteryIntent를 추가했습니다.\n잦은 업데이트 죄송합니다. 업데이트에 좀 더 신중해지도록 하겠습니다.")
-        msg.add(22,"");
+        msg.add(22,"")
+        msg.add(23,"추후 구현의 용이성을 도모하여 코틀린으로 전환했습니다.\n\n안드로이드 누가 미만에서 카카오톡 최신버전의 알림 수신 중 방 이름이 잘못 수신되는 오류를 해결했습니다.\n카카오톡 구버전과의 연동성도 고려했지만, 카카오톡을 업데이트하는것을 권장합니다.\n\n컴파일 시작/완료 로그에 스크립트 이름을 명시합니다.\n\nImageDB.getProfileBitmap()이 추가되었습니다.\n\n방 세션 초기화 옵션을 공용설정으로 옮겼습니다.")
+        msg.add(24,"Api.UIThread오류를 해결했습니다.")
         val result = StringBuilder()
         for (i in lastVersion + 1 - 21..version - 21) {
             if (i > msg.size - 1) break

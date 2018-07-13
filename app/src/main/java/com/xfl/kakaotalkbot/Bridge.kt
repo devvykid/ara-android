@@ -11,7 +11,7 @@ class Bridge : ScriptableObject() {
     }
 
     companion object {
-
+        @JvmStatic
         @JSStaticFunction
         fun getScopeOf(scriptName: String): ScriptableObject? {
             if (!isAllowed(scriptName)) {
@@ -31,6 +31,7 @@ class Bridge : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun isAllowed(scriptName: String): Boolean {
 

@@ -1,7 +1,6 @@
 package com.xfl.kakaotalkbot
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.FileProvider
@@ -9,11 +8,9 @@ import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -27,7 +24,7 @@ import java.nio.charset.StandardCharsets
 class ScriptEditor : AppCompatActivity() {
     private lateinit var scriptEdit: EditText
     private lateinit var scrollView: NestedScrollView
-    private lateinit var lastSave: String
+    private  var lastSave: String?=null
 
     private var script: File? = null
     private var scriptName: String? = null
@@ -196,7 +193,7 @@ Thread thr;
 
         if (id == R.id.action_open_on_another_app) {
 
-            val uri = FileProvider.getUriForFile(this, applicationContext.packageName + ".provider", script)
+            val uri = FileProvider.getUriForFile(this, applicationContext.packageName + ".provider", script!!)
 
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

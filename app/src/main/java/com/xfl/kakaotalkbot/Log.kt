@@ -1,14 +1,11 @@
 package com.xfl.kakaotalkbot
 
-import android.content.Context
 import android.text.Html
 import android.widget.Toast
-
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.annotations.JSStaticFunction
-
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 /**
  * Created by XFL on 2/20/2018.
@@ -26,36 +23,36 @@ class Log : ScriptableObject() {
         private var log: String? = null
         private var logStack = ctx!!.getSharedPreferences("log", 0).getString("log", "")
 
-
+        @JvmStatic
         @get:JSStaticFunction
         var debugLength: Int= ctx!!.getSharedPreferences("log", 0).getInt("debugLength", 0)
             private set
-
+        @JvmStatic
         @get:JSStaticFunction
         var infoLength: Int = ctx!!.getSharedPreferences("log", 0).getInt("infoLength", 0)
             private set
-
+        @JvmStatic
         @get:JSStaticFunction
         var errorLength: Int = ctx!!.getSharedPreferences("log", 0).getInt("errorLength", 0)
             private set
 
-
+        @JvmStatic
         @JSStaticFunction
         fun d(str: String) {
             debug(str)
         }
 
-
+        @JvmStatic
         @JSStaticFunction
         fun e(str: String, bool: Boolean) {
             error(str, bool)
         }
-
+        @JvmStatic
         @JSStaticFunction
         fun i(str: String) {
             info(str)
         }
-
+        @JvmStatic
         @JSStaticFunction
         fun debug(str: String) {
             var str = str
@@ -72,7 +69,7 @@ class Log : ScriptableObject() {
 
             ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply()
         }
-
+        @JvmStatic
         @JSStaticFunction
         fun info(str: String) {
             var str = str
@@ -87,7 +84,7 @@ class Log : ScriptableObject() {
 
             ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply()
         }
-
+        @JvmStatic
         @JSStaticFunction
         fun error(str: String, toast: Boolean) {
             val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
@@ -112,7 +109,7 @@ class Log : ScriptableObject() {
             LoggerScreen.appendLogText(Html.fromHtml(str))
             ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply()
         }
-
+        @JvmStatic
         @JSStaticFunction
         fun clear() {
             val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
@@ -128,6 +125,7 @@ class Log : ScriptableObject() {
         }
 
         val length: Int
+            @JvmStatic
             @JSStaticFunction
             get() = debugLength!! + infoLength!! + errorLength!!
     }

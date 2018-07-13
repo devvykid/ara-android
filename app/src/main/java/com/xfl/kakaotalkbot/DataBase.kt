@@ -1,18 +1,10 @@
 package com.xfl.kakaotalkbot
 
 import android.os.Environment
-
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.annotations.JSStaticFunction
-
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 
 /**
  * Created by XFL on 2/20/2018.
@@ -28,6 +20,7 @@ class DataBase : ScriptableObject() {
     companion object {
         internal var dbDir = File(Environment.getExternalStorageDirectory().toString() + File.separator + "katalkbot" + File.separator + "Database")
 
+        @JvmStatic
         @JSStaticFunction
         fun setDataBase(fileName: String, data: String?) {
             var fileName = fileName
@@ -61,12 +54,15 @@ class DataBase : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun getDataBase(fileName: String): String? {
             var fileName=fileName
-
+            if (!fileName.contains(".")) {
+                fileName += ".txt"
+            }
             try {
-                return FileManager.read(File(fileName))
+                return FileManager.read(File(dbDir,fileName))
             } catch (e: IOException) {
                 MainApplication.reportInternalError(e)
             }
@@ -74,6 +70,7 @@ class DataBase : ScriptableObject() {
             return null
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun removeDataBase(fileName: String): Boolean {
             var fileName = fileName

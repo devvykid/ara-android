@@ -4,11 +4,11 @@ import org.mozilla.javascript.Function
 import org.mozilla.javascript.ScriptableObject
 
  class ScriptsManager {
-    private lateinit var responder: Function
+    private  var responder: Function?=null
     private lateinit var execScope: ScriptableObject
-    private lateinit var onStartCompile: Function
+    private  var onStartCompile: Function?=null
     private var optimization: Int = 0
-    private var scope: ScriptableObject? = null
+    private lateinit var scope: ScriptableObject
     var onCreate: Function? = null
         private set
     var onStop: Function? = null
@@ -28,7 +28,7 @@ import org.mozilla.javascript.ScriptableObject
 
     constructor() {}
 
-    fun setResponder(responder: Function): ScriptsManager {
+    fun setResponder(responder: Function?): ScriptsManager {
         this.responder = responder
         return this
     }
@@ -38,7 +38,7 @@ import org.mozilla.javascript.ScriptableObject
         return this
     }
 
-    fun setOnStartCompile(onStartCompile: Function): ScriptsManager {
+    fun setOnStartCompile(onStartCompile: Function?): ScriptsManager {
         this.onStartCompile = onStartCompile
         return this
     }
@@ -57,7 +57,7 @@ import org.mozilla.javascript.ScriptableObject
         return this
     }
 
-    fun setScriptActivity(onCreate: Function, onStop: Function, onResume: Function, onPause: Function): ScriptsManager {
+    fun setScriptActivity(onCreate: Function?, onStop: Function?, onResume: Function?, onPause: Function?): ScriptsManager {
         this.onCreate = onCreate
         this.onStop = onStop
         this.onResume = onResume
@@ -67,10 +67,10 @@ import org.mozilla.javascript.ScriptableObject
 fun getExecScope():ScriptableObject{
     return execScope
 }
-fun getOnStartCompile():Function{
+fun getOnStartCompile():Function?{
     return onStartCompile
 }
-     fun getResponder():Function{
+     fun getResponder():Function?{
          return responder
      }
      fun getOptimization():Int{

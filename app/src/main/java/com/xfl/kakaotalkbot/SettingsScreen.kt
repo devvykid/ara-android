@@ -1,35 +1,20 @@
 package com.xfl.kakaotalkbot
 
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.SeekBar
-import android.widget.Toast
-
+import android.widget.*
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdRequest.*
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-
 import java.io.File
-import java.util.ArrayList
-
-import com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR
-import com.google.android.gms.ads.AdRequest.ERROR_CODE_INVALID_REQUEST
-import com.google.android.gms.ads.AdRequest.ERROR_CODE_NETWORK_ERROR
-import com.google.android.gms.ads.AdRequest.ERROR_CODE_NO_FILL
+import java.util.*
 
 
 /**
@@ -70,7 +55,7 @@ class SettingsScreen : AppCompatActivity() {
         val chkOnDeleteBackup = findViewById<CheckBox>(R.id.chk_OnDeleteBackup)
         val chkIgnoreApiOff = findViewById<CheckBox>(R.id.chk_ignoreApiOff)
         val chkAllowBridge = findViewById<CheckBox>(R.id.chk_allowBridge)
-        val chkResetSession = findViewById<CheckBox>(R.id.chk_resetSession)
+
         val chkSpecificLog = findViewById<CheckBox>(R.id.chk_specificLog)
         val chkUseUnifiedParams = findViewById<CheckBox>(R.id.chk_useUnifiedParams)
         val optimization = findViewById<SeekBar>(R.id.optimization)
@@ -87,7 +72,7 @@ class SettingsScreen : AppCompatActivity() {
         chkOnDeleteBackup.isChecked = pref.getBoolean("onDeleteBackup", true)
         chkIgnoreApiOff.isChecked = pref.getBoolean("ignoreApiOff", false)
         chkAllowBridge.isChecked = pref.getBoolean("allowBridge", true)
-        chkResetSession.isChecked = pref.getBoolean("resetSession", false)
+
         chkSpecificLog.isChecked = pref.getBoolean("specificLog", false)
         chkUseUnifiedParams.isChecked = pref.getBoolean("useUnifiedParams", false)
         optimization.progress = pref.getInt("optimization", -2) + 1
@@ -108,7 +93,7 @@ class SettingsScreen : AppCompatActivity() {
             pref.edit().putBoolean("onDeleteBackup", chkOnDeleteBackup.isChecked).apply()
             pref.edit().putBoolean("ignoreApiOff", chkIgnoreApiOff.isChecked).apply()
             pref.edit().putBoolean("allowBridge", chkAllowBridge.isChecked).apply()
-            pref.edit().putBoolean("resetSession", chkResetSession.isChecked).apply()
+
             pref.edit().putBoolean("specificLog", chkSpecificLog.isChecked).apply()
             pref.edit().putBoolean("useUnifiedParams", chkUseUnifiedParams.isChecked).apply()
             pref.edit().putInt("optimization", optimization.progress - 1).apply()

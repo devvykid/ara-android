@@ -5,7 +5,6 @@ import android.app.Notification
 import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.service.notification.NotificationListenerService
@@ -16,19 +15,14 @@ import android.text.Spanned
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-
 import com.faendir.rhino_android.RhinoAndroidHelper
-
 import org.mozilla.javascript.Context
 import org.mozilla.javascript.Function
 import org.mozilla.javascript.ImporterTopLevel
-import org.mozilla.javascript.Script
 import org.mozilla.javascript.ScriptableObject
-
 import java.io.File
 import java.io.FileReader
-import java.util.Date
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by XFL on 2/19/2018.
@@ -127,8 +121,7 @@ class NotificationListener : NotificationListenerService() {
                     var msg: String
 
 
-                    var isGroupChat = extras.get("android.text") is SpannableString
-
+                    var isGroupChat:Boolean=extras.get("android.text")is SpannableString
 
                     if (Build.VERSION.SDK_INT > 23) {
                         try {
@@ -162,14 +155,37 @@ class NotificationListener : NotificationListenerService() {
                         }
 
                     } else {
-                        room = extras.getString("android.title")
-                        if (extras.get("android.text") !is String) {
-                            val html = Html.toHtml(extras.get("android.text") as Spanned)
-                            sender = Html.fromHtml(html.split("<b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].split("</b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]).toString()
-                            msg = Html.fromHtml(html.split("</b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].split("</p>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0].substring(1)).toString()
-                        } else {
-                            sender = room
-                            msg = extras.get("android.text")!!.toString()
+                        var katalk_ver=0
+                        var no_katalk=false
+                        try{
+                            katalk_ver=MainApplication.context!!.packageManager.getPackageInfo("com.kakao.talk",0).versionCode
+                        }catch(thr:Throwable){
+                            no_katalk=true
+                        }
+                        if(no_katalk||packName!="com.kakao.talk"||katalk_ver<1907310){
+                            room = extras.getString("android.title")
+
+                            if (extras.get("android.text") !is String) {
+
+                                val html = Html.toHtml(extras.get("android.text") as Spanned)
+
+                                sender = Html.fromHtml(html.split("<b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].split("</b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]).toString()
+
+                                msg = Html.fromHtml(html.split("</b>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].split("</p>".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0].substring(1)).toString()
+
+                            } else {
+
+                                sender = room
+
+                                msg = extras.get("android.text")!!.toString()
+
+                            }
+                        }else {
+                            room = extras.getString("android.subText")
+                            sender = extras.getString("android.title")
+                            msg = extras.getString("android.text")
+                            isGroupChat = room != null
+                            if (room == null) room = sender
                         }
                     }
                     Log.d("room", room)
@@ -301,9 +317,9 @@ class NotificationListener : NotificationListenerService() {
                 MainApplication.context!!.getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply()
                 if (responder != null) {
                     if (MainApplication.context!!.getSharedPreferences("settings$scriptName", 0).getBoolean("useUnifiedParams", false)) {
-                        responder.call(parseContext, execScope, execScope, arrayOf(ResponseParameters(room!!, msg, sender, isGroupChat, SessionCacheReplier(room), imageDB, packName)))
+                        responder.call(parseContext, execScope, execScope, arrayOf<Any>(ResponseParameters(room!!, msg, sender, isGroupChat, SessionCacheReplier(room), imageDB, packName)))
                     } else {
-                        responder.call(parseContext, execScope, execScope, arrayOf(room, msg, sender, isGroupChat, SessionCacheReplier(room!!), imageDB, packName))
+                        responder.call(parseContext, execScope, execScope, arrayOf(room!!, msg, sender, isGroupChat, SessionCacheReplier(room), imageDB, packName))
                     }
                 }
 
@@ -372,7 +388,7 @@ class NotificationListener : NotificationListenerService() {
             val responder: Function?
 
 
-            com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compileStart))
+            com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compileStart)+": $scriptName")
 
             val parseContext: Context
             try {
@@ -390,13 +406,13 @@ class NotificationListener : NotificationListenerService() {
 
             if (container[scriptName] != null) {
                 if (container[scriptName]!!.getOnStartCompile() != null) {
-                    container[scriptName]!!.getOnStartCompile().call(parseContext, execScope, execScope, arrayOf())
+                    container[scriptName]!!.getOnStartCompile()!!.call(parseContext, execScope, execScope, arrayOf<Any>())
                 }
 
             }
 
             System.gc()
-            if (MainApplication.context!!.getSharedPreferences(PREF_SETTINGS, 0).getBoolean("resetSession", false))
+            if (MainApplication.context!!.getSharedPreferences("publicSettings", 0).getBoolean("resetSession", false))
                 resetSession()
             val scope: ScriptableObject
 
@@ -452,16 +468,16 @@ class NotificationListener : NotificationListenerService() {
                 }
                 container[scriptName] = ScriptsManager()
                         .setExecScope(execScope!!)
-                        .setResponder(responder!!)
-                        .setOnStartCompile(onStartCompile!!)
+                        .setResponder(responder)
+                        .setOnStartCompile(onStartCompile)
                         .setOptimization(optimization)
                         .setScope(scope)
-                        .setScriptActivity(onCreate!!, onStop!!, onResume!!, onPause!!)
+                        .setScriptActivity(onCreate, onStop, onResume, onPause)
 
                 Api.scriptName = scriptName
                 Context.exit()
 
-                com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compiled))
+                com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compiled)+": $scriptName")
 
                 isCompiling[scriptName] = false
             } catch (e: Throwable) {

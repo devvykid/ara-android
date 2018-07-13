@@ -3,11 +3,8 @@ package com.xfl.kakaotalkbot
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-
 import com.faendir.rhino_android.RhinoAndroidHelper
-
 import org.mozilla.javascript.ScriptableObject
-import java.util.*
 
 class ScriptActivity : AppCompatActivity() {
     private lateinit var parseCtx: org.mozilla.javascript.Context
@@ -35,7 +32,7 @@ class ScriptActivity : AppCompatActivity() {
             parseCtx.optimizationLevel = manager!!.getOptimization()
             excScope = manager!!.getExecScope()
 
-            manager!!.onCreate!!.call(parseCtx, excScope, excScope, arrayOf(savedInstanceState, this))
+            manager!!.onCreate!!.call(parseCtx, excScope, excScope, arrayOf(savedInstanceState!!, this))
         } catch (e: Throwable) {
             Log.error("onCreate Error(" + scriptName + "):" + e.message, true)
         }

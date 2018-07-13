@@ -8,22 +8,28 @@ import java.io.ByteArrayOutputStream
 class ImageDB(bitmap: Bitmap) {
     private var profilePic: Bitmap? = null
 
-    val profileImage: String
-        get() {
-            if (profilePic == null) return "[[NO_PROFILE_PICTURE]]"
-            val byteArrayOutputStream = ByteArrayOutputStream()
 
-            profilePic!!.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-            val byteArray = byteArrayOutputStream.toByteArray()
-            try {
-                byteArrayOutputStream.close()
-            } catch (e: Throwable) {
-                MainApplication.reportInternalError(e)
-            }
+    fun getProfileImage():String{
+         return getProfileBase64()
+    }
+    fun getProfileBase64():String{
+        if (profilePic == null) return "[[NO_PROFILE_PICTURE]]"
+        val byteArrayOutputStream = ByteArrayOutputStream()
 
-            return Base64.encodeToString(byteArray, Base64.DEFAULT)
+        profilePic!!.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        try {
+            byteArrayOutputStream.close()
+        } catch (e: Throwable) {
+            MainApplication.reportInternalError(e)
         }
 
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+    val profileBitmap:Bitmap?
+    get(){
+        return profilePic
+    }
     val image: String?
         get() = null
 

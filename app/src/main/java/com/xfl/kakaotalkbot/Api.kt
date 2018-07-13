@@ -4,19 +4,17 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.os.Environment
 import android.view.View
 import android.widget.Toast
-
 import com.faendir.rhino_android.RhinoAndroidHelper
-
 import org.json.JSONObject
 import org.mozilla.javascript.Function
 import org.mozilla.javascript.Scriptable
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.annotations.JSStaticFunction
-
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.File
@@ -24,9 +22,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
-import java.util.ArrayList
-
-import android.content.Context.NOTIFICATION_SERVICE
+import java.util.*
 
 /**
  * Created by XFL on 2/20/2018.
@@ -45,13 +41,16 @@ class Api : ScriptableObject() {
 
 
         val rootView: View
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = NotificationListener.rootView
 
         val context: Context
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() = MainApplication.context!!
 
+        @JvmStatic
         @JSStaticFunction
         fun UIThread(function: org.mozilla.javascript.Function, onComplete: Function?) {
             val parseCtx = RhinoAndroidHelper().enterContext()
@@ -87,17 +86,20 @@ class Api : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun showToast(str: String, length: Int) {
             NotificationListener.UIHandler!!.post { Toast.makeText(MainApplication.context, str, length).show() }
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun canReply(room: String): Boolean {
             return NotificationListener.hasSession(room) || room == NotificationListener.debugRoom
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun replyRoom(room: String, str: String, hideToast: Boolean): Boolean {
             try {
@@ -111,6 +113,7 @@ class Api : ScriptableObject() {
             return false
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun off(scriptName: String): Boolean {
 
@@ -129,6 +132,7 @@ class Api : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun on(scriptName: String): Boolean {
 
@@ -145,18 +149,21 @@ class Api : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun isOn(scriptName: String): Boolean {
             return context.getSharedPreferences("bot$scriptName", 0).getBoolean("on", false)
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun isCompiled(scriptName: String): Boolean {
             return NotificationListener.container[scriptName] != null
         }
 
         val scriptNames: Scriptable
-            @JSStaticFunction
+            @JvmStatic
+        @JSStaticFunction
             get() {
                 val basePath = File(Environment.getExternalStorageDirectory().toString() + File.separator + "katalkbot")
                 basePath.mkdir()
@@ -171,7 +178,8 @@ class Api : ScriptableObject() {
                 return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope!!, list.toTypedArray())
 
             }
-        /*@JSStaticFunction
+        /*@kotlin.jvm.JvmStatic
+        @JSStaticFunction
     public static Scriptable getScriptFiles(){
 
         File basePath = new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot");
@@ -189,6 +197,7 @@ class Api : ScriptableObject() {
     }*/
 
 
+        @JvmStatic
         @JSStaticFunction
         fun makeNoti(title: String, content: String, id: Int): Boolean {
 
@@ -230,6 +239,8 @@ class Api : ScriptableObject() {
             return true
         }
 
+
+        @JvmStatic
         @JSStaticFunction
         fun prepare(scriptName: String): Int {
             if (Api.isCompiled(scriptName)) return 2
@@ -239,11 +250,13 @@ class Api : ScriptableObject() {
                 0
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun compile(scriptName: String): Boolean {
             return reload(scriptName)
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun unload(scriptName: String): Boolean {
             if (scriptName == "undefined") return false
@@ -252,6 +265,7 @@ class Api : ScriptableObject() {
             return true
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun reload(scriptName: String): Boolean {
 
@@ -278,11 +292,13 @@ class Api : ScriptableObject() {
 
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun papagoTranslate(source: String, target: String, str: String, errorToString: Boolean?): String? {
             return doPapagoTranslate(source, target, str, errorToString)
         }
 
+        @JvmStatic
         @JSStaticFunction
         private fun doPapagoTranslate(source: String, target: String, str: String, errorToString: Boolean?): String? {
 
@@ -345,6 +361,7 @@ class Api : ScriptableObject() {
             return res
         }
 
+        @JvmStatic
         @JSStaticFunction
         fun gc() {
             System.gc()
