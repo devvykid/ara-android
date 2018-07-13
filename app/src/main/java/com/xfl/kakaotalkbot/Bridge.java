@@ -14,13 +14,13 @@ public class Bridge extends ScriptableObject {
         if (!isAllowed(scriptName)) {
             return null;
         }
-        if (NotificationListener.container.get(scriptName) == null) {
+        if (NotificationListener.Companion.getContainer().get(scriptName) == null) {
             //Context.reportError("java.lang.NullPointerException: The script '"+scriptName+"' is not compiled yet");
 
             return null;
         }
         try {
-            return NotificationListener.container.get(scriptName).getScope();
+            return NotificationListener.Companion.getContainer().get(scriptName).getScope();
         } catch (Throwable e) {
             Context.reportError(e.toString());
             return null;

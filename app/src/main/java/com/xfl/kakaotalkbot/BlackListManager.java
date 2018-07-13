@@ -29,7 +29,7 @@ public class BlackListManager extends AppCompatActivity {
             public void onClick(View view) {
                 ctx.getSharedPreferences("bot", 0).edit().putString("banRoom" + scriptName, banRoom.getText().toString()).apply();
                 ctx.getSharedPreferences("bot", 0).edit().putString("banName" + scriptName, banName.getText().toString()).apply();
-                NotificationListener.initializeBanList(scriptName);
+                NotificationListener.Companion.initializeBanList(scriptName);
                 finish();
             }
         });

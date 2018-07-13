@@ -147,7 +147,7 @@ public class CodePlaygroundScreen extends AppCompatActivity {
 
     private void appendReply(final String str) {
 
-        NotificationListener.UIHandler.post(new Runnable() {
+        NotificationListener.Companion.getUIHandler().post(new Runnable() {
             @Override
             public void run() {
                 messageList.add(new UserMessage(true, str, ""));

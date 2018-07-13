@@ -56,10 +56,10 @@ public final class Api extends ScriptableObject {
         final ScriptableObject excScope;
 
         //parseCtx.setOptimizationLevel(NotificationListener.container.get(scriptName).optimization);
-        excScope = NotificationListener.execScope;
+        excScope = NotificationListener.Companion.getExecScope();
 
 
-        NotificationListener.UIHandler.post(new Runnable() {
+        NotificationListener.Companion.getUIHandler().post(new Runnable() {
             @Override
             public void run() {
                 org.mozilla.javascript.Context.enter();
@@ -77,7 +77,7 @@ public final class Api extends ScriptableObject {
                     if (onComplete != null)
                         onComplete.call(parseCtx, excScope, excScope, new Object[]{error, result});
                 } catch (Throwable e) {
-                    Log.error(e.toString(), true);
+                    Log.Companion.error(e.toString(), true);
                 }
                 org.mozilla.javascript.Context.exit();
 
@@ -89,7 +89,7 @@ public final class Api extends ScriptableObject {
 
     @JSStaticFunction
     public static void showToast(final String str, final int length) {
-        NotificationListener.UIHandler.post(new Runnable() {
+        NotificationListener.Companion.getUIHandler().post(new Runnable() {
 
             @Override
             public void run() {
@@ -102,7 +102,7 @@ public final class Api extends ScriptableObject {
 
     @JSStaticFunction
     public static boolean canReply(String room) {
-        return NotificationListener.hasSession(room) || room.equals(NotificationListener.debugRoom);
+        return NotificationListener.Companion.hasSession(room) || room.equals(NotificationListener.Companion.getDebugRoom());
     }
 
     @JSStaticFunction
@@ -121,10 +121,10 @@ public final class Api extends ScriptableObject {
     public static boolean off(final String scriptName) {
 
         if (scriptName.equals("undefined")) {
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.putOnAll(false);
+                    ScriptSelectActivity.Companion.putOnAll(false);
 
                 }
             });
@@ -135,10 +135,10 @@ public final class Api extends ScriptableObject {
             }
             if (MainApplication.getContext().getSharedPreferences("settings" + scriptName, 0).getBoolean("ignoreApiOff", false))
                 return false;
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.putOn(scriptName, false);
+                    ScriptSelectActivity.Companion.putOn(scriptName, false);
                 }
             });
         }
@@ -150,10 +150,10 @@ public final class Api extends ScriptableObject {
     public static boolean on(final String scriptName) {
 
         if (scriptName.equals("undefined")) {
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.putOnAll(true);
+                    ScriptSelectActivity.Companion.putOnAll(true);
 
                 }
             });
@@ -162,10 +162,10 @@ public final class Api extends ScriptableObject {
             if (!(new File(Environment.getExternalStorageDirectory() + File.separator + "katalkbot" + File.separator + scriptName).exists())) {
                 return false;
             }
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.putOn(scriptName, true);
+                    ScriptSelectActivity.Companion.putOn(scriptName, true);
                 }
             });
         }
@@ -180,7 +180,7 @@ public final class Api extends ScriptableObject {
 
     @JSStaticFunction
     public static boolean isCompiled(final String scriptName) {
-        return NotificationListener.container.get(scriptName) != null;
+        return NotificationListener.Companion.getContainer().get(scriptName) != null;
     }
 
     @JSStaticFunction
@@ -195,7 +195,7 @@ public final class Api extends ScriptableObject {
             }
         }
 
-        return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope, list.toArray());
+        return org.mozilla.javascript.Context.enter().newArray(NotificationListener.Companion.getExecScope(), list.toArray());
 
     }
     /*@JSStaticFunction
@@ -222,7 +222,7 @@ public final class Api extends ScriptableObject {
         final NotificationManager notificationManager =
                 (NotificationManager) MainApplication.getContext().getSystemService(NOTIFICATION_SERVICE);
         try {
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
                     Notification.Builder noti = new Notification.Builder(MainApplication.getContext());
@@ -276,8 +276,8 @@ public final class Api extends ScriptableObject {
     @JSStaticFunction
     public static boolean unload(final String scriptName){
         if(scriptName.equals("undefined"))return false;
-        if(!NotificationListener.container.containsKey(scriptName))return false;
-        NotificationListener.container.remove(scriptName);
+        if(!NotificationListener.Companion.getContainer().containsKey(scriptName))return false;
+        NotificationListener.Companion.getContainer().remove(scriptName);
         return true;
     }
     @JSStaticFunction
@@ -286,7 +286,7 @@ public final class Api extends ScriptableObject {
 
         if (scriptName.equals("undefined")) {
 
-            NotificationListener.initializeAll(false);
+            NotificationListener.Companion.initializeAll(false);
 
 
         } else {
@@ -295,19 +295,19 @@ public final class Api extends ScriptableObject {
             }
 
 
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.refreshProgressBar(scriptName, true, true);
+                    ScriptSelectActivity.Companion.refreshProgressBar(scriptName, true, true);
 
                 }
             });
-            final boolean bool = NotificationListener.initializeScript(scriptName, false);
+            final boolean bool = NotificationListener.Companion.initializeScript(scriptName, false);
 
-            NotificationListener.UIHandler.post(new Runnable() {
+            NotificationListener.Companion.getUIHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ScriptSelectActivity.refreshProgressBar(scriptName, false, bool);
+                    ScriptSelectActivity.Companion.refreshProgressBar(scriptName, false, bool);
 
                 }
             });
