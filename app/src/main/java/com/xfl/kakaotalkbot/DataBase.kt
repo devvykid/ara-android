@@ -64,7 +64,8 @@ class DataBase : ScriptableObject() {
             try {
                 return FileManager.read(File(dbDir,fileName))
             } catch (e: IOException) {
-                MainApplication.reportInternalError(e)
+                //MainApplication.reportInternalError(e)
+org.mozilla.javascript.Context.reportError(e.toString())
             }
 
             return null
