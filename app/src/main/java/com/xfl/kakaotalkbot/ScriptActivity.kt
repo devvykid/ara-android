@@ -32,7 +32,7 @@ class ScriptActivity : AppCompatActivity() {
             parseCtx.optimizationLevel = manager!!.getOptimization()
             excScope = manager!!.getExecScope()
 
-            manager!!.onCreate!!.call(parseCtx, excScope, excScope, arrayOf(savedInstanceState!!, this))
+            manager!!.onCreate!!.call(parseCtx, excScope, excScope, arrayOf(savedInstanceState, this))
         } catch (e: Throwable) {
             Log.error("onCreate Error(" + scriptName + "):" + e.message, true)
         }

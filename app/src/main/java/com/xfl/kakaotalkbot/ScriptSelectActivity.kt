@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
 import android.view.*
 import android.widget.*
 import java.io.File
@@ -53,71 +54,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             return bool
         }
 
-    private fun getUpdateMessage(lastVersion: Int, version: Int): String {
-        val msg = ArrayList<String>()
-        //-21
-        msg.add(0, "업데이트 다이얼로그 추가\nresponse 함수에 인자 추가: packageName\nDataBase.getDataBase에서 한줄이 더 추가되는 오류 해결\nApi.canReply(String room)을 통해 replyRoom 사용가능 여부 확인 가능")
-        msg.add(1, "블랙리스트가 작동하지 않는 오류 해결")
-        msg.add(2, "상세로그 간소화\n튕기는 문제 해결")
-        msg.add(3, "최적화, 오류수정")
-        msg.add(4, "디버그 모드 레이아웃 개선과 동시에, 개발자의 코딩 실력 부족으로(...) 디버그 모드를 보고있지 않을때 Api.replyRoom으로 디버그 모드에 메시지를 작성할 수 없게 되었습니다.\n" +
-                "열심히 공부해서(?) 빠른 시일 내에 고치도록 하겠습니다(...)\n" +
-                "대신, 꾹 눌러 복사하기를 추가하였고, 하이퍼링크 등을 지원하게 되었습니다.")
-        msg.add(5, "Bridge.getScopeOf(\"스크립트이름.js\")를 통해 다른 스크립트의 전역변수/함수 등에 접근할 수 있습니다.\n" +
-                "예) Bridge.getScopeOf(\"멋진메신저봇.js\").a=1\n" +
-                "또한, 설정에서 Bridge에 의한 접근을 금지할 수 있습니다.\n" +
-                "Bridge.isAllowed(\"스크립트이름.js\")를 통해 접근이 허용되어있는지 확인할 수 있습니다.\n\n" +
-                "파일읽기 권한이 작동도중 사라졌을때 앱이 튕기는 문제 해결\n" +
-                "Api.replyRoom의 토스트 문제 해결")
 
-        msg.add(6, "[긴급패치]Api.replyRoom 반환값 오류 해결")
-        msg.add(7, "최초 컴파일이 여러번 되는 문제 해결")
-        msg.add(8, "Api.isOn(\"스크립트이름.js\")와 Utils.parse(\"주소\")가 추가됨. Utils.parse는 jsoup로 get한 결과를 리턴함\n" +
-                "명칭 혼동을 막기 위해, Api.reload와 같은 기능을 하는 Api.compile추가\n" +
-                "Api.getRootView()추가\n" +
-                "Api.isCompiled(\"스크립트이름.js\")추가\n" +
-                "Bridge.getScopeOf가 없거나 컴파일 되지 않은 스크립트에 접근하였을 경우 null반환")
-        msg.add(9, "메모리 문제 해결\n공용 설정 추가\n(공용 설정)HTML 파싱 제한시간 설정 추가")
-        msg.add(10, "Api.prepare(\"스크립트이름.js\"): 스크립트가 단 한번도 컴파일되지 않았을경우만 컴파일합니다.\n컴파일 된 적이 있을경우 2, 컴파일에 성공했을경우 1, 스크립트가 존재하지 않을경우 0을 반환하고, 컴파일에 실패했을경우 에러를 throw합니다.\n" +
-                "이제 Api.reload 또는 Api.compile이 컴파일 에러가 발생했을경우 에러를 throw합니다.\n" +
-                "이제 Utils.parse 및 Utils.getWebText에서 콘텐츠 타입을 무시합니다. (즉, 인터넷에 있는 .js파일 등을 불러올 수 있습니다.)")
-        msg.add(11, "Api.papagoTranslate에서 에러를 반환하지 않고 이전 번역 결과를 반환하는 오류를 수정했습니다. 이제 4번째 인자를 true로 하면 에러를 String으로 반환하고, false로 하면 throw합니다." +
-                "\n디버그화면과 샌드박스화면에 기록 지우기 버튼이 추가되었습니다." +
-                "\n공용설정에 자동컴파일 관련 설정이 추가되었습니다.")
-        msg.add(12, "자바스크립트 버전을 ES6으로 변경했습니다.\n이제 앱 내부 오류를 따로 구분하여 출력합니다.\n드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)\n네이버 카페가 개설되었습니다.")
-        msg.add(13, "컴파일이 되지 않았을때 디버그 화면에 메시지 전송 시 튕기는 오류를 수정했습니다.\n이제 스크립트에 response함수가 없어도 오류가 나지 않습니다. 대신, 컴파일 후 스위치를 켤 때 경고가 표시됩니다.")
-        msg.add(14, "약간의 최적화를 적용했습니다.\n일부 오류를 수정했습니다.\nreplier.reply(방,메시지)가 추가되었습니다.\n스크립트별 액티비티가 추가되었습니다.(구현 방법 예시는 새 스크립트를 만들어서 볼 수 있습니다.)")
-        msg.add(15, "봇 이름의 컴파일 상태 색이 잘못 지정되는 문제를 해결했습니다.\n" +
-                "디버그룸에서 튕기는 오류를 해결했습니다.\n" +
-                "디버그룸 메시지의 최대 가로 크기를 확장했습니다.\n" +
-                "약간의 최적화를 적용했습니다.\n" +
-                "전체 봇 활성화/비활성화 버튼을 추가했습니다.\n" +
-                "UI를 개선했습니다.\n" +
-                "블랙리스트가 스크립트별로 구분되지 않는 문제를 해결했습니다.")
-        msg.add(16, "스크립트 삭제 기능을 추가했습니다.\n" +
-                "통합 매개변수 기능을 추가했습니다. 이 기능을 체크하실 경우 response함수를 room,msg등의 인자들을 하나의 객체로 모아 호출합니다.\n" +
-                "약간의 최적화를 적용했습니다.\n" +
-                "일부 UI를 개선했습니다.")
-        msg.add(17, "약간의 안정화를 적용했습니다.")
-        msg.add(18, "활성화 스위치가 작동하지 않는 문제를 해결했습니다.")
-        msg.add(19, "이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)")
-        msg.add(20, "DB가 없을때 DataBase.removeDataBase를 호출하면 발생하는 오류를 해결했습니다.\n Api.UIThread가 작동하지 않는 오류를 해결했습니다.\nDevice객체를 추가했습니다.\n봇이 켜진 상태로 설정에서 스크립트 삭제시 봇이 계속 구동되는 문제를 해결했습니다. 단, 다른 파일 탐색기에서 삭제하는것은 주의해주세요.\nApi.unload(\"스크립트이름.js\"): 해당 스크립트의 컴파일 상태를 제거합니다.")
-        msg.add(21, "Device에 파일읽기쓰기를 넣으면 추후에 보안 관련 분류가 어려워질 것 같아 FileStream.read, FileStream.write로 대체했습니다.\nDevice.getBatteryStatus를 수정했습니다.\nDevice.getBatteryIntent를 추가했습니다.\n잦은 업데이트 죄송합니다. 업데이트에 좀 더 신중해지도록 하겠습니다.")
-        msg.add(22,"")
-        msg.add(23,"추후 구현의 용이성을 도모하여 코틀린으로 전환했습니다.\n\n안드로이드 누가 미만에서 카카오톡 최신버전의 알림 수신 중 방 이름이 잘못 수신되는 오류를 해결했습니다.\n카카오톡 구버전과의 연동성도 고려했지만, 카카오톡을 업데이트하는것을 권장합니다.\n\n컴파일 시작/완료 로그에 스크립트 이름을 명시합니다.\n\nImageDB.getProfileBitmap()이 추가되었습니다.\n\n방 세션 초기화 옵션을 공용설정으로 옮겼습니다.")
-        msg.add(24,"Api.UIThread오류를 해결했습니다.")
-        msg.add(25,"디버그 룸이 안되는 현상, 없는 DB에 대해 getDataBase요청시 내부 오류가 발생하는 현상 등 중대한 오류를 해결했습니다.\n디버그룸의 메시지 입력창이 세로로 확장되도록 변경했습니다.")
-        val result = StringBuilder()
-        for (i in lastVersion + 1 - 21..version - 21) {
-            if (i > msg.size - 1) break
-            result.append(msg[i]).append("\n\n")
-
-
-        }
-
-
-        return result.toString()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +65,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             val pInfo = this.packageManager.getPackageInfo(packageName, 0)
             val version = pInfo.versionCode
             val lastVersion = getSharedPreferences("versionCode", 0).getInt("versionCode", 20)
+            getSharedPreferences("lastVersionCode",0).edit().putInt("lastVersionCode",lastVersion).apply()
             if (lastVersion < version) {
                 val ad = AlertDialog.Builder(this@ScriptSelectActivity)
 
@@ -143,7 +81,8 @@ class ScriptSelectActivity : AppCompatActivity() {
                 scroll.layoutParams = params
 
                 val txt = TextView(this)
-                txt.text = getUpdateMessage(lastVersion, version)
+
+                txt.text = Html.fromHtml(getUpdateMessage(lastVersion, version))
                 scroll.addView(txt)
                 container.addView(scroll)
                 ad.setView(container)
@@ -482,7 +421,73 @@ class ScriptSelectActivity : AppCompatActivity() {
     companion object {
         private val switchMap = HashMap<String, Switch>()
         private val progressBarMap = HashMap<String, ProgressBar>()
+        fun getUpdateMessage(lastVersion: Int, version: Int): String? {
+            val msg = ArrayList<String>()
+            //-21
+            msg.add(0, "업데이트 다이얼로그 추가<br />response 함수에 인자 추가: packageName<br />DataBase.getDataBase에서 한줄이 더 추가되는 오류 해결<br />Api.canReply(String room)을 통해 replyRoom 사용가능 여부 확인 가능")
+            msg.add(1, "블랙리스트가 작동하지 않는 오류 해결")
+            msg.add(2, "상세로그 간소화<br />튕기는 문제 해결")
+            msg.add(3, "최적화, 오류수정")
+            msg.add(4, "디버그 모드 레이아웃 개선과 동시에, 개발자의 코딩 실력 부족으로(...) 디버그 모드를 보고있지 않을때 Api.replyRoom으로 디버그 모드에 메시지를 작성할 수 없게 되었습니다.<br />" +
+                    "열심히 공부해서(?) 빠른 시일 내에 고치도록 하겠습니다(...)<br />" +
+                    "대신, 꾹 눌러 복사하기를 추가하였고, 하이퍼링크 등을 지원하게 되었습니다.")
+            msg.add(5, "Bridge.getScopeOf(\"스크립트이름.js\")를 통해 다른 스크립트의 전역변수/함수 등에 접근할 수 있습니다.<br />" +
+                    "예) Bridge.getScopeOf(\"멋진메신저봇.js\").a=1<br />" +
+                    "또한, 설정에서 Bridge에 의한 접근을 금지할 수 있습니다.<br />" +
+                    "Bridge.isAllowed(\"스크립트이름.js\")를 통해 접근이 허용되어있는지 확인할 수 있습니다.<br />" +
+                    "파일읽기 권한이 작동도중 사라졌을때 앱이 튕기는 문제 해결<br />" +
+                    "Api.replyRoom의 토스트 문제 해결")
 
+            msg.add(6, "[긴급패치]Api.replyRoom 반환값 오류 해결")
+            msg.add(7, "최초 컴파일이 여러번 되는 문제 해결")
+            msg.add(8, "Api.isOn(\"스크립트이름.js\")와 Utils.parse(\"주소\")가 추가됨. Utils.parse는 jsoup로 get한 결과를 리턴함<br />" +
+                    "명칭 혼동을 막기 위해, Api.reload와 같은 기능을 하는 Api.compile추가<br />" +
+                    "Api.getRootView()추가<br />" +
+                    "Api.isCompiled(\"스크립트이름.js\")추가<br />" +
+                    "Bridge.getScopeOf가 없거나 컴파일 되지 않은 스크립트에 접근하였을 경우 null반환")
+            msg.add(9, "메모리 문제 해결<br />공용 설정 추가<br />(공용 설정)HTML 파싱 제한시간 설정 추가")
+            msg.add(10, "Api.prepare(\"스크립트이름.js\"): 스크립트가 단 한번도 컴파일되지 않았을경우만 컴파일합니다.<br />컴파일 된 적이 있을경우 2, 컴파일에 성공했을경우 1, 스크립트가 존재하지 않을경우 0을 반환하고, 컴파일에 실패했을경우 에러를 throw합니다.<br />" +
+                    "이제 Api.reload 또는 Api.compile이 컴파일 에러가 발생했을경우 에러를 throw합니다.<br />" +
+                    "이제 Utils.parse 및 Utils.getWebText에서 콘텐츠 타입을 무시합니다. (즉, 인터넷에 있는 .js파일 등을 불러올 수 있습니다.)")
+            msg.add(11, "Api.papagoTranslate에서 에러를 반환하지 않고 이전 번역 결과를 반환하는 오류를 수정했습니다. 이제 4번째 인자를 true로 하면 에러를 String으로 반환하고, false로 하면 throw합니다." +
+                    "<br />디버그화면과 샌드박스화면에 기록 지우기 버튼이 추가되었습니다." +
+                    "<br />공용설정에 자동컴파일 관련 설정이 추가되었습니다.")
+            msg.add(12, "자바스크립트 버전을 ES6으로 변경했습니다.<br />이제 앱 내부 오류를 따로 구분하여 출력합니다.<br />드디어 디버그창, 샌드박스창의 쓰레드가 분리되어 랙이 없어졌을겁니다(?)<br />네이버 카페가 개설되었습니다.")
+            msg.add(13, "컴파일이 되지 않았을때 디버그 화면에 메시지 전송 시 튕기는 오류를 수정했습니다.<br />이제 스크립트에 response함수가 없어도 오류가 나지 않습니다. 대신, 컴파일 후 스위치를 켤 때 경고가 표시됩니다.")
+            msg.add(14, "약간의 최적화를 적용했습니다.<br />일부 오류를 수정했습니다.<br />replier.reply(방,메시지)가 추가되었습니다.<br />스크립트별 액티비티가 추가되었습니다.(구현 방법 예시는 새 스크립트를 만들어서 볼 수 있습니다.)")
+            msg.add(15, "봇 이름의 컴파일 상태 색이 잘못 지정되는 문제를 해결했습니다.<br />" +
+                    "디버그룸에서 튕기는 오류를 해결했습니다.<br />" +
+                    "디버그룸 메시지의 최대 가로 크기를 확장했습니다.<br />" +
+                    "약간의 최적화를 적용했습니다.<br />" +
+                    "전체 봇 활성화/비활성화 버튼을 추가했습니다.<br />" +
+                    "UI를 개선했습니다.<br />" +
+                    "블랙리스트가 스크립트별로 구분되지 않는 문제를 해결했습니다.")
+            msg.add(16, "<h3>2.89</h3> 스크립트 삭제 기능을 추가했습니다.<br />" +
+                    "통합 매개변수 기능을 추가했습니다. 이 기능을 체크하실 경우 response함수를 room,msg등의 인자들을 하나의 객체로 모아 호출합니다.<br />" +
+                    "약간의 최적화를 적용했습니다.<br />" +
+                    "일부 UI를 개선했습니다.")
+            msg.add(17, "<h3>2.9</h3> 약간의 안정화를 적용했습니다.")
+            msg.add(18, "<h3>2.91</h3> 활성화 스위치가 작동하지 않는 문제를 해결했습니다.")
+            msg.add(19, "<h3>2.92</h3> 이제 커스텀 패키지를 추가할 수 있습니다. (추가 방법: 공용 설정의 Custom Packages에 원하는 앱의 패키지명 입력후 적용 -> 스크립트 개별 설정에서 체크)")
+            msg.add(20, "<h3>2.93</h3> DB가 없을때 DataBase.removeDataBase를 호출하면 발생하는 오류를 해결했습니다.<br /> Api.UIThread가 작동하지 않는 오류를 해결했습니다.<br />Device객체를 추가했습니다.<br />봇이 켜진 상태로 설정에서 스크립트 삭제시 봇이 계속 구동되는 문제를 해결했습니다. 단, 다른 파일 탐색기에서 삭제하는것은 주의해주세요.<br />Api.unload(\"스크립트이름.js\"): 해당 스크립트의 컴파일 상태를 제거합니다.")
+            msg.add(21, "<h3>2.94</h3> Device에 파일읽기쓰기를 넣으면 추후에 보안 관련 분류가 어려워질 것 같아 FileStream.read, FileStream.write로 대체했습니다.<br />Device.getBatteryStatus를 수정했습니다.<br />Device.getBatteryIntent를 추가했습니다.<br />잦은 업데이트 죄송합니다. 업데이트에 좀 더 신중해지도록 하겠습니다.")
+            msg.add(22,"")
+            msg.add(23,"<h3>2.96</h3> 추후 구현의 용이성을 도모하여 코틀린으로 전환했습니다.<br />안드로이드 누가 미만에서 카카오톡 최신버전의 알림 수신 중 방 이름이 잘못 수신되는 오류를 해결했습니다.<br />카카오톡 구버전과의 연동성도 고려했지만, 카카오톡을 업데이트하는것을 권장합니다.<br />컴파일 시작/완료 로그에 스크립트 이름을 명시합니다.<br />ImageDB.getProfileBitmap()이 추가되었습니다.<br />방 세션 초기화 옵션을 공용설정으로 옮겼습니다.")
+            msg.add(24,"<h3>2.97</h3> Api.UIThread오류를 해결했습니다.")
+            msg.add(25,"<h3>2.98</h3> 디버그 룸이 안되는 현상, 없는 DB에 대해 getDataBase요청시 내부 오류가 발생하는 현상 등 중대한 오류를 해결했습니다.<br />디버그룸의 메시지 입력창이 세로로 확장되도록 변경했습니다.")
+            msg.add(26,"<h3>2.99</h3> 스크립트 액티비티 문제를 해결했습니다.")
+            val result = StringBuilder()
+            for (i in lastVersion + 1 - 21..version - 21) {
+                if (i > msg.size - 1) break
+                if(msg[i].isEmpty())continue
+                result.append(msg[i]).append("<br /><br />")
+
+
+            }
+
+
+            return result.toString()
+        }
         fun refreshProgressBar(scriptName: String, b: Boolean, changeColor: Boolean) {
             if (progressBarMap[scriptName] == null) return
             if (b) {

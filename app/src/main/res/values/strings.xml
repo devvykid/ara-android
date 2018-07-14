@@ -37,12 +37,13 @@
     You can reply the room by calling replier.reply(String) in response function\n\n
     Api.getContext() : get this application\'s context\n
     Api.reload() or Api.compile() : re-compile all the script\n
-    Api.reload("Script.js") or Api.compile("Script.js") : re-compile the script\n
-    Api.prepare("Script.js") : compile only if the script has never been compiled. throws error on compile failure, returns 0 when the script doesn\'t exists, returns 1 on compile success, and returns 2 if the script has ever been compiled.\n
+    Api.reload(\"Script.js\") or Api.compile(\"Script.js\") : re-compile the script\n
+    Api.prepare(\"Script.js\") : compile only if the script has never been compiled. throws error on compile failure, returns 0 when the script doesn\'t exists, returns 1 on compile success, and returns 2 if the script has ever been compiled.\n
     Api.off() : turn off your bot\n
     Api.replyRoom(room,message,hideToast=false) : send message to specific room\n
     Api.canReply(room) : check if bot can reply to room\n
-    Utils.getWebText(url:String) : get website\'s HTML\n\n
+    Utils.getWebText(url:String) : get website\'s HTML\n
+        Utils.parse(url:String) : return html parse data as Jsoup Document\n\n
     Log.error(string,viewToast=true) : add error log to log screen (if viewToast is true, it makes Toast popup)\n
     Log.info(string) : add info to log screen\n
     Log.debug(string) : add debug log to log screen\n\n
@@ -55,7 +56,7 @@
     DataBase.removeDataBase(String fileName) : delete file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
     Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
-    Device : contains device informations and provides file read/write\n
+    Device : contains device information.\n
           .getBuild()\n
           .getAndroidVersionCode()\n
           .getAndroidVersionName()\n
@@ -69,13 +70,14 @@
           .getBatteryVoltage()\n
           .getBatteryStatus()\n
           .getBatteryIntent()\n
-    FileStream
+
+        FileStream : Provides file read/write.\n
           .read(path): read file\n
           .write(path,content): write file\n
     \n
     \n
     Rhino, Mozilla\'s JavaScript Engine, is used in this application.\n
-    License: https://www.mozilla.org/en-US/MPL/2.0/</string>
+    License: https://www.mozilla.org/en-US/MPL/2.0</string>
     <string name="settings_kakaotalk_location_facebookMessenger" translatable="false">Facebook Messenger</string>
     <string name="settings_kakaotalk_location_Line" translatable="false">Line</string>
     <string name="script_autoloaded">Applied edited script to editor</string>

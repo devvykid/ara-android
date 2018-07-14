@@ -8,9 +8,11 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:fillViewport="true">
 
         <TextView
+            android:id="@+id/helpTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,6 +24,7 @@
             android:singleLine="false"
             android:text="@string/help"
             android:textColor="@android:color/black"
+            android:textIsSelectable="true"
             tools:layout_editor_absoluteX="75dp"
             tools:layout_editor_absoluteY="108dp" />
     </android.support.v4.widget.NestedScrollView>

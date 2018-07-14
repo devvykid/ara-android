@@ -38,13 +38,14 @@
     response関数でreplier.reply(String)を呼び出すことで返事するのができます\n\n
     Api.getContext() : このアプリのコンテキストを取得します\n
     Api.reload() or Api.compile() : すべてのスクリプトを再コンパイルします\n
-    Api.reload("Script.js") or Api.compile("Script.js") : スクリプトをコンパイルします\n
-    Api.prepare("Script.js") : compile only if the script has never been compiled. throws error on compile failure, returns 0 when the script doesn\'t exists, returns 1 on compile success, and returns 2 if the script has ever been compiled.\n
+    Api.reload(\"Script.js\") or Api.compile(\"Script.js\") : スクリプトをコンパイルします\n
+    Api.prepare(\"Script.js\") : compile only if the script has never been compiled. throws error on compile failure, returns 0 when the script doesn\'t exists, returns 1 on compile success, and returns 2 if the script has ever been compiled.\n
     Api.off() : ボットを電源を切ります\n
     Api.replyRoom(room,message) : 特定の部屋にメッセージを送ります\n
     Api.canReply(room) : 特定部屋に伝送可能かどうかを確認します\n\n
     Api.isDebugMode : デバッグモードかどうか\n\n
-    Utils.getWebText(url:String) : ウェブサイトのHTMLを取得します\n\n
+    Utils.getWebText(url:String) : ウェブサイトのHTMLを取得します\n
+        Utils.parse(url:String) : return html parse data as Jsoup Document\n\n
     Log.error(string,viewToast=true) : ログ画面にエラーログを登録します。もし、viewToastがtrueなら、トーストポップアップを表示します\n
     Log.info(string) : ログ画面に情報ログを登録します\n
     Log.debug(string) : ログ画面にデバッグログを登録します\n\n
@@ -57,7 +58,7 @@
     DataBase.removeDataBase(String fileName) : delete file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
     Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
-    Device : contains device informations and provides file read/write\n
+    Device : contains device information.\n
           .getBuild()\n
           .getAndroidVersionCode()\n
           .getAndroidVersionName()\n
@@ -71,13 +72,14 @@
           .getBatteryVoltage()\n
           .getBatteryStatus()\n
           .getBatteryIntent()\n
-    FileStream
-          .read(path): read file\n
-          .write(path,content): write file\n
+    -*FileStream*-
+        -**FileStream**- : Provides file read/write.\n
+          -**.read(path)**-: read file\n
+          -**.write(path,content)**-: write file\n
     \n
     \n
     MozillaのJavaScript Engine、Rhinoがこのアプリに使われました。\n
-    ライセンス: https://www.mozilla.org/en-US/MPL/2.0/</string>
+    ライセンス: https://www.mozilla.org/en-US/MPL/2.0</string>
     <string name="script_autoloaded">変更事項が適用されました</string>
     <string name="tutorial_openAnotherApp">長くターチして他のアプリで開く</string>
     <string name="tutorial_saveAndCompile">長くターチして保存＆コンパイル</string>

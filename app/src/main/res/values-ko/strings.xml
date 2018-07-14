@@ -34,33 +34,41 @@
     <string name="help">당신만의 카카오톡 봇을 만들어 보세요!\n
     시작하기 전에, 당신은 JavaScript로 코딩하는 방법을 아셔야 합니다.\n
     response 함수 내에서 replier.reply(String)을 호출하는것으로 답장할수 있습니다.\n\n
-    Api.getContext() : 앱의 컨텍스트를 가져옵니다\n
-    Api.reload() 또는 Api.compile(): 모든 스크립트를 재컴파일합니다.\n
-    Api.reload("스크립트.js") 또는 Api.compile("스크립트.js"): 특정 스크립트를 재컴파일합니다.\n
-    Api.prepare("스크립트.js") : 해당 스크립트가 한번도 컴파일 된 적이 없을 경우에만 컴파일합니다. 컴파일 실패시 에러를 throw하고,스크립트가 존재하지 않을 시 0, 컴파일 성공시 1, 한번이라도 컴파일 된 적이 있을 시 2를 반환합니다.\n
-    Api.off() : 모든 스크립트의 전원을 끕니다.\n
-    Api.off("스크립트.js") : 특정 스크립트의 전원을 끕니다.\n
-    Api.on() : 모든 스크립트의 전원을 켭니다.\n
-    Api.on("스크립트.js") : 특정 스크립트의 전원을 켭니다.\n
-    Api.isOn("스크립트.js") : 특정 스크립트의 전원 상태를 반환합니다.\n
-    Api.replyRoom(room,message,hideToast=false) : 특정한 방에 메시지를 보냅니다. hideToast가 true일 경우 방 세션이 없어도 토스트를 띄우지 않습니다.\n
-    Api.canReply(room) : 특정 방에 전송 가능한지 확인합니다.\n\n
-    Utils.getWebText(url:String) : 웹사이트의 HTML을 가져옵니다.\n\n
-    Log.error(string,viewToast=true) : 로그 화면에 에러 로그를 추가합니다. (viewToast가 true일경우, 토스트 팝업을 표시합니다.)\n
-    Log.info(string) : 로그 화면에 정보를 추가합니다.\n
-    Log.debug(string) : 로그 화면에 디버그 로그를 추가합니다.\n
+    -*Api*-
+    -**Api.getContext()**- : 앱의 컨텍스트를 가져옵니다\n
+    -**Api.reload()**- 또는 -**Api.compile()**- : 모든 스크립트를 재컴파일합니다.\n
+    -**Api.reload(\"스크립트.js\")**- 또는 -**Api.compile(\"스크립트.js\")**- : 특정 스크립트를 재컴파일합니다.\n
+    -**Api.prepare(\"스크립트.js\")**- : 해당 스크립트가 한번도 컴파일 된 적이 없을 경우에만 컴파일합니다. 컴파일 실패시 에러를 throw하고,스크립트가 존재하지 않을 시 0, 컴파일 성공시 1, 한번이라도 컴파일 된 적이 있을 시 2를 반환합니다.\n
+    -**Api.off()**- : 모든 스크립트의 전원을 끕니다.\n
+    -**Api.off(\"스크립트.js\")**- : 특정 스크립트의 전원을 끕니다.\n
+    -**Api.on()**- : 모든 스크립트의 전원을 켭니다.\n
+    -**Api.on(\"스크립트.js\")**- : 특정 스크립트의 전원을 켭니다.\n
+    -**Api.isOn(\"스크립트.js\")**- : 특정 스크립트의 전원 상태를 반환합니다.\n
+    -**Api.replyRoom(room,message,hideToast=false)**- : 특정한 방에 메시지를 보냅니다. hideToast가 true일 경우 방 세션이 없어도 토스트를 띄우지 않습니다.\n
+    -**Api.canReply(room)**- : 특정 방에 전송 가능한지 확인합니다.\n\n
+    -*Utils*-
+    -**Utils.getWebText(url:String)**- : 웹사이트의 HTML을 가져옵니다.\n
+        -**Utils.parse(url:String)**- : 웹사이트 파싱 결과를 Jsoup Document로 반환합니다.\n\n
+    -*Log*-
+    -**Log.error(string,viewToast=true)**- : 로그 화면에 에러 로그를 추가합니다. (viewToast가 true일경우, 토스트 팝업을 표시합니다.)\n
+    -**Log.info(string)**- : 로그 화면에 정보를 추가합니다.\n
+    -**Log.debug(string)**- : 로그 화면에 디버그 로그를 추가합니다.\n
     로그는 각각 Log.e,Log.i,Log.d로도 사용할 수 있습니다.\n\n
-    AppData.putInt/Boolean/String(String key,int/boolean/String data) : 앱 데이터에 데이터를 저장합니다.\n
-    AppData.getInt/Boolean/String() : 앱 데이터에서 데이터를 불러옵니다.\n
-    AppData.clear() : 앱 데이터를 초기화합니다.\n
-    AppData.remove(String key) : 앱 데이터에서 데이터를 지웁니다.\n
-    DataBase.setDataBase(String fileName,String content) : 파일에 데이터를 씁니다.\n
-    DataBase.getDataBase(String fileName) : 파일에서 데이터를 불러옵니다.\n
-    DataBase.removeDataBase(String fileName) : 파일을 삭제합니다.\n\n
-    Bridge.getScopeOf(String scriptName) : 해당 스크립트의 스코프를 가져옵니다. 이를통해 다른 스크립트에 접근이 가능합니다.\n
-    Bridge.isAllowed(String scriptName) : 스크립트 접근 허용 여부를 반환합니다.\n
-    Device : 디바이스 정보를 포함하고 파일 읽기/쓰기를 제공합니다.\n
-          .getBuild()\n
+    -*AppData*-
+    -**AppData.putInt/Boolean/String(String key,int/boolean/String data)**- : 앱 데이터에 데이터를 저장합니다.\n
+    -**AppData.getInt/Boolean/String()**- : 앱 데이터에서 데이터를 불러옵니다.\n
+    -**AppData.clear()**- : 앱 데이터를 초기화합니다.\n
+    -**AppData.remove(String key)**- : 앱 데이터에서 데이터를 지웁니다.\n
+    -*DataBase*-
+    -**DataBase.setDataBase(String fileName,String content)**- : 파일에 데이터를 씁니다.\n
+    -**DataBase.getDataBase(String fileName)**- : 파일에서 데이터를 불러옵니다.\n
+    -**DataBase.removeDataBase(String fileName)**- : 파일을 삭제합니다.\n\n
+    -*Bridge*-
+    -**Bridge.getScopeOf(String scriptName)**- : 해당 스크립트의 스코프를 가져옵니다. 이를통해 다른 스크립트에 접근이 가능합니다.\n
+    -**Bridge.isAllowed(String scriptName)**- : 스크립트 접근 허용 여부를 반환합니다.\n
+    -*Device*-
+    -**Device**- : 디바이스 정보를 포함합니다.\n
+          -**.getBuild()\n
           .getAndroidVersionCode()\n
           .getAndroidVersionName()\n
           .getPhoneBrand()\n
@@ -72,14 +80,15 @@
           .getBatteryTemperature()\n
           .getBatteryVoltage()\n
           .getBatteryStatus()\n
-          .getBatteryIntent()\n
-    FileStream
-          .read(path): 파일을 읽습니다.\n
-          .write(path,content): 파일을 씁니다.\n
+          .getBatteryIntent()\n**-
+    -*FileStream*-
+        -**FileStream-** : 파일 읽기/쓰기를 제공합니다.\n
+          -**.read(path)**-: 파일을 읽습니다.\n
+          -**.write(path,content)**-: 파일을 씁니다.\n**-
     \n
     \n
     이 앱에는 Mozilla의 JavaScript 엔진인 Rhino가 사용되었습니다.\n
-    라이선스: https://www.mozilla.org/en-US/MPL/2.0/</string>
+    라이선스: https://www.mozilla.org/en-US/MPL/2.0</string>
     <string name="script_autoloaded">변경사항 적용됨</string>
     <string name="tutorial_openAnotherApp">길게 눌러서 다른 앱으로 열기</string>
     <string name="tutorial_saveAndCompile">길게 눌러서 저장후 컴파일</string>
