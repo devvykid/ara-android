@@ -267,7 +267,7 @@ class NotificationListener : NotificationListenerService() {
         var UIHandler: Handler? = Handler()
         var execScope: ScriptableObject? = null
         lateinit var rootView: View
-        var SavedSessions: MutableMap<String?, Notification.Action> = HashMap()
+        var SavedSessions: MutableMap<String?, Notification.Action?> = HashMap()
         private val basePath = MainApplication.basePath
         // static File sessionsPath = new File(basePath + File.separator + "Sessions");
         private val banNameArr = HashMap<String, Array<String>>()
@@ -295,7 +295,7 @@ class NotificationListener : NotificationListenerService() {
 
         }
 
-        fun callResponder(scriptName: String, room: String?, msg: String?, sender: String?, isGroupChat: Boolean?, imageDB: ImageDB?, packName: String?, session: Notification.Action?, isDebugMode: Boolean?) {
+        fun callResponder(scriptName: String, room: String?, msg: String?, sender: String?, isGroupChat: Boolean, imageDB: ImageDB?, packName: String?, session: Notification.Action?, isDebugMode: Boolean) {
 
 
             val execScope = container[scriptName]!!.getExecScope()

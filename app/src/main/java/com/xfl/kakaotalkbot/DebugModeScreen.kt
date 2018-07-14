@@ -14,12 +14,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-
 import com.xfl.kakaotalkbot.MessageUI.MessageListAdapter
 import com.xfl.kakaotalkbot.MessageUI.UserMessage
-
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 
 /**
@@ -73,7 +70,7 @@ class DebugModeScreen : AppCompatActivity() {
             mMessageRecycler.scrollToPosition(newMsgPosition)
             NotificationListener.debugRoom = room.text.toString()
 
-            val thr = Thread(Runnable { NotificationListener.callResponder(scriptName!!, room.text.toString(), msgTxt.text.toString(), sender.text.toString(), chk_groupchat.isChecked, ImageDB(BitmapFactory.decodeResource(MainApplication.context!!.getResources(), R.drawable.ic_lock_bugreport)), "DEBUGMODE", null!!, true) })
+            val thr = Thread(Runnable { NotificationListener.callResponder(scriptName!!, room.text.toString(), msgTxt.text.toString(), sender.text.toString(), chk_groupchat.isChecked, ImageDB(BitmapFactory.decodeResource(MainApplication.context!!.resources, R.drawable.ic_lock_bugreport)), "DEBUGMODE", null, true) })
             thr.start()
 
 
@@ -113,7 +110,7 @@ class DebugModeScreen : AppCompatActivity() {
         lateinit internal var mMessageRecycler: RecyclerView
         lateinit internal var mMessageAdapter: MessageListAdapter
 
-        fun appendReply(value: String) {
+        fun appendReply(value: String?) {
 
             //messageList.add(new UserMessage("BOT", value));
 

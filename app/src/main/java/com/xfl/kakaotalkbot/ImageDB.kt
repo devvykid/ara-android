@@ -5,7 +5,7 @@ import android.util.Base64
 
 import java.io.ByteArrayOutputStream
 
-class ImageDB(bitmap: Bitmap) {
+class ImageDB(bitmap: Bitmap?) {
     private var profilePic: Bitmap? = null
 
 

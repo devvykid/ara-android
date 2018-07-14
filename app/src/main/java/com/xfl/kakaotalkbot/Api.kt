@@ -55,10 +55,9 @@ class Api : ScriptableObject() {
         fun UIThread(function: org.mozilla.javascript.Function, onComplete: Function?) {
             val parseCtx = RhinoAndroidHelper().enterContext()
             parseCtx.wrapFactory = PrimitiveWrapFactory()
-            val excScope: ScriptableObject?
+            val excScope: ScriptableObject? = NotificationListener.execScope
 
             //parseCtx.setOptimizationLevel(NotificationListener.container.get(scriptName).optimization);
-            excScope = NotificationListener.execScope
 
 
             NotificationListener.UIHandler!!.post {
@@ -161,10 +160,10 @@ class Api : ScriptableObject() {
             return NotificationListener.container[scriptName] != null
         }
 
-        val scriptNames: Scriptable
+
             @JvmStatic
-        @JSStaticFunction
-            get() {
+            @JSStaticFunction
+            fun getScriptNames():Scriptable? {
                 val basePath = File(Environment.getExternalStorageDirectory().toString() + File.separator + "katalkbot")
                 basePath.mkdir()
                 val files = basePath.listFiles()
@@ -175,7 +174,7 @@ class Api : ScriptableObject() {
                     }
                 }
 
-                return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope!!, list.toTypedArray())
+                return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope!!, list.toArray())
 
             }
         /*@kotlin.jvm.JvmStatic

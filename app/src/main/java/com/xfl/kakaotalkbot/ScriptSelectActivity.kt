@@ -106,6 +106,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         msg.add(22,"")
         msg.add(23,"추후 구현의 용이성을 도모하여 코틀린으로 전환했습니다.\n\n안드로이드 누가 미만에서 카카오톡 최신버전의 알림 수신 중 방 이름이 잘못 수신되는 오류를 해결했습니다.\n카카오톡 구버전과의 연동성도 고려했지만, 카카오톡을 업데이트하는것을 권장합니다.\n\n컴파일 시작/완료 로그에 스크립트 이름을 명시합니다.\n\nImageDB.getProfileBitmap()이 추가되었습니다.\n\n방 세션 초기화 옵션을 공용설정으로 옮겼습니다.")
         msg.add(24,"Api.UIThread오류를 해결했습니다.")
+        msg.add(25,"디버그 룸이 안되는 현상, 없는 DB에 대해 getDataBase요청시 내부 오류가 발생하는 현상 등 중대한 오류를 해결했습니다.\n디버그룸의 메시지 입력창이 세로로 확장되도록 변경했습니다.")
         val result = StringBuilder()
         for (i in lastVersion + 1 - 21..version - 21) {
             if (i > msg.size - 1) break

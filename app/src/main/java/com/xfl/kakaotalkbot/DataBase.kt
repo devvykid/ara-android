@@ -61,8 +61,10 @@ class DataBase : ScriptableObject() {
             if (!fileName.contains(".")) {
                 fileName += ".txt"
             }
+            var f=File(dbDir,fileName)
+            if(!f.exists())return null
             try {
-                return FileManager.read(File(dbDir,fileName))
+                return FileManager.read(f)
             } catch (e: IOException) {
                 org.mozilla.javascript.Context.reportError(e.message)
             }
