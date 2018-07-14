@@ -21,7 +21,7 @@ public class SessionCacheReplier {
     }
 
 
-    private void replyTo(String value) {
+    private void replyTo(String? value) {
 
         if (session == null) return;
 
@@ -47,7 +47,7 @@ public class SessionCacheReplier {
 
     }
 
-    public void reply(final String value) {
+    public void reply(final String? value) {
         if (NotificationListener.debugRoom != null && this.room.equals(NotificationListener.debugRoom)) {
             DebugModeScreen.appendReply(value);
             return;
@@ -56,11 +56,11 @@ public class SessionCacheReplier {
         replyTo(value);
     }
 
-    public boolean reply(final String room, final String value) {
+    public boolean reply(final String room, final String? value) {
         return reply(room, value, false);
     }
 
-    public boolean reply(final String room, final String value, final boolean hideToast) {
+    public boolean reply(final String room, final String? value, final boolean hideToast) {
         if (NotificationListener.debugRoom != null && this.room.equals(NotificationListener.debugRoom)) {
 
             DebugModeScreen.appendReply(value);
