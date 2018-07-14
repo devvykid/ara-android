@@ -218,6 +218,7 @@ Thread thr;
         }
         try {
             Thread(Runnable { }).start()
+
             val str = FileManager.read(script!!)
             if (str!!.isEmpty()) {
                 val param: String
@@ -262,6 +263,8 @@ Thread thr;
         } catch (e: Exception) {
             e.printStackTrace()
 
+            MainApplication.reportInternalError(e)
+        
         }
 
         return changed
