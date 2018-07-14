@@ -295,7 +295,7 @@ class NotificationListener : NotificationListenerService() {
 
         }
 
-        fun callResponder(scriptName: String, room: String?, msg: String, sender: String, isGroupChat: Boolean, imageDB: ImageDB, packName: String, session: Notification.Action, isDebugMode: Boolean) {
+        fun callResponder(scriptName: String, room: String?, msg: String?, sender: String?, isGroupChat: Boolean?, imageDB: ImageDB?, packName: String?, session: Notification.Action?, isDebugMode: Boolean?) {
 
 
             val execScope = container[scriptName]!!.getExecScope()
