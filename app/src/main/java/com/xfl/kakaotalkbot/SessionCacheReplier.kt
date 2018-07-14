@@ -13,7 +13,7 @@ class SessionCacheReplier(private val room: String)//this.session = session;
     private var session: Notification.Action? = null
 
 
-    private fun replyTo(value: String) {
+    private fun replyTo(value: String?) {
 
         if (session == null) return
 
@@ -39,7 +39,7 @@ class SessionCacheReplier(private val room: String)//this.session = session;
 
     }
 
-    fun reply(value: String) {
+    fun reply(value: String?) {
         if (NotificationListener.debugRoom != null && this.room == NotificationListener.debugRoom) {
             DebugModeScreen.appendReply(value)
             return
@@ -49,7 +49,7 @@ class SessionCacheReplier(private val room: String)//this.session = session;
     }
 
     @JvmOverloads
-    fun reply(room: String, value: String, hideToast: Boolean = false): Boolean {
+    fun reply(room: String, value: String?, hideToast: Boolean = false): Boolean {
 
         if (NotificationListener.debugRoom != null && this.room == NotificationListener.debugRoom) {
 
