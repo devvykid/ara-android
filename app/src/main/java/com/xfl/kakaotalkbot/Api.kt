@@ -50,14 +50,22 @@ class Api : ScriptableObject() {
         @JSStaticFunction
             get() = MainApplication.context!!
 
+        /*@JvmStatic
+        @JSStaticFunction
+        fun getThreads(scriptName: String):Scriptable{
+            if(NotificationListener.threads[scriptName]==null){
+                return org.mozilla.javascript.Context.enter().newArray(ScriptsManager.execScope!!, arrayOf())
+            }
+            return org.mozilla.javascript.Context.enter().newArray(ScriptsManager.execScope!!, NotificationListener.threads[scriptName]!!.toArray())
+        }*/
         @JvmStatic
         @JSStaticFunction
         fun UIThread(function: org.mozilla.javascript.Function, onComplete: Function?) {
             val parseCtx = RhinoAndroidHelper().enterContext()
             parseCtx.wrapFactory = PrimitiveWrapFactory()
-            val excScope: ScriptableObject? = NotificationListener.execScope
+            val excScope: ScriptableObject? = ScriptsManager.execScope
 
-            //parseCtx.setOptimizationLevel(NotificationListener.container.get(scriptName).optimization);
+            //parseCtx.setOptimizationLevel(ScriptsManager.container.get(scriptName).optimization);
 
 
             NotificationListener.UIHandler!!.post {
@@ -157,7 +165,7 @@ class Api : ScriptableObject() {
         @JvmStatic
         @JSStaticFunction
         fun isCompiled(scriptName: String): Boolean {
-            return NotificationListener.container[scriptName] != null
+            return ScriptsManager.container[scriptName] != null
         }
 
 
@@ -174,7 +182,7 @@ class Api : ScriptableObject() {
                     }
                 }
 
-                return org.mozilla.javascript.Context.enter().newArray(NotificationListener.execScope!!, list.toArray())
+                return org.mozilla.javascript.Context.enter().newArray(ScriptsManager.execScope!!, list.toArray())
 
             }
         /*@kotlin.jvm.JvmStatic
@@ -192,7 +200,7 @@ class Api : ScriptableObject() {
                 list.add(k);
             }
         }
-        return org.mozilla.javascript.Context.enter().newArray(NotificationListener.container.get(scriptName).execScope,list.toArray());
+        return org.mozilla.javascript.Context.enter().newArray(ScriptsManager.container.get(scriptName).execScope,list.toArray());
     }*/
 
 
@@ -259,8 +267,8 @@ class Api : ScriptableObject() {
         @JSStaticFunction
         fun unload(scriptName: String): Boolean {
             if (scriptName == "undefined") return false
-            if (!NotificationListener.container.containsKey(scriptName)) return false
-            NotificationListener.container.remove(scriptName)
+            if (!ScriptsManager.container.containsKey(scriptName)) return false
+            ScriptsManager.container.remove(scriptName)
             return true
         }
 
@@ -271,7 +279,7 @@ class Api : ScriptableObject() {
 
             if (scriptName == "undefined") {
 
-                NotificationListener.initializeAll(false)
+                ScriptsManager.initializeAll(false)
 
 
             } else {
@@ -281,7 +289,7 @@ class Api : ScriptableObject() {
 
 
                 NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, true, true) }
-                val bool = NotificationListener.initializeScript(scriptName, false)
+                val bool = ScriptsManager.initializeScript(scriptName, false)
 
                 NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, false, bool) }
 

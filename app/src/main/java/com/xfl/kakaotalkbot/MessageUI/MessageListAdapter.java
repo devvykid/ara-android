@@ -3,6 +3,7 @@ package com.xfl.kakaotalkbot.MessageUI;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,14 @@ import android.widget.Toast;
 
 import com.xfl.kakaotalkbot.MainApplication;
 import com.xfl.kakaotalkbot.R;
+import com.xfl.kakaotalkbot.ShowAllActivity;
 
 import java.util.List;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
-
+    private final int LONG_MESSAGE_LENGTH = 500;
     private Context mContext;
     private List<UserMessage> mMessageList;
 
@@ -33,10 +35,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         notifyItemRangeRemoved(0, size);
     }
 
-    public void addItem(UserMessage item, int position) {
+   /* public void addItem(boolean isBot,String msg,String sender, int position) {
+        if(item.message.length()>500){
+            item.message=item.message.substring(0,500)
+        }
         mMessageList.add(position, item);
         notifyItemInserted(position);
-    }
+    }*/
 
     @Override
     public int getItemCount() {
@@ -78,9 +83,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         UserMessage message = mMessageList.get(position);
-
+        final String msgTxt = message.getText();
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
@@ -94,11 +99,23 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             public boolean onLongClick(View v) {
                 Context ctx = MainApplication.getContextForJava();
                 Toast.makeText(ctx, ctx.getResources().getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show();
-                String str = ((TextView) v.findViewById(R.id.message_body)).getText().toString();
+                String str = msgTxt;
                 ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText(str, str);
                 clipboard.setPrimaryClip(clip);
                 return true;
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (msgTxt.length() >= LONG_MESSAGE_LENGTH) {
+                    Intent intent = new Intent(MainApplication.getContextForJava(), ShowAllActivity.class);
+                    intent.putExtra("showAllData", msgTxt);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MainApplication.getContextForJava().startActivity(intent);
+
+                }
             }
         });
     }
@@ -114,7 +131,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(UserMessage message) {
-            messageText.setText(message.getText());
+            String msg = message.getText();
+            if (msg.length() >= LONG_MESSAGE_LENGTH) {
+                msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
+            }
+            messageText.setText(msg);
             senderText.setText(message.getName());
             // Format the stored timestamp into a readable String using method.
 
@@ -134,7 +155,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(UserMessage message) {
-            messageText.setText(message.getText());
+            String msg = message.getText();
+            if (msg.length() >= LONG_MESSAGE_LENGTH) {
+                msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
+
+            }
+            messageText.setText(msg);
 
             // Format the stored timestamp into a readable String using method.
 

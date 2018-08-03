@@ -10,12 +10,12 @@ class ScriptActivity : AppCompatActivity() {
     private lateinit var parseCtx: org.mozilla.javascript.Context
     private lateinit var excScope: ScriptableObject
     private var scriptName: String? = null
-    private var manager: ScriptsManager? = null
+    private var manager: ScriptContainer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scriptName = intent.extras!!.getString("scriptName")
-        manager = NotificationListener.container[scriptName!!]
+        manager = ScriptsManager.container[scriptName!!]
 
         if (manager == null) {
             Toast.makeText(this, resources.getString(R.string.please_compile_first), Toast.LENGTH_SHORT).show()

@@ -34,11 +34,19 @@ class DebugModeScreen : AppCompatActivity() {
         val sender = findViewById<EditText>(R.id.txt_sender)
         val msgTxt = findViewById<EditText>(R.id.edittext_chatbox)
         val chk_groupchat = findViewById<CheckBox>(R.id.chk_groupchat)
+
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         scriptName = intent.extras!!.getString("scriptName")
         chk_groupchat.isChecked = MainApplication.context!!.getSharedPreferences("debugGroupChat", 0).getBoolean(scriptName, false)
         room.setText(MainApplication.context!!.getSharedPreferences("debugRoom", 0).getString(scriptName, ""))
         sender.setText(MainApplication.context!!.getSharedPreferences("debugSender", 0).getString(scriptName, ""))
+        if (room.text.isEmpty()) {
+            room.requestFocus()
+        } else if (sender.text.isEmpty()) {
+            sender.requestFocus()
+        } else {
+            msgTxt.requestFocus()
+        }
         if (savedMessageList[scriptName] == null)
             savedMessageList[scriptName] = ArrayList()
         messageList = savedMessageList[scriptName]
@@ -50,7 +58,7 @@ class DebugModeScreen : AppCompatActivity() {
 
         sendBtn.setOnClickListener(View.OnClickListener {
             if (TextUtils.isEmpty(msgTxt.text.toString())) return@OnClickListener
-            if (NotificationListener.container[scriptName!!] == null) {
+            if (ScriptsManager.container[scriptName!!] == null) {
                 Toast.makeText(this@DebugModeScreen, this@DebugModeScreen.resources.getString(R.string.please_compile_first), Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
@@ -63,14 +71,21 @@ class DebugModeScreen : AppCompatActivity() {
             MainApplication.context!!.getSharedPreferences("debugGroupChat", 0).edit().putBoolean(scriptName, chk_groupchat.isChecked).apply()
             MainApplication.context!!.getSharedPreferences("debugSender", 0).edit().putString(scriptName, sender.text.toString()).apply()
             MainApplication.context!!.getSharedPreferences("debugRoom", 0).edit().putString(scriptName, room.text.toString()).apply()
-            mMessageAdapter.addItem(UserMessage(false, msgTxt.text.toString(), sender.text.toString()), mMessageAdapter.itemCount)
-            //messageList.add(new UserMessage("USER", msgTxt.getText().toString()));
+
+            messageList?.add(UserMessage(false, msgTxt.text.toString(), sender.text.toString()));
             val newMsgPosition = mMessageAdapter.itemCount - 1
             //mMessageAdapter.notifyItemInserted(newMsgPosition);
             mMessageRecycler.scrollToPosition(newMsgPosition)
             NotificationListener.debugRoom = room.text.toString()
+            val scname = scriptName
+            //if(NotificationListener.threads[scname]==null)NotificationListener.threads[scname!!]=ArrayList<Thread?>()
+            // val id=NotificationListener.threads[scname]!!.size
+            val thr = Thread(Runnable {
+                NotificationListener.callResponder(scriptName!!, room.text.toString(), msgTxt.text.toString(), sender.text.toString(), chk_groupchat.isChecked, ImageDB(BitmapFactory.decodeResource(MainApplication.context!!.resources, R.drawable.ic_lock_bugreport)), "DEBUGMODE",/*id,*/ null, true)
+                //   NotificationListener.threads[scname]!![id]=null
+            })
 
-            val thr = Thread(Runnable { NotificationListener.callResponder(scriptName!!, room.text.toString(), msgTxt.text.toString(), sender.text.toString(), chk_groupchat.isChecked, ImageDB(BitmapFactory.decodeResource(MainApplication.context!!.resources, R.drawable.ic_lock_bugreport)), "DEBUGMODE", null, true) })
+            //   NotificationListener.threads[scname]!!.add(thr)
             thr.start()
 
 
@@ -105,8 +120,8 @@ class DebugModeScreen : AppCompatActivity() {
 
     companion object {
 
-        internal var savedMessageList: MutableMap<String?, List<UserMessage>?> = HashMap()
-        internal var messageList: List<UserMessage>? = ArrayList()
+        internal var savedMessageList: MutableMap<String?, MutableList<UserMessage>?> = HashMap()
+        internal var messageList: MutableList<UserMessage>? = ArrayList()
         lateinit internal var mMessageRecycler: RecyclerView
         lateinit internal var mMessageAdapter: MessageListAdapter
 
@@ -115,8 +130,8 @@ class DebugModeScreen : AppCompatActivity() {
             //messageList.add(new UserMessage("BOT", value));
 
             NotificationListener.UIHandler!!.post {
-                mMessageAdapter.addItem(UserMessage(true, value, "BOT"), mMessageAdapter.itemCount)
-                //mMessageAdapter.notifyItemInserted(mMessageAdapter.getItemCount() - 1);
+                messageList?.add(UserMessage(true, value, "BOT"))
+                mMessageAdapter.notifyItemInserted(mMessageAdapter.getItemCount() - 1);
                 mMessageRecycler.scrollToPosition(messageList!!.size - 1)
             }
 

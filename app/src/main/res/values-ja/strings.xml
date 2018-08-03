@@ -105,4 +105,5 @@
     <string name="delete_script">スクリプトを削除</string>
     <string name="alert_delete_script">本当に削除しますか？</string>
     <string name="alert_delete_script_hint">このスクリプトの名前を入力</string>
+    <string name="showAll_adjustScreen">Adjust to Screen</string>
 </resources>

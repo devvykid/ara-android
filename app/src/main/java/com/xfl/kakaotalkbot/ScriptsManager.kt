@@ -1,84 +1,174 @@
 package com.xfl.kakaotalkbot
 
+import android.os.Environment
+import android.util.Log
+import android.widget.Toast
+import com.faendir.rhino_android.RhinoAndroidHelper
+import org.mozilla.javascript.Context
 import org.mozilla.javascript.Function
+import org.mozilla.javascript.ImporterTopLevel
 import org.mozilla.javascript.ScriptableObject
+import java.io.File
+import java.io.FileReader
+import java.util.*
 
- class ScriptsManager {
-    private  var responder: Function?=null
-    private lateinit var execScope: ScriptableObject
-    private  var onStartCompile: Function?=null
-    private var optimization: Int = 0
-    private lateinit var scope: ScriptableObject
-    var onCreate: Function? = null
-        private set
-    var onStop: Function? = null
-        private set
-    var onResume: Function? = null
-        private set
-    var onPause: Function? = null
-        private set
+class ScriptsManager {
 
-    @Deprecated("")
-    constructor(responder: Function, execScope: ScriptableObject, onStartCompile: Function, scope: ScriptableObject) {
-        this.responder = responder
-        this.execScope = execScope
-        this.onStartCompile = onStartCompile
-        this.scope = scope
-    }
-
-    constructor() {}
-
-    fun setResponder(responder: Function?): ScriptsManager {
-        this.responder = responder
-        return this
-    }
-
-    fun setExecScope(execScope: ScriptableObject): ScriptsManager {
-        this.execScope = execScope
-        return this
-    }
-
-    fun setOnStartCompile(onStartCompile: Function?): ScriptsManager {
-        this.onStartCompile = onStartCompile
-        return this
-    }
-
-    fun setOptimization(optimization: Int): ScriptsManager {
-        this.optimization = optimization
-        return this
-    }
-
-    fun getScope(): ScriptableObject? {
-        return scope
-    }
-
-    fun setScope(scope: ScriptableObject): ScriptsManager {
-        this.scope = scope
-        return this
-    }
-
-    fun setScriptActivity(onCreate: Function?, onStop: Function?, onResume: Function?, onPause: Function?): ScriptsManager {
-        this.onCreate = onCreate
-        this.onStop = onStop
-        this.onResume = onResume
-        this.onPause = onPause
-        return this
-    }
-fun getExecScope():ScriptableObject{
-    return execScope
-}
-fun getOnStartCompile():Function?{
-    return onStartCompile
-}
-     fun getResponder():Function?{
-         return responder
-     }
-     fun getOptimization():Int{
-         return optimization
-     }
-     companion object {
+    companion object {
+        var execScope: ScriptableObject? = null
+        var container: MutableMap<String, ScriptContainer> = HashMap()
+        public val isCompiling = HashMap<String, Boolean>()
         var scriptName: String? = null
+        public fun initializeScript(scriptName: String, isManual: Boolean): Boolean {
 
+            /*if (isCompiling.get(scriptName) != null && isCompiling.get(scriptName)) {
+            return false;
+        }*/
+            isCompiling[scriptName] = true
+            MainApplication.context!!.getSharedPreferences("log", 0).edit().putString("logTarget", scriptName).apply()
+            val PREF_SETTINGS = "settings$scriptName"
+            val optimization = MainApplication.context!!.getSharedPreferences(PREF_SETTINGS, 0).getInt("optimization", -1)
+            val script = File(Environment.getExternalStorageDirectory().toString() + File.separator + "katalkbot" + File.separator + scriptName)
+
+            if (ScriptsManager.container[scriptName] != null) {
+                //execScope = container.get(scriptName).execScope;
+            }
+            val responder: Function?
+
+
+            com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compileStart) + ": $scriptName")
+
+            val parseContext: Context
+            try {
+                parseContext = RhinoAndroidHelper().enterContext()
+                parseContext.wrapFactory = PrimitiveWrapFactory()
+                parseContext.languageVersion = Context.VERSION_ES6
+                parseContext.optimizationLevel = optimization
+            } catch (e: Exception) {
+                if (!isManual) {
+                    NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, false, false) }
+                    Context.reportError(e.toString())
+                }
+                return false
+            }
+
+            if (container[scriptName] != null) {
+                if (container[scriptName]!!.getOnStartCompile() != null) {
+                    container[scriptName]!!.getOnStartCompile()!!.call(parseContext, execScope, execScope, arrayOf<Any>())
+                }
+
+            }
+
+            System.gc()
+            if (MainApplication.context!!.getSharedPreferences("publicSettings", 0).getBoolean("resetSession", false))
+                NotificationListener.resetSession()
+            val scope: ScriptableObject
+
+            try {
+
+                parseContext.languageVersion = Context.VERSION_ES6
+                scope = parseContext.initStandardObjects(ImporterTopLevel(parseContext)) as ScriptableObject
+                val fileReader = FileReader(script)
+                val script_real = parseContext.compileReader(fileReader, scriptName, 0, null)
+                fileReader.close()
+
+                // ScriptableObject.putProperty(scope, "DataBase", Context.javaToJS(new DataBase(), scope));
+                // ScriptableObject.putProperty(scope, "Api", Context.javaToJS(new Api(), scope));
+                // ScriptableObject.putProperty(scope, "Utils", Context.javaToJS(new Utils(), scope));
+                //ScriptableObject.putProperty(scope, "Log", Context.javaToJS(new com.xfl.kakaotalkbot.Log(), scope));
+
+                ScriptableObject.defineClass(scope, Api::class.java)
+                ScriptableObject.defineClass(scope, DataBase::class.java)
+                ScriptableObject.defineClass(scope, Utils::class.java)
+                ScriptableObject.defineClass(scope, com.xfl.kakaotalkbot.Log::class.java)
+                ScriptableObject.defineClass(scope, AppData::class.java)
+                ScriptableObject.defineClass(scope, Bridge::class.java)
+                ScriptableObject.defineClass(scope, Device::class.java)
+                ScriptableObject.defineClass(scope, FileStream::class.java)
+                execScope = scope
+
+
+                script_real.exec(parseContext, scope)
+                if (scope.has("response", scope)) {
+                    responder = scope.get("response", scope) as Function
+                } else {
+                    responder = null
+                }
+                var onStartCompile: Function? = null
+                var onCreate: Function? = null
+                var onStop: Function? = null
+                var onResume: Function? = null
+                var onPause: Function? = null
+                if (scope.has("onStartCompile", scope)) {
+                    onStartCompile = scope.get("onStartCompile", scope) as Function
+                }
+                if (scope.has("onCreate", scope)) {
+                    onCreate = scope.get("onCreate", scope) as Function
+                }
+                if (scope.has("onStop", scope)) {
+                    onStop = scope.get("onStop", scope) as Function
+                }
+                if (scope.has("onResume", scope)) {
+                    onResume = scope.get("onResume", scope) as Function
+                }
+                if (scope.has("onPause", scope)) {
+                    onPause = scope.get("onPause", scope) as Function
+                }
+                container[scriptName] = ScriptContainer()
+                        .setExecScope(execScope!!)
+                        .setResponder(responder)
+                        .setOnStartCompile(onStartCompile)
+                        .setOptimization(optimization)
+                        .setScope(scope)
+                        .setScriptActivity(onCreate, onStop, onResume, onPause)
+
+                Api.scriptName = scriptName
+                Context.exit()
+
+                com.xfl.kakaotalkbot.Log.info(MainApplication.context!!.resources.getString(R.string.snackbar_compiled) + ": $scriptName")
+
+                isCompiling[scriptName] = false
+            } catch (e: Throwable) {
+
+                if (NotificationListener.UIHandler != null) {
+                    NotificationListener.UIHandler!!.post {
+                        Log.e("parser", "?", e)
+                        Toast.makeText(MainApplication.context!!, "Compile Error:" + e.toString(), Toast.LENGTH_LONG).show()
+                        com.xfl.kakaotalkbot.Log.error(e.toString(), false)
+                    }
+                }
+
+                isCompiling[scriptName] = false
+                if (!isManual) {
+                    NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, false, false) }
+                    Context.reportError(e.toString())
+
+                }
+                return false
+
+            }
+
+
+            MainApplication.context!!.getSharedPreferences("lastCompileSuccess2", 0).edit().putLong(scriptName, Date().time).apply()
+
+            NotificationListener.UIHandler!!.post { Toast.makeText(MainApplication.context!!, MainApplication.context!!.resources.getString(R.string.snackbar_compiled) + ":" + scriptName, Toast.LENGTH_SHORT).show() }
+            return true
+        }
+
+        public fun initializeAll(isManual: Boolean) {//isManual: true on Api.reload
+            MainApplication.basePath.mkdir()
+            val files = MainApplication.basePath.listFiles()
+            for (k in files) {
+                if (k.name.endsWith(".js")) {
+
+
+                    initializeScript(k.name, isManual)
+
+
+                }
+            }
+        }
      }
+
 
 }

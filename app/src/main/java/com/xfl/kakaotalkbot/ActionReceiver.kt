@@ -14,7 +14,7 @@ class ActionReceiver : BroadcastReceiver() {
         val action = intent.getStringExtra("action")
         if (action == "reload") {
             Toast.makeText(context, context.resources.getString(R.string.snackbar_compiling), Toast.LENGTH_SHORT).show()
-            NotificationListener.initializeAll(true)
+            ScriptsManager.initializeAll(true)
 
         } else if (action == "off") {
             ScriptSelectActivity.putOnAll(false)

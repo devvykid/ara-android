@@ -20,9 +20,9 @@ public class ResponseParameters {
 
     public String packageName;
 
+    public int threadId;
 
-
-    public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB, String packName) {
+    public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB, String packName/*,int threadId*/) {
 
 
 
@@ -41,7 +41,7 @@ public class ResponseParameters {
         this.ImageDB = imageDB;
 
         this.packageName = packName;
-
+//this.threadId=threadId;
     }
 
     /*

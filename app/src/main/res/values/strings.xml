@@ -29,7 +29,7 @@
     <string name="chk_groupchat">GroupChat</string>
 
     <string name="wait_for_ad">Please wait for a moment to load ad…</string>
-<string name="thanks_for_helping">Thanks for helping!</string>
+    <string name="thanks_for_helping">Thanks for helping!</string>
     <string name="btn_help">Help</string>
     <string name="help">(English Help is outdated. It would be updated later)
     \nMake your own Kakaotalk Bot!\n
@@ -106,5 +106,6 @@
     <string name="delete_script">Delete Script</string>
     <string name="alert_delete_script">Are you sure?</string>
     <string name="alert_delete_script_hint">Please type the name of this script</string>
+    <string name="showAll_adjustScreen">Adjust to Screen</string>
 
 </resources>

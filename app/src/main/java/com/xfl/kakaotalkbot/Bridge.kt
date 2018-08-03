@@ -17,13 +17,13 @@ class Bridge : ScriptableObject() {
             if (!isAllowed(scriptName)) {
                 return null
             }
-            if (NotificationListener.container[scriptName] == null) {
+            if (ScriptsManager.container[scriptName] == null) {
                 //Context.reportError("java.lang.NullPointerException: The script '"+scriptName+"' is not compiled yet");
 
                 return null
             }
             try {
-                return NotificationListener.container[scriptName]!!.getScope()
+                return ScriptsManager.container[scriptName]!!.getScope()
             } catch (e: Throwable) {
                 Context.reportError(e.toString())
                 return null
