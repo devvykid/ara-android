@@ -109,7 +109,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (msgTxt.length() >= LONG_MESSAGE_LENGTH) {
+                if (msgTxt.length() > LONG_MESSAGE_LENGTH) {
                     Intent intent = new Intent(MainApplication.getContextForJava(), ShowAllActivity.class);
                     intent.putExtra("showAllData", msgTxt);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -132,7 +132,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(UserMessage message) {
             String msg = message.getText();
-            if (msg.length() >= LONG_MESSAGE_LENGTH) {
+            if (msg.length() > LONG_MESSAGE_LENGTH) {
                 msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
             }
             messageText.setText(msg);
@@ -156,7 +156,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(UserMessage message) {
             String msg = message.getText();
-            if (msg.length() >= LONG_MESSAGE_LENGTH) {
+            if (msg.length() > LONG_MESSAGE_LENGTH) {
                 msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
 
             }

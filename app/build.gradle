@@ -9,8 +9,8 @@ android {
         applicationId "com.xfl.kakaotalkbot"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 47
-        versionName "2.99"
+        versionCode 48
+        versionName "3.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }

@@ -476,6 +476,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             msg.add(24,"<h3>2.97</h3> Api.UIThread오류를 해결했습니다.")
             msg.add(25,"<h3>2.98</h3> 디버그 룸이 안되는 현상, 없는 DB에 대해 getDataBase요청시 내부 오류가 발생하는 현상 등 중대한 오류를 해결했습니다.<br />디버그룸의 메시지 입력창이 세로로 확장되도록 변경했습니다.")
             msg.add(26, "<h3>2.99</h3> 스크립트 액티비티 문제를 해결했습니다.<br />도움말을 개선하였으며, 이제 도움말에서 업데이트 로그를 볼 수 있습니다.")
+            msg.add(27, "<h3>3.00</h3> 디버그 룸에서 500자를 초과하는 메시지의 경우 전체보기를 표시하도록 했습니다.(데이터는 온전하게 전달됩니다.)")
             val result = StringBuilder()
             for (i in lastVersion + 1 - 21..version - 21) {
                 if (i > msg.size - 1) break
