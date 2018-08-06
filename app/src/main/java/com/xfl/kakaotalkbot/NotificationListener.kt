@@ -66,7 +66,7 @@ class NotificationListener : NotificationListenerService() {
                             var bool = false
                             UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(k.name, true, true) }
                             if (ScriptsManager.isCompiling[k.name] == null) {
-                                bool = ScriptsManager.initializeScript(k.name, true)
+                                bool = ScriptsManager.initializeScript(k.name, true, false)
 
                             }
                             val fbool = bool

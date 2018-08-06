@@ -19,7 +19,7 @@ class ScriptsManager {
         var container: MutableMap<String, ScriptContainer> = HashMap()
         public val isCompiling = HashMap<String, Boolean>()
         var scriptName: String? = null
-        public fun initializeScript(scriptName: String, isManual: Boolean): Boolean {
+        public fun initializeScript(scriptName: String, isManual: Boolean, ignoreError: Boolean): Boolean {
 
             /*if (isCompiling.get(scriptName) != null && isCompiling.get(scriptName)) {
             return false;
@@ -141,7 +141,8 @@ class ScriptsManager {
                 isCompiling[scriptName] = false
                 if (!isManual) {
                     NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, false, false) }
-                    Context.reportError(e.toString())
+                    if (!ignoreError)
+                        Context.reportError(e.toString())
 
                 }
                 return false
@@ -162,7 +163,7 @@ class ScriptsManager {
                 if (k.name.endsWith(".js")) {
 
 
-                    initializeScript(k.name, isManual)
+                    initializeScript(k.name, isManual, true)
 
 
                 }

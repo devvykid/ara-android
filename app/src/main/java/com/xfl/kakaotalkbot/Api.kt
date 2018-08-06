@@ -168,13 +168,27 @@ class Api : ScriptableObject() {
             return ScriptsManager.container[scriptName] != null
         }
 
+        @JvmStatic
+        @JSStaticFunction
+        fun isCompiling(scriptName: String): Boolean {
+            if (scriptName == "undefined") {
+                val keySet = MainApplication.basePath.listFiles()
+                for (key in keySet) {
+                    if (key.name.endsWith(".js")) {
+                        if (ScriptsManager.isCompiling[key.name]!!) return true
+                    }
+                }
+                return false
+            }
+            return ScriptsManager.isCompiling[scriptName]!!
+        }
 
             @JvmStatic
             @JSStaticFunction
             fun getScriptNames():Scriptable? {
-                val basePath = File(Environment.getExternalStorageDirectory().toString() + File.separator + "katalkbot")
-                basePath.mkdir()
-                val files = basePath.listFiles()
+
+                MainApplication.basePath.mkdir()
+                val files = MainApplication.basePath.listFiles()
                 val list = ArrayList<String>()
                 for (k in files) {
                     if (k.name.endsWith(".js")) {
@@ -249,9 +263,25 @@ class Api : ScriptableObject() {
 
         @JvmStatic
         @JSStaticFunction
-        fun prepare(scriptName: String): Int {
+        fun prepare(scriptName: String, stopOnError: Boolean): Int {
+            if (scriptName == "undefined") {
+                val keySet = MainApplication.basePath.listFiles()
+
+                var compiled = 0
+
+                for (k in keySet) {
+                    if (k.name.endsWith(".js")) {
+                        if (Api.isCompiled(k.name) || (ScriptsManager.isCompiling[k.name] != null && ScriptsManager.isCompiling[k.name]!!)) {
+                            continue
+                        }
+                        Api.reload(k.name, !stopOnError)
+                        compiled++
+                    }
+                }
+                return compiled
+            }
             if (Api.isCompiled(scriptName)) return 2
-            return if (Api.reload(scriptName))
+            return if (Api.reload(scriptName, !stopOnError))
                 1
             else
                 0
@@ -259,8 +289,8 @@ class Api : ScriptableObject() {
 
         @JvmStatic
         @JSStaticFunction
-        fun compile(scriptName: String): Boolean {
-            return reload(scriptName)
+        fun compile(scriptName: String, stopOnError: Boolean): Boolean {
+            return reload(scriptName, !stopOnError)
         }
 
         @JvmStatic
@@ -274,7 +304,7 @@ class Api : ScriptableObject() {
 
         @JvmStatic
         @JSStaticFunction
-        fun reload(scriptName: String): Boolean {
+        fun reload(scriptName: String, stopOnError: Boolean): Boolean {
 
 
             if (scriptName == "undefined") {
@@ -289,7 +319,7 @@ class Api : ScriptableObject() {
 
 
                 NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, true, true) }
-                val bool = ScriptsManager.initializeScript(scriptName, false)
+                val bool = ScriptsManager.initializeScript(scriptName, false, !stopOnError)
 
                 NotificationListener.UIHandler!!.post { ScriptSelectActivity.refreshProgressBar(scriptName, false, bool) }
 

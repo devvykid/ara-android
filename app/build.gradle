@@ -4,13 +4,21 @@ apply plugin: 'kotlin-android'
 
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'HexIsrf1403.'
+            storeFile file('G:/XFKey.jks')
+            storePassword 'HexIsrf1403.'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.xfl.kakaotalkbot"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 48
-        versionName "3.00"
+        versionCode 49
+        versionName "3.01"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -24,6 +32,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     dexOptions {
@@ -46,7 +57,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.google.android.gms:play-services-ads:15.0.0'
-
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -55,7 +65,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'org.mozilla:rhino:1.7.9'
-
     compile 'com.faendir.rhino:rhino-android:1.5'
     compile 'org.jsoup:jsoup:1.10.1'
     implementation 'com.adcolony:sdk:3.3.2'
@@ -63,7 +72,6 @@ dependencies {
     implementation 'com.google.ads.mediation:adcolony:3.3.2.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     apply plugin: 'kotlin-android-extensions'
-
 }
 repositories {
     mavenCentral()

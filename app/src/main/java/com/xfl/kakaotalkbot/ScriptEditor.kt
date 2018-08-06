@@ -71,7 +71,7 @@ class ScriptEditor : AppCompatActivity() {
         fab.setOnLongClickListener {
             save()
             Toast.makeText(MainApplication.context!!, R.string.snackbar_compileStart, Toast.LENGTH_SHORT).show()
-            Thread(Runnable { ScriptsManager.initializeScript(scriptName!!, true) }).start()
+            Thread(Runnable { ScriptsManager.initializeScript(scriptName!!, true, false) }).start()
 
             true
         }
