@@ -162,7 +162,7 @@ class ScriptsManager {
             for (k in files) {
                 if (k.name.endsWith(".js")) {
 
-
+                    if (isCompiling[k.name] == null || !isCompiling[k.name]!!)
                     initializeScript(k.name, isManual, true)
 
 

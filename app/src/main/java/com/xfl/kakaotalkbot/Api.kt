@@ -175,11 +175,13 @@ class Api : ScriptableObject() {
                 val keySet = MainApplication.basePath.listFiles()
                 for (key in keySet) {
                     if (key.name.endsWith(".js")) {
-                        if (ScriptsManager.isCompiling[key.name]!!) return true
+                        if (ScriptsManager.isCompiling[key.name] != null)
+                            if (ScriptsManager.isCompiling[key.name]!!) return true
                     }
                 }
                 return false
             }
+            if (ScriptsManager.isCompiling[scriptName] == null) return false
             return ScriptsManager.isCompiling[scriptName]!!
         }
 
@@ -274,14 +276,14 @@ class Api : ScriptableObject() {
                         if (Api.isCompiled(k.name) || (ScriptsManager.isCompiling[k.name] != null && ScriptsManager.isCompiling[k.name]!!)) {
                             continue
                         }
-                        Api.reload(k.name, !stopOnError)
+                        Api.reload(k.name, stopOnError)
                         compiled++
                     }
                 }
                 return compiled
             }
             if (Api.isCompiled(scriptName)) return 2
-            return if (Api.reload(scriptName, !stopOnError))
+            return if (Api.reload(scriptName, stopOnError))
                 1
             else
                 0
@@ -290,7 +292,7 @@ class Api : ScriptableObject() {
         @JvmStatic
         @JSStaticFunction
         fun compile(scriptName: String, stopOnError: Boolean): Boolean {
-            return reload(scriptName, !stopOnError)
+            return reload(scriptName, stopOnError)
         }
 
         @JvmStatic
