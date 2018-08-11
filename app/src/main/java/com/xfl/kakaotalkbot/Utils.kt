@@ -22,7 +22,7 @@ class Utils : ScriptableObject() {
     }
 
     companion object {
-        internal var result: StringBuilder? = null
+
 
         @JvmStatic
         @JSStaticFunction

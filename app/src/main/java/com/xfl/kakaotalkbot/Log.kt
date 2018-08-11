@@ -88,6 +88,7 @@ class Log : ScriptableObject() {
         @JSStaticFunction
         fun error(str: String, toast: Boolean) {
             // val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
+
             errorLength++
             ctx!!.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength).apply()
             val formed = SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(Date()) + str.replace("<".toRegex(), "&lt;").replace(">".toRegex(), "&gt;").replace("\n".toRegex(), "<br>")

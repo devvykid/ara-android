@@ -44,16 +44,17 @@
     Api.canReply(room) : check if bot can reply to room\n
     Utils.getWebText(url:String) : get website\'s HTML\n
         Utils.parse(url:String) : return html parse data as Jsoup Document\n\n
-    Log.error(string,viewToast=true) : add error log to log screen (if viewToast is true, it makes Toast popup)\n
+    Log.error(string,viewToast=false) : add error log to log screen (if viewToast is true, it makes Toast popup)\n
     Log.info(string) : add info to log screen\n
     Log.debug(string) : add debug log to log screen\n\n
     AppData.putInt/Boolean/String(String key,int/boolean/String data) : save data to appdata\n
     AppData.getInt/Boolean/String() : load data from appdata\n
     AppData.clear() : clear the appdata\n
     AppData.remove(String key) : remove data from appdata\n\n
-    DataBase.setDataBase(String fileName,String content) : save data to file\n
+    DataBase.setDataBase(String fileName,String content) : overwrite data to file\n
     DataBase.getDataBase(String fileName) : get data from file\n
-    DataBase.removeDataBase(String fileName) : delete file\n\n
+    DataBase.removeDataBase(String fileName) : delete file\n
+    DataBase.appendDataBase(String fileName,String content) : append data to file\n\n
     Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
     Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
     Device : contains device information.\n

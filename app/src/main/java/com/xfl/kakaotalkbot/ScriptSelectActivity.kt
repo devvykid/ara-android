@@ -479,7 +479,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             msg.add(27, "<h3>3.00</h3> [내부 테스트] 디버그 룸에서 500자를 초과하는 메시지의 경우 전체보기를 표시하도록 했습니다.(데이터는 온전하게 전달됩니다.)")
             msg.add(28, "<h3>3.01</h3> (중요) Api.reload(또는 compile), Api.prepare에 인자를 전달하지 않을때 전체 리로드 중 오류가 나는 스크립트에서 정지되지 않도록 수정했습니다.<br />이제 두번째 인자로 true를 전달하면 오류가 나는 스크립트에서 정지합니다.")
             msg.add(29, "<h3>3.02</h3> Api.isCompiling(\"스크립트이름.js\")이 추가되었습니다. 인자를 전달하지 않을 경우 하나라도 컴파일중인 스크립트가 있을 시 true를 반환합니다.<br />지난 업데이트에서 몇가지 업데이트가 적용되지 않은 문제를 해결했습니다.<br />전역에서 인자없이 Api.compile을 호출 할 시 무한 컴파일이 되는 현상을 방지했습니다.")
-            msg.add(30, "<h3>3.03</h3> DataBase.appendDataBase, FileStream.append가 추가되었습니다. <br /> DataBase의 setDataBase, FileStream의 write가 이제 파일의 최종 내용을 리턴합니다.(appendDataBase, append도 마찬가지)<br />DataBase와 FileStream의 각 함수에 이제 경로를 명시할 수 있습니다.<br />onStartCompile호출 중 에러 발생 시 튕기는 오류를 해결하고, 컴파일을 중지하도록 수정하였습니다.")
+            msg.add(30, "<h3>3.03</h3> DataBase.appendDataBase, FileStream.append가 추가되었습니다. <br /> DataBase의 setDataBase, FileStream의 write가 이제 파일의 최종 내용을 리턴합니다.(appendDataBase, append도 마찬가지)<br />DataBase와 FileStream의 각 함수에 이제 경로를 명시할 수 있습니다.<br />onStartCompile호출 중 에러 발생 시 튕기는 오류를 해결하고, 컴파일을 중지하도록 수정하였습니다.<br />도움말을 업데이트하였습니다.")
             val result = StringBuilder()
             for (i in lastVersion + 1 - 21..version - 21) {
                 if (i > msg.size - 1) break

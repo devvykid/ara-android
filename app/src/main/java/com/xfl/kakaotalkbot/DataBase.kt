@@ -40,15 +40,16 @@ class DataBase : ScriptableObject() {
                         fileName += ".txt"
                     }
                 }
-                var f = File(dbDir, fileName)
-                f.mkdirs()
+                var f = File(dbDir + File.separator + fileName)
+                f.parentFile.mkdirs()
                 f.createNewFile()
                 var fw = FileWriter(f, true)
 
                 fw.write(data)
                 fw.close()
             } catch (e: Exception) {
-                Context.reportError(e.message)
+                e.printStackTrace()
+                Context.reportError(e.toString())
             }
             return getDataBase(fileName)
         }
@@ -75,13 +76,17 @@ class DataBase : ScriptableObject() {
 
 
                 val file = File(dbDir + File.separator + fileName)
-                file.mkdirs()
+                file.parentFile.mkdirs()
+
                 file.createNewFile()
-                file.bufferedWriter().use{ out-> out.write(data)
+
+                file.absoluteFile.bufferedWriter().use { out ->
+                    out.write(data)
                 }
 
             } catch (e: Exception) {
-                Context.reportError(e.message)
+                e.printStackTrace()
+                Context.reportError(e.toString())
             }
             return getDataBase(fileName)
         }
@@ -94,13 +99,14 @@ class DataBase : ScriptableObject() {
                 fileName += ".txt"
             }
             var f = File(dbDir + File.separator + fileName)
-            f.mkdirs()
-            f.createNewFile()
+            f.parentFile.mkdirs()
+
             if(!f.exists())return null
             try {
-                return FileManager.read(f)
+                return FileManager.read(f.absoluteFile)
             } catch (e: IOException) {
-                org.mozilla.javascript.Context.reportError(e.message)
+                e.printStackTrace()
+                org.mozilla.javascript.Context.reportError(e.toString())
             }
 
             return null
