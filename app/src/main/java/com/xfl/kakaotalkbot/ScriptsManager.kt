@@ -17,9 +17,9 @@ class ScriptsManager {
     companion object {
         var execScope: ScriptableObject? = null
         var container: MutableMap<String, ScriptContainer> = HashMap()
-        public val isCompiling = HashMap<String, Boolean>()
+        val isCompiling = HashMap<String, Boolean>()
         var scriptName: String? = null
-        public fun initializeScript(scriptName: String, isManual: Boolean, ignoreError: Boolean): Boolean {
+        fun initializeScript(scriptName: String, isManual: Boolean, ignoreError: Boolean): Boolean {
 
             /*if (isCompiling.get(scriptName) != null && isCompiling.get(scriptName)) {
             return false;
@@ -52,12 +52,7 @@ class ScriptsManager {
                 return false
             }
 
-            if (container[scriptName] != null) {
-                if (container[scriptName]!!.getOnStartCompile() != null) {
-                    container[scriptName]!!.getOnStartCompile()!!.call(parseContext, execScope, execScope, arrayOf<Any>())
-                }
 
-            }
 
             System.gc()
             if (MainApplication.context!!.getSharedPreferences("publicSettings", 0).getBoolean("resetSession", false))
@@ -65,7 +60,11 @@ class ScriptsManager {
             val scope: ScriptableObject
 
             try {
-
+                if (container[scriptName] != null) {
+                    if (container[scriptName]!!.getOnStartCompile() != null) {
+                        container[scriptName]!!.getOnStartCompile()!!.call(parseContext, execScope, execScope, arrayOf<Any>())
+                    }
+                }
                 parseContext.languageVersion = Context.VERSION_ES6
                 scope = parseContext.initStandardObjects(ImporterTopLevel(parseContext)) as ScriptableObject
                 val fileReader = FileReader(script)
@@ -156,7 +155,7 @@ class ScriptsManager {
             return true
         }
 
-        public fun initializeAll(isManual: Boolean) {//isManual: true on Api.reload
+        fun initializeAll(isManual: Boolean) {//isManual: true on Api.reload
             MainApplication.basePath.mkdir()
             val files = MainApplication.basePath.listFiles()
             for (k in files) {

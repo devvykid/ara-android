@@ -368,14 +368,14 @@ class Api : ScriptableObject() {
                 } else {  // 에러 발생
 
                     br = BufferedReader(InputStreamReader(con.errorStream))
-                    var einputLine: String
+                    // var einputLine: String
                     val eresponse = StringBuilder()
 
                     eresponse.append(br.readLines().joinToString("\n"))
                     throw Exception(JSONObject(eresponse.toString()).getString("errorMessage"))
 
                 }
-                var inputLine: String
+                // var inputLine: String
                 val response = StringBuilder()
 
                 response.append(br.readLines().joinToString("\n"))

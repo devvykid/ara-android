@@ -1,6 +1,5 @@
 package com.xfl.kakaotalkbot
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -33,7 +32,7 @@ class LoggerScreen : AppCompatActivity() {
         logTxt!!.text = Html.fromHtml(log)
         initialize()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            scrollView!!.setOnScrollChangeListener { view, i, i1, i2, i3 ->
+            scrollView!!.setOnScrollChangeListener { _, _, _, _, _ ->
                 MainApplication.context!!.getSharedPreferences("logger", 0).edit().putInt("scrollState", scrollView!!.scrollY).apply()
                 if (scrollView!!.scrollY >= scrollView!!.getChildAt(0).measuredHeight - scrollView!!.measuredHeight) {
 
@@ -62,6 +61,7 @@ class LoggerScreen : AppCompatActivity() {
     }
 
     companion object {
+
         var logTxt: TextView? = null
         var scrollView: ScrollView? = null
         private var scriptName: String? = null

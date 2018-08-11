@@ -77,7 +77,7 @@ class DebugModeScreen : AppCompatActivity() {
             //mMessageAdapter.notifyItemInserted(newMsgPosition);
             mMessageRecycler.scrollToPosition(newMsgPosition)
             NotificationListener.debugRoom = room.text.toString()
-            val scname = scriptName
+            // val scname = scriptName
             //if(NotificationListener.threads[scname]==null)NotificationListener.threads[scname!!]=ArrayList<Thread?>()
             // val id=NotificationListener.threads[scname]!!.size
             val thr = Thread(Runnable {

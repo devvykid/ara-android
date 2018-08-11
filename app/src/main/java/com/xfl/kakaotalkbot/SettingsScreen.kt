@@ -122,7 +122,7 @@ class SettingsScreen : AppCompatActivity() {
             et.layoutParams = params
             container.addView(et)
             ad.setView(container)
-            ad.setPositiveButton("OK") { dialog, which ->
+            ad.setPositiveButton("OK") { dialog, _ ->
                 if (et.text.toString() == scriptName) {
                     Api.off(scriptName)
                     Api.unload(scriptName)
@@ -132,7 +132,7 @@ class SettingsScreen : AppCompatActivity() {
                     this@SettingsScreen.finish()
                 }
             }
-            ad.setNegativeButton("Cancel") { dialog, which -> dialog.dismiss() }
+            ad.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
 
 
             ad.show()

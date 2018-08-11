@@ -56,9 +56,9 @@ class Log : ScriptableObject() {
         @JSStaticFunction
         fun debug(str: String) {
             var str = str
-            val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
+            //val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
             debugLength++
-            ctx!!.getSharedPreferences("log", 0).edit().putInt("debugLength", debugLength!!).apply()
+            ctx!!.getSharedPreferences("log", 0).edit().putInt("debugLength", debugLength).apply()
             str = SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(Date()) + str.replace("<".toRegex(), "&lt;").replace(">".toRegex(), "&gt;").replace("\n".toRegex(), "<br>")
             log = "<font color=GREEN>$str</font><br><br>"
 
@@ -73,9 +73,9 @@ class Log : ScriptableObject() {
         @JSStaticFunction
         fun info(str: String) {
             var str = str
-            val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
+            //val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
             infoLength++
-            ctx!!.getSharedPreferences("log", 0).edit().putInt("infoLength", infoLength!!).apply()
+            ctx!!.getSharedPreferences("log", 0).edit().putInt("infoLength", infoLength).apply()
             str = SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(Date()) + str.replace("<".toRegex(), "&lt;").replace(">".toRegex(), "&gt;").replace("\n".toRegex(), "<br>")
             log = "$str<br><br>"
             logStack += log
@@ -87,9 +87,9 @@ class Log : ScriptableObject() {
         @JvmStatic
         @JSStaticFunction
         fun error(str: String, toast: Boolean) {
-            val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
+            // val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
             errorLength++
-            ctx!!.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength!!).apply()
+            ctx!!.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength).apply()
             val formed = SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ").format(Date()) + str.replace("<".toRegex(), "&lt;").replace(">".toRegex(), "&gt;").replace("\n".toRegex(), "<br>")
             log = "<font color=RED>$formed</font><br><br>"
             logStack += log
@@ -104,7 +104,7 @@ class Log : ScriptableObject() {
 
         fun internalError(str: String) {
             errorLength++
-            ctx!!.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength!!).apply()
+            ctx!!.getSharedPreferences("log", 0).edit().putInt("errorLength", errorLength).apply()
             logStack += str
             LoggerScreen.appendLogText(Html.fromHtml(str))
             ctx.getSharedPreferences("log", 0).edit().putString("log", logStack).apply()
@@ -112,7 +112,7 @@ class Log : ScriptableObject() {
         @JvmStatic
         @JSStaticFunction
         fun clear() {
-            val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
+            //val scriptName = MainApplication.context!!.getSharedPreferences("log", 0).getString("logTarget", "")
             logStack = ""
             infoLength = 0
             debugLength = 0
@@ -127,7 +127,7 @@ class Log : ScriptableObject() {
         val length: Int
             @JvmStatic
             @JSStaticFunction
-            get() = debugLength!! + infoLength!! + errorLength!!
+            get() = debugLength + infoLength + errorLength
     }
     /*@JSStaticFunction
     public static String[] getDebugLog(){

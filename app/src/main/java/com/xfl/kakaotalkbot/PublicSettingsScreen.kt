@@ -34,9 +34,16 @@ class PublicSettingsScreen : AppCompatActivity() {
 
             }
             pref.edit().putBoolean("resetSession",chkResetSession.isChecked).apply()
+
             pref.edit().putString("customPackages", customPackages.text.toString()).apply()
             pref.edit().putBoolean("autoCompile", chkAutoCompile.isChecked).apply()
             Snackbar.make(v, "Saved", Snackbar.LENGTH_SHORT).show()
+
+
+            if (customPackages.text.toString().contains(applicationContext.packageName)) {
+                Toast.makeText(this, "???????????????????????", Toast.LENGTH_LONG).show()
+
+            }
         }
     }
 }

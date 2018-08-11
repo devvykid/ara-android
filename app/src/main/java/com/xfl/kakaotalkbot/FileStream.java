@@ -19,6 +19,7 @@ public class FileStream extends ScriptableObject {
     public static String read(String path) {
         try {
             File f = new File(path);
+            f.mkdirs();
             f.createNewFile();
             FileInputStream fIn = new FileInputStream(f);
             InputStreamReader myInReader = new InputStreamReader(fIn, "UTF-8");
@@ -43,11 +44,13 @@ public class FileStream extends ScriptableObject {
     }
 
     @JSStaticFunction
-    public static void write(String path, String data) {
+    public static String write(String path, String data) {
         BufferedWriter wr = null;
         try {
 
-
+            File f = new File(path);
+            f.mkdirs();
+            f.createNewFile();
             wr = new BufferedWriter(new FileWriter(path));
             wr.write(data);
             wr.flush();
@@ -55,10 +58,20 @@ public class FileStream extends ScriptableObject {
 
         } catch (Exception e) {
             Context.reportError(e.toString());
-            try {
-                wr.close();
-            } catch (Throwable er) {
-            }
+
         }
+        return read(path);
+    }
+
+    @JSStaticFunction
+    public static String append(String path, String data) {
+        try {
+            FileWriter fw = new FileWriter(path, true);
+            fw.write(data);
+            fw.close();
+        } catch (Exception e) {
+            Context.reportError(e.getMessage());
+        }
+        return read(path);
     }
 }

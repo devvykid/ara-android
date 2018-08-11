@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import java.io.File
 import java.io.FileOutputStream
@@ -33,7 +32,7 @@ class ScriptEditor : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_scripteditor)
 
-        val debug = findViewById<TextView>(R.id.debug)
+        //val debug = findViewById<TextView>(R.id.debug)
         scriptEdit = findViewById(R.id.JSCodeEdit)
 
         scriptName = intent.extras!!.getString("scriptName")
@@ -56,7 +55,7 @@ class ScriptEditor : AppCompatActivity() {
         scrollView = findViewById(R.id.scriptEdit_scrollView)
         scrollView.post { scrollView.scrollY = MainApplication.context!!.getSharedPreferences("editor", 0).getInt("scrollState", 0) }
 
-        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY -> MainApplication.context!!.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply() })
+        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ -> MainApplication.context!!.getSharedPreferences("editor", 0).edit().putInt("scrollState", scrollView.scrollY).apply() })
 
 
         fab.setOnClickListener {

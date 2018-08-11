@@ -8,7 +8,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword 'HexIsrf1403.'
-            storeFile file('G:/XFKey.jks')
+            storeFile file('F:/XFKey.jks')
             storePassword 'HexIsrf1403.'
         }
     }
