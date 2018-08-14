@@ -128,7 +128,8 @@ class ScriptsManager {
 
                 isCompiling[scriptName] = false
             } catch (e: Throwable) {
-                container[scriptName]!!.setOnStartCompile(null)
+
+                container[scriptName]?.setOnStartCompile(null)
                 if (NotificationListener.UIHandler != null) {
                     NotificationListener.UIHandler!!.post {
                         Log.e("parser", "?", e)
