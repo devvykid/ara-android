@@ -199,6 +199,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             initialize()
 
         }
+
         /*File sessionsPath= new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"katalkbot"+File.separator+"Sessions");
         if(sessionsPath.exists()){
             File[] files=sessionsPath.listFiles();
@@ -337,11 +338,12 @@ class ScriptSelectActivity : AppCompatActivity() {
         var b = false
         for (k in keySet) {
             b = switchMap[k]!!.isChecked;
+            if (b) {
+                noti(ctx)
+                break
+            }
+        }
 
-        }
-        if (b) {
-            noti(ctx)
-        }
     }
 
     override fun onResume() {
@@ -481,6 +483,7 @@ class ScriptSelectActivity : AppCompatActivity() {
             msg.add(29, "<h3>3.02</h3> Api.isCompiling(\"스크립트이름.js\")이 추가되었습니다. 인자를 전달하지 않을 경우 하나라도 컴파일중인 스크립트가 있을 시 true를 반환합니다.<br />지난 업데이트에서 몇가지 업데이트가 적용되지 않은 문제를 해결했습니다.<br />전역에서 인자없이 Api.compile을 호출 할 시 무한 컴파일이 되는 현상을 방지했습니다.")
             msg.add(30, "<h3>3.03</h3> DataBase.appendDataBase, FileStream.append가 추가되었습니다. <br /> DataBase의 setDataBase, FileStream의 write가 이제 파일의 최종 내용을 리턴합니다.(appendDataBase, append도 마찬가지)<br />DataBase와 FileStream의 각 함수에 이제 경로를 명시할 수 있습니다.<br />onStartCompile호출 중 에러 발생 시 튕기는 오류를 해결하고, 컴파일을 중지하도록 수정하였습니다.<br />도움말을 업데이트하였습니다.")
             msg.add(31, "<h3>3.04</h3> (긴급) 첫 컴파일중 컴파일에러 발생시 앱이 튕기는 문제를 해결했습니다.")
+            msg.add(32, "<h3>3.05</h3> 디버그룸에서 replier.reply에 메시지값으로 null전달시 튕기는 문제를 해결했습니다.")
             val result = StringBuilder()
             for (i in lastVersion + 1 - 21..version - 21) {
                 if (i > msg.size - 1) break
@@ -579,6 +582,7 @@ class ScriptSelectActivity : AppCompatActivity() {
                 notificationManager.cancel(1)
             else {
                 notificationManager.notify(1, noti.build())
+
             }
 
 

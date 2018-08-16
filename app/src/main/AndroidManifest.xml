@@ -90,6 +90,7 @@
         </provider>
 
         <activity android:name=".ShowAllActivity"></activity>
+
     </application>
 
 </manifest>

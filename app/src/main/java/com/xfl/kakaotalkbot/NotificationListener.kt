@@ -283,11 +283,11 @@ class NotificationListener : NotificationListenerService() {
 
         }
 
-        fun getSession(room: String): Notification.Action? {
+        fun getSession(room: String?): Notification.Action? {
             return SavedSessions[room]
         }
 
-        fun hasSession(room: String): Boolean {
+        fun hasSession(room: String?): Boolean {
             return SavedSessions[room] != null
 
         }

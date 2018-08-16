@@ -156,10 +156,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(UserMessage message) {
             String msg = message.getText();
-            if (msg.length() > LONG_MESSAGE_LENGTH) {
-                msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
+            if (msg != null)
+                if (msg.length() > LONG_MESSAGE_LENGTH) {
+                    msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
 
-            }
+                }
             messageText.setText(msg);
 
             // Format the stored timestamp into a readable String using method.
