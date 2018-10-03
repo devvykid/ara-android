@@ -1,5 +1,5 @@
 # 안드로이드 Arabot Agent
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/computerpark/ara-android/blob/master/LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 https://github.com/mir99712/KakaotalkBot 에서 Violet XF님의 소스를 포크하였습니다.
 
