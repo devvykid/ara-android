@@ -1,5 +1,6 @@
 # 안드로이드 Arabot Agent
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+라이센스: GPL v3. 즉, 소스 먹튀 금지.
 
 https://github.com/mir99712/KakaotalkBot 에서 Violet XF님의 소스를 포크하였습니다.
 
