@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1002332903255:android:3e7deccaede5024f",
         "android_client_info": {
-          "package_name": "com.xfl.kakaotalkbot"
+          "package_name": "me.computerpark.ara_android"
         }
       },
       "oauth_client": [

@@ -1,4 +1,4 @@
-package com.xfl.kakaotalkbot.MessageUI;
+package me.computerpark.ara_android.MessageUI;
 
 public class UserMessage {
 

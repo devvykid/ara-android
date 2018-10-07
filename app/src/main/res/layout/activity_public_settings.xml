@@ -107,6 +107,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@drawable/ic_done_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

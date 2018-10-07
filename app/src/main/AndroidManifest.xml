@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xfl.kakaotalkbot">
+    package="me.computerpark.ara_android">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +21,7 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Ara">
         <service
             android:name=".NotificationListener"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -34,22 +34,16 @@
 
         <activity
             android:name=".HelpActivity"
-            android:parentActivityName=".ScriptSelectActivity" />
+            android:parentActivityName=".ScriptSelectActivity"
+            android:theme="@style/Ara" />
         <activity
             android:name=".BlackListManager"
-            android:parentActivityName=".ScriptSelectActivity" />
+            android:parentActivityName=".ScriptSelectActivity"
+            android:theme="@style/Ara" />
         <activity
             android:name=".PublicSettingsScreen"
-            android:label="Public Setting"
+            android:label="@string/public_settings"
             android:parentActivityName=".ScriptSelectActivity" />
-        <activity
-            android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true" />
-        <activity
-            android:name="com.adcolony.sdk.AdColonyAdViewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true" />
         <activity
             android:name=".ScriptSelectActivity"
             android:label="@string/app_name">
@@ -68,7 +62,7 @@
         <activity
             android:name=".ScriptEditor"
             android:label="Script Editor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Ara" />
         <activity
             android:name=".DebugModeScreen"
             android:label="Debug Room" />

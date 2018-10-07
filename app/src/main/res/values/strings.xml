@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MessengerBot</string>
-    <string name="channel_name">MessengerBot Notifications</string>
+    <string name="app_name">Arabot-Agent</string>
+    <string name="channel_name">Ara-Agent Notifications</string>
     <string name="channel_description">Notifications of MessengerBot</string>
     <string name="action_clearlogs">Reset Log</string>
     <string name="blacklist_room">Room(Enter to separate)</string>
@@ -12,7 +12,7 @@
     <string name="settings_kakaotalk_location_normal">Standard Kakaotalk/Samsung DualMessenger</string>
     <string name="settings_kakaotalk_location_parallel">Parallel Space(Not works yet)</string>
     <string name="settings_compatibility">Compatibility</string>
-    <string name="settings_compatibility_jellbreak">JellBreak Bot</string>
+    <string name="settings_compatibility_jellbreak">JellBreak Bot Compatibility (Database etc...)</string>
     <string name="settings_manage_blacklist">Manage Blacklist</string>
     <string name="settings_others">Others</string>
     <string name="settings_others_offOnRuntimeError">Automatically turn off bot on runtime error(Recommended)</string>
@@ -79,14 +79,14 @@
     \n
     Rhino, Mozilla\'s JavaScript Engine, is used in this application.\n
     License: https://www.mozilla.org/en-US/MPL/2.0</string>
-    <string name="settings_kakaotalk_location_facebookMessenger" translatable="false">Facebook Messenger</string>
-    <string name="settings_kakaotalk_location_Line" translatable="false">Line</string>
+    <string name="settings_kakaotalk_location_facebookMessenger">Facebook Messenger</string>
+    <string name="settings_kakaotalk_location_Line">Line</string>
     <string name="script_autoloaded">Applied edited script to editor</string>
     <string name="tutorial_openAnotherApp">Long press to open in another app</string>
     <string name="tutorial_saveAndCompile">Long press to Save and Compile</string>
     <string name="alert_newScript_title">New Script</string>
     <string name="alert_newScript_message">Type file name:</string>
-    <string name="already_compiling">The script is already being compiled</string>
+    <string name="already_compiling">The script is already being compiled.</string>
     <string name="compile_all">Compile All</string>
     <string name="off_all">Turn off All</string>
     <string name="alert_set_noti_access_message">Touch OK to go settings</string>
@@ -98,15 +98,26 @@
     <string name="public_settings_autocompile">Automatically compile scripts when you get first message but no scripts have been compiled</string>
     <string name="public_settings_customPackages">Package names to read Notification (Enter to separate)</string>
     <string name="internal_error">MessengerBot: App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
-    <string name="action_open_cafe">Open Naver Cafe</string>
+    <string name="action_open_cafe">MessengerBot Community</string>
     <string name="public_settings">Public Settings</string>
     <string name="please_compile_first">Please compile first</string>
-    <string name="switch_redundant">Since this script doesn\'t include response function, turning on this is redundant.</string>
+    <string name="switch_redundant">Since this script doesn\'t include response function, so turning on this is redundant.</string>
     <string name="bot_activate">Activate</string>
     <string name="unify_params">Use unified parameters. Not recommended for beginners of JavaScript</string>
     <string name="delete_script">Delete Script</string>
     <string name="alert_delete_script">Are you sure?</string>
-    <string name="alert_delete_script_hint">Please type the name of this script</string>
+    <string name="alert_delete_script_hint">Please type the name of this script.</string>
     <string name="showAll_adjustScreen">Adjust to Screen</string>
+    <string name="goto_github">View On Github</string>
+    <string name="public_settings_timeout_overflow">Value must be in 0~2147483647</string>
+    <string name="saved">Saved</string>
+    <string name="func_oncreate_error">There is no function onCreate()!</string>
+    <string name="func_onstop_error">There is no function onStop()!</string>
+    <string name="func_onresume_error">There is no function onResume()!</string>
+    <string name="func_onpause_error">There is no function onPause()!</string>
+    <string name="messege_more">more...</string>
+    <string name="quit">Quit</string>
+    <string name="action_help">Help</string>
+    <string name="btn_dismiss">Dismiss</string>
 
 </resources>

@@ -69,5 +69,5 @@
         android:clickable="true"
         android:focusable="true"
         android:tint="#FFFFFF"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>

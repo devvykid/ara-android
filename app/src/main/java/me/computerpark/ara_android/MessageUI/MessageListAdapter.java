@@ -1,4 +1,4 @@
-package com.xfl.kakaotalkbot.MessageUI;
+package me.computerpark.ara_android.MessageUI;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xfl.kakaotalkbot.MainApplication;
-import com.xfl.kakaotalkbot.R;
-import com.xfl.kakaotalkbot.ShowAllActivity;
-
 import java.util.List;
+
+import me.computerpark.ara_android.MainApplication;
+import me.computerpark.ara_android.R;
+import me.computerpark.ara_android.ShowAllActivity;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
@@ -133,7 +133,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(UserMessage message) {
             String msg = message.getText();
             if (msg.length() > LONG_MESSAGE_LENGTH) {
-                msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
+                msg = msg.substring(0, LONG_MESSAGE_LENGTH) + R.string.messege_more;
             }
             messageText.setText(msg);
             senderText.setText(message.getName());
@@ -158,7 +158,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             String msg = message.getText();
             if (msg != null)
                 if (msg.length() > LONG_MESSAGE_LENGTH) {
-                    msg = msg.substring(0, LONG_MESSAGE_LENGTH) + "...more";
+                    msg = msg.substring(0, LONG_MESSAGE_LENGTH) + R.string.messege_more;
 
                 }
             messageText.setText(msg);

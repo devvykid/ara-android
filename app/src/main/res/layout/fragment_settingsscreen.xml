@@ -173,21 +173,7 @@
                 android:text="@string/settings_manage_blacklist"
                 android:textColor="@color/buttonText" />
 
-            <Button
-                android:id="@+id/btn_help"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/buttonBackground"
-                android:text="@string/btn_help"
-                android:textColor="@color/buttonText" />
 
-            <Button
-                android:id="@+id/btn_showAd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/buttonBackground"
-                android:text="@string/settings_showAd"
-                android:textColor="@color/buttonText" />
 
             <Button
                 android:id="@+id/btn_deleteScript"
@@ -208,6 +194,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@drawable/ic_done_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

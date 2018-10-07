@@ -1,7 +1,4 @@
-package com.xfl.kakaotalkbot;
-
-
-
+package me.computerpark.ara_android;
 
 
 public class ResponseParameters {
@@ -23,9 +20,6 @@ public class ResponseParameters {
     public int threadId;
 
     public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB, String packName/*,int threadId*/) {
-
-
-
 
 
         this.room = room;
@@ -89,7 +83,6 @@ public class ResponseParameters {
     }
 
 */
-
 
 
 }

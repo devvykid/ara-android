@@ -1,4 +1,4 @@
-package com.xfl.kakaotalkbot;
+package me.computerpark.ara_android;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ScriptableObject;
@@ -12,9 +12,6 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 
 public class FileStream extends ScriptableObject {
-    public String getClassName(){
-        return "FileStream";
-    }
     @JSStaticFunction
     public static String read(String path) {
         try {
@@ -86,5 +83,9 @@ public class FileStream extends ScriptableObject {
             Context.reportError(e.toString());
         }
         return false;
+    }
+
+    public String getClassName() {
+        return "FileStream";
     }
 }

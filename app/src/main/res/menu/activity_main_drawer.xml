@@ -21,7 +21,7 @@
             android:title="Sandbox"/>
         <item
             android:id="@+id/nav_settingsscreen"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title=""/>
     </group>
 

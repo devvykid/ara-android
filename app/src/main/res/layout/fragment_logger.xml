@@ -33,6 +33,6 @@
         android:layout_weight="0.05"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/ic_arrow_upward_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

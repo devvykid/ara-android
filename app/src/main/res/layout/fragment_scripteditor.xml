@@ -18,7 +18,7 @@
         android:clickable="true"
         android:focusable="true"
         android:longClickable="true"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@drawable/ic_save_white_24dp" />
 
     <TextView
         android:id="@+id/debug"
@@ -52,7 +52,7 @@
                 android:fillViewport="false"
                 android:scrollbars="horizontal">
 
-                <com.xfl.kakaotalkbot.NumberedEditText
+                <me.computerpark.ara_android.NumberedEditText
                     android:id="@+id/JSCodeEdit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
