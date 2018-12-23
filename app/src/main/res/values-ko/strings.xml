@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">아라봇++</string>
-    <string name="channel_name">아라봇 에이전트 알림</string>
-    <string name="channel_description">아라봇 에이전트의 알림</string>
+    <string name="channel_name">아라봇++ 알림</string>
+    <string name="channel_description">아라봇++의 알림</string>
     <string name="action_clearlogs">로그 초기화</string>
-    <string name="blacklist_room">방(엔터로 구분)</string>
-    <string name="blacklist_name">이름(엔터로 구분)</string>
+    <string name="blacklist_room">방 (엔터로 구분)</string>
+    <string name="blacklist_name">이름 (엔터로 구분)</string>
     <string name="blacklist_apply">적용하고 나가기</string>
     <string name="noti_read_permission">알림 읽기 권한</string>
     <string name="no_noti_read_permission">알림 읽기 권한이 없습니다.</string>
     <string name="settings_kakaotalk_location">메신저</string>
-    <string name="settings_kakaotalk_location_normal">일반 카카오톡/삼성 듀얼메신저</string>
-    <string name="settings_kakaotalk_location_parallel">Parallel Space(미구현)</string>
+    <string name="settings_kakaotalk_location_normal">일반 카카오톡 / 삼성 듀얼메신저</string>
+    <string name="settings_kakaotalk_location_parallel">Parallel Space (미구현)</string>
     <string name="settings_compatibility">호환성</string>
     <string name="settings_compatibility_jellbreak">JellBreak봇 호환 (데이터베이스 등...)</string>
     <string name="settings_manage_blacklist">블랙리스트 관리</string>
@@ -19,7 +19,7 @@
     <string name="settings_others_onDeleteBackup">DataBase.removeDataBase호출시, 자동으로 데이터베이스를 백업합니다</string>
     <string name="settings_specificLog">상세 로그</string>
     <string name="settings_snackbar_applied">일부 설정은 재컴파일 이후 적용됩니다</string>
-    <string name="settings_resetSession">재컴파일시 디버그룸 세션 초기화</string>
+    <string name="settings_resetSession">재컴파일시 디버그룸 초기화</string>
     <string name="settings_showAd">광고를 보아 개발자 돕기</string>
     <string name="snackbar_script_saved">저장되었습니다.</string>
     <string name="snackbar_script_save_failed">저장 실패!</string>
@@ -99,8 +99,13 @@
     \n
     \n
     이 앱에는 Mozilla의 JavaScript 엔진인 Rhino가 사용되었습니다.\n
-    라이선스: https://www.mozilla.org/en-US/MPL/2.0</string>
-    <string name="script_autoloaded">변경사항 적용됨</string>
+    라이선스: https://www.mozilla.org/en-US/MPL/2.0\n
+    \n
+    \n
+    <i>C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do it blows your whole leg off.</i>\n
+    <i>― Bjarne Stroustrup</i>\n\n
+    </string>
+    <string name="script_autoloaded">변경사항이 적용되었습니다</string>
     <string name="tutorial_openAnotherApp">길게 눌러서 다른 앱으로 열기</string>
     <string name="tutorial_saveAndCompile">길게 눌러서 저장 후 컴파일</string>
     <string name="alert_newScript_title">새 스크립트</string>
@@ -116,8 +121,8 @@
     <string name="public_settings_jsouptimeout">HTML 파싱 시간제한(단위: ms)</string>
     <string name="public_settings_autocompile">메시지를 처음 수신했지만 어떤 스크립트도 컴파일 되지 않았을 때, 자동으로 컴파일합니다.</string>
     <string name="public_settings_customPackages">알림을 읽을 패키지명(엔터로 구분)</string>
-    <string name="internal_error">메신저봇: 앱 내부 오류가 발생하였습니다. 로그창 이미지를 zudevxf@gmail.com로 보내주시면 감사하겠습니다.</string>
-    <string name="public_settings">공용 설정</string>
+    <string name="internal_error">앱 내부 오류가 발생하였습니다. 로그창 이미지를 burningpig9592@gmail.com로 보내주시면 감사하겠습니다.</string>
+    <string name="public_settings">공통 설정</string>
     <string name="please_compile_first">우선, 컴파일을 해주세요</string>
     <string name="switch_redundant">스크립트에 response 함수가 없기 때문에 이 스크립트를 켜는것은 무의미합니다.</string>
     <string name="bot_activate">활성화</string>
@@ -140,4 +145,14 @@
     <string name="quit">끝내기</string>
     <string name="action_help">도움말</string>
     <string name="btn_dismiss">확인</string>
+    <string name="sandbox">샌드박스</string>
+    <string name="scriptsettings">스크립트 설정</string>
+    <string name="log">로그</string>
+    <string name="debugroom">디버그 룸</string>
+    <string name="scriptactivity">스크립트 액티비티</string>
+    <string name="scripteditor">스크립트 에디터</string>
+    <string name="blacklist">블랙리스트 관리</string>
+    <string name="custom_packages">커스텀 패키지</string>
+    <string name="application">애플리케이션</string>
+    <string name="script">스크립트</string>
 </resources>

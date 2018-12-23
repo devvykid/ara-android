@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,7 +18,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Script"
+                android:text="@string/script"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"
@@ -52,10 +53,11 @@
 
             <TextView
                 android:id="@+id/textView4"
+                android:paddingTop="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Application"
+                android:text="@string/application"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
@@ -77,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Custom Packages"
+                android:paddingTop="20dp"
+                android:text="@string/custom_packages"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />

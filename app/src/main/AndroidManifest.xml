@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="me.computerpark.ara_android">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,7 +22,9 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Ara">
+        android:theme="@style/Ara"
+        android:fullBackupContent="@xml/backup_descriptor"
+        tools:ignore="GoogleAppIndexingWarning">
         <service
             android:name=".NotificationListener"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -39,6 +42,7 @@
         <activity
             android:name=".BlackListManager"
             android:parentActivityName=".ScriptSelectActivity"
+            android:label="@string/blacklist"
             android:theme="@style/Ara" />
         <activity
             android:name=".PublicSettingsScreen"
@@ -55,23 +59,23 @@
         </activity>
         <activity
             android:name=".SettingsScreen"
-            android:label="Script Setting" />
+            android:label="@string/scriptsettings" />
         <activity
             android:name=".ScriptActivity"
-            android:label="Script Activity" />
+            android:label="@string/scriptactivity" />
         <activity
             android:name=".ScriptEditor"
-            android:label="Script Editor"
+            android:label="@string/scripteditor"
             android:theme="@style/Ara" />
         <activity
             android:name=".DebugModeScreen"
-            android:label="Debug Room" />
+            android:label="@string/debugroom" />
         <activity
             android:name=".LoggerScreen"
-            android:label="Log" />
+            android:label="@string/log" />
         <activity
             android:name=".CodePlaygroundScreen"
-            android:label="Sandbox" />
+            android:label="@string/sandbox" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -83,7 +87,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".ShowAllActivity"></activity>
+        <activity android:name=".ShowAllActivity" />
 
     </application>
 

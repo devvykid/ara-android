@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".40"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -37,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".40"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -67,11 +69,13 @@
 
     <Button
         android:id="@+id/blackListApply"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".65"
         android:backgroundTint="@color/buttonBackground"
         android:text="@string/blacklist_apply"
-        android:textColor="@color/buttonText" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </android.widget.LinearLayout>

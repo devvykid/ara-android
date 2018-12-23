@@ -18,6 +18,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:text="@string/settings_kakaotalk_location"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
@@ -72,6 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_compatibility"
+                android:paddingTop="8dp"
+
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
@@ -80,6 +83,7 @@
                 android:id="@+id/chk_JBBotCompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="@string/settings_compatibility_jellbreak" />
@@ -89,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_others"
                 android:textAlignment="center"
+                android:paddingTop="20dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
 
@@ -149,6 +154,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="20dp"
                 android:text="@string/settings_optimization"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
@@ -158,6 +164,8 @@
                 android:id="@+id/optimization"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:max="10"
                 android:progress="0" />
 

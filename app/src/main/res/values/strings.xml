@@ -1,32 +1,32 @@
 <resources>
-    <string name="app_name">Arabot-Agent</string>
-    <string name="channel_name">Ara-Agent Notifications</string>
-    <string name="channel_description">Notifications of MessengerBot</string>
+    <string name="app_name">Arabot++</string>
+    <string name="channel_name">Arabot++ Notifications</string>
+    <string name="channel_description">Notifications of Arabot++ App</string>
     <string name="action_clearlogs">Reset Log</string>
-    <string name="blacklist_room">Room(Enter to separate)</string>
-    <string name="blacklist_name">Name(Enter to separate)</string>
+    <string name="blacklist_room">Room (Separate by lines)</string>
+    <string name="blacklist_name">Name (Separate by lines)</string>
     <string name="blacklist_apply">Apply end exit</string>
-    <string name="noti_read_permission">Notification Read Access</string>
-    <string name="no_noti_read_permission">No Notification Read Access</string>
+    <string name="noti_read_permission">Notification Access</string>
+    <string name="no_noti_read_permission">No Notification Access!</string>
     <string name="settings_kakaotalk_location">Messenger</string>
-    <string name="settings_kakaotalk_location_normal">Standard Kakaotalk/Samsung DualMessenger</string>
-    <string name="settings_kakaotalk_location_parallel">Parallel Space(Not works yet)</string>
+    <string name="settings_kakaotalk_location_normal">Kakaotalk / Samsung Dual Messenger</string>
+    <string name="settings_kakaotalk_location_parallel">Parallel Space (Not works yet)</string>
     <string name="settings_compatibility">Compatibility</string>
     <string name="settings_compatibility_jellbreak">JellBreak Bot Compatibility (Database etc...)</string>
     <string name="settings_manage_blacklist">Manage Blacklist</string>
     <string name="settings_others">Others</string>
-    <string name="settings_others_offOnRuntimeError">Automatically turn off bot on runtime error(Recommended)</string>
-    <string name="settings_others_onDeleteBackup">Backup database automatically when you call DataBase.removeDataBase</string>
+    <string name="settings_others_offOnRuntimeError">Automatically turn off bot when runtime error (Recommended)</string>
+    <string name="settings_others_onDeleteBackup">Backup database when DataBase.removeDataBase is called</string>
     <string name="settings_specificLog">Specific Log</string>
-    <string name="settings_snackbar_applied">Some settings will be applied after re-compile</string>
-    <string name="settings_resetSession">When re-compile, reset rooms session</string>
+    <string name="settings_snackbar_applied">Some settings will be applied at next compile</string>
+    <string name="settings_resetSession">When re-compile, reset debug room</string>
     <string name="settings_showAd">See ad to help developer</string>
     <string name="snackbar_script_saved">Saved</string>
     <string name="snackbar_script_save_failed">Saving Failed</string>
     <string name="snackbar_compiling">Compiling…</string>
     <string name="snackbar_compiled">Compiled</string>
     <string name="snackbar_compileStart">Start Compile</string>
-    <string name="chk_groupchat">GroupChat</string>
+    <string name="chk_groupchat">Group Chat</string>
 
     <string name="wait_for_ad">Please wait for a moment to load ad…</string>
     <string name="thanks_for_helping">Thanks for helping!</string>
@@ -55,7 +55,7 @@
     DataBase.getDataBase(String fileName) : get data from file\n
     DataBase.removeDataBase(String fileName) : delete file\n
     DataBase.appendDataBase(String fileName,String content) : append data to file\n\n
-    Bridge.getScopeOf(String scriptName) : Gets the script's scope.\n
+    Bridge.getScopeOf(String scriptName) : Gets the script\'s scope.\n
     Bridge.isAllowed(String scriptName) : returns if the script is allowed to be accessed\n
     Device : contains device information.\n
           .getBuild()\n
@@ -81,23 +81,23 @@
     License: https://www.mozilla.org/en-US/MPL/2.0</string>
     <string name="settings_kakaotalk_location_facebookMessenger">Facebook Messenger</string>
     <string name="settings_kakaotalk_location_Line">Line</string>
-    <string name="script_autoloaded">Applied edited script to editor</string>
+    <string name="script_autoloaded">Applied changes to editor</string>
     <string name="tutorial_openAnotherApp">Long press to open in another app</string>
     <string name="tutorial_saveAndCompile">Long press to Save and Compile</string>
     <string name="alert_newScript_title">New Script</string>
-    <string name="alert_newScript_message">Type file name:</string>
-    <string name="already_compiling">The script is already being compiled.</string>
+    <string name="alert_newScript_message">Input file name:</string>
+    <string name="already_compiling">Script is already compiling.</string>
     <string name="compile_all">Compile All</string>
     <string name="off_all">Turn off All</string>
-    <string name="alert_set_noti_access_message">Touch OK to go settings</string>
+    <string name="alert_set_noti_access_message">To go to settings, tap OK button</string>
     <string name="settings_ignore_api_off">Ignore Api.off()</string>
     <string name="copied_to_clipboard">Copied to Clipboard</string>
     <string name="settings_allow_bridge">Allow Bridge to access this script\'s scope</string>
-    <string name="settings_optimization">Optimization (interpreter=0)</string>
+    <string name="settings_optimization">Optimization (Interpreter=0)</string>
     <string name="public_settings_jsouptimeout">HTML Parsing Timeout(ms)</string>
-    <string name="public_settings_autocompile">Automatically compile scripts when you get first message but no scripts have been compiled</string>
-    <string name="public_settings_customPackages">Package names to read Notification (Enter to separate)</string>
-    <string name="internal_error">MessengerBot: App Internal Error has occurred. Sending Log screen image to zudevxf@gmail.com would be appreciated</string>
+    <string name="public_settings_autocompile">Automatically compile scripts when you get first message but no script was compiled</string>
+    <string name="public_settings_customPackages">Package names to read Notification (Separate with lines)</string>
+    <string name="internal_error">An Internal Error has occurred. Please send log screen image to burningpig9592@gmail.com.</string>
     <string name="action_open_cafe">MessengerBot Community</string>
     <string name="public_settings">Public Settings</string>
     <string name="please_compile_first">Please compile first</string>
@@ -119,5 +119,15 @@
     <string name="quit">Quit</string>
     <string name="action_help">Help</string>
     <string name="btn_dismiss">Dismiss</string>
+    <string name="sandbox">Sandbox</string>
+    <string name="scriptsettings">Script Configuration</string>
+    <string name="log">Log</string>
+    <string name="debugroom">Debug Room</string>
+    <string name="scriptactivity">Script Activity</string>
+    <string name="scripteditor">Script Editor</string>
+    <string name="blacklist">Manage Blacklist</string>
+    <string name="application">Application</string>
+    <string name="custom_packages">Custom Packages</string>
+    <string name="script">Script</string>
 
 </resources>

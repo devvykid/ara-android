@@ -24,13 +24,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Arabot Agent"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Minimal Kakaotalk, Messenger Bot Platform." />
+        android:layout_height="55dp"
+        android:paddingTop="2dp"
+        android:text="C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do it blows your whole leg off.    ― Bjarne Stroustrup"
+        android:textColor="@color/white" />
 
 </LinearLayout>

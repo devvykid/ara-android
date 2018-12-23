@@ -17,8 +17,8 @@ android {
         applicationId "me.computerpark.ara_android"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1007
-        versionName "18.1007"
+        versionCode 181214
+        versionName "18.1214"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
