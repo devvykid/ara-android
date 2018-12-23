@@ -10,4 +10,4 @@ https://github.com/mir99712/KakaotalkBot 에서 Violet XF님의 소스를 포크
 
 --- 업데이트
 
-Messenger봇의 소스가 내려갔습니다.
+Messenger봇의 소스가 내려갔습니다. ~~나쁜 새키들~~
