@@ -64,7 +64,7 @@ class ScriptEditor : AppCompatActivity() {
 
         fab.setOnClickListener {
             val i = applicationContext.getSharedPreferences("tutorial", 0).getInt("saveAndCompile", 0)
-            if (i < 2) {
+            if (true) {
                 applicationContext.getSharedPreferences("tutorial", 0).edit().putInt("saveAndCompile", i + 1).apply()
                 Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_saveAndCompile), Toast.LENGTH_SHORT).show()
             }
