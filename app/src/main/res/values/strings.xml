@@ -12,7 +12,7 @@
     <string name="settings_kakaotalk_location_normal">Kakaotalk / Samsung Dual Messenger</string>
     <string name="settings_kakaotalk_location_parallel">Parallel Space (Not works yet)</string>
     <string name="settings_compatibility">Compatibility</string>
-    <string name="settings_compatibility_jellbreak">JellBreak Bot Compatibility (Database etc...)</string>
+    <string name="settings_compatibility_jellbreak">JellBreak Bot Compatibility (Database etc…)</string>
     <string name="settings_manage_blacklist">Manage Blacklist</string>
     <string name="settings_others">Others</string>
     <string name="settings_others_offOnRuntimeError">Automatically turn off bot when runtime error (Recommended)</string>
@@ -115,7 +115,7 @@
     <string name="func_onstop_error">There is no function onStop()!</string>
     <string name="func_onresume_error">There is no function onResume()!</string>
     <string name="func_onpause_error">There is no function onPause()!</string>
-    <string name="messege_more">more...</string>
+    <string name="messege_more">more…</string>
     <string name="quit">Quit</string>
     <string name="action_help">Help</string>
     <string name="btn_dismiss">Dismiss</string>
@@ -129,5 +129,6 @@
     <string name="application">Application</string>
     <string name="custom_packages">Custom Packages</string>
     <string name="script">Script</string>
+    <string name="badscriptname">Script name is incorrect!</string>
 
 </resources>

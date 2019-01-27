@@ -28,7 +28,7 @@ class SettingsScreen : AppCompatActivity() {
         val customPackages = context.getSharedPreferences("publicSettings", 0).getString("customPackages", "")
 
         for (kk in customPackages!!.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-            var k = kk.trim { it <= ' ' }
+            val k = kk.trim { it <= ' ' }
             if (k.isEmpty()) continue
             val chk = CheckBox(this)
 
@@ -113,13 +113,15 @@ class SettingsScreen : AppCompatActivity() {
             container.addView(et)
             ad.setView(container)
             ad.setPositiveButton("OK") { dialog, _ ->
-                if (et.text.toString() == scriptName) {
+                if (et.text.toString().toLowerCase() == scriptName.toLowerCase() || et.text.toString().toLowerCase() + ".js" == scriptName) {   //fixes: ara-android #2
                     Api.off(scriptName)
                     Api.unload(scriptName)
                     File(MainApplication.basePath.path + File.separator + scriptName).delete()
                     Toast.makeText(this@SettingsScreen, "Deleted", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                     this@SettingsScreen.finish()
+                } else {
+                    Toast.makeText(this@SettingsScreen, getString(R.string.badscriptname), Toast.LENGTH_SHORT).show()
                 }
             }
             ad.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }

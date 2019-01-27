@@ -12,7 +12,7 @@
     <string name="settings_kakaotalk_location_normal">일반 카카오톡 / 삼성 듀얼메신저</string>
     <string name="settings_kakaotalk_location_parallel">Parallel Space (미구현)</string>
     <string name="settings_compatibility">호환성</string>
-    <string name="settings_compatibility_jellbreak">JellBreak봇 호환 (데이터베이스 등...)</string>
+    <string name="settings_compatibility_jellbreak">JellBreak봇 호환 (데이터베이스 등…)</string>
     <string name="settings_manage_blacklist">블랙리스트 관리</string>
     <string name="settings_others">기타</string>
     <string name="settings_others_offOnRuntimeError">런타임 에러시, 자동으로 봇의 전원을 끕니다(권장)</string>
@@ -145,7 +145,7 @@
     <string name="func_onstop_error">onStop() 함수를 찾을 수 없습니다!</string>
     <string name="func_onresume_error">onResume() 함수를 찾을 수 없습니다!</string>
     <string name="func_onpause_error">onPause() 함수를 찾을 수 없습니다!</string>
-    <string name="messege_more">더보기...</string>
+    <string name="messege_more">더보기…</string>
     <string name="quit">끝내기</string>
     <string name="action_help">도움말</string>
     <string name="btn_dismiss">확인</string>
@@ -159,4 +159,5 @@
     <string name="custom_packages">커스텀 패키지</string>
     <string name="application">애플리케이션</string>
     <string name="script">스크립트</string>
+    <string name="badscriptname">스크립트 이름이 틀립니다!</string>
 </resources>
