@@ -27,7 +27,7 @@ class ScriptContainer {
         this.scope = scope
     }
 
-    constructor() {}
+    constructor()
 
     fun setResponder(responder: Function?): ScriptContainer {
         this.responder = responder

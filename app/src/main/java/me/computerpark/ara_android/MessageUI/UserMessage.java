@@ -2,9 +2,9 @@ package me.computerpark.ara_android.MessageUI;
 
 public class UserMessage {
 
-    String message;
-    String sender;
-    boolean isBot;
+    private String message;
+    private String sender;
+    private final boolean isBot;
     long createdAt;
 
     public UserMessage(boolean isBot, String message, String sender) {

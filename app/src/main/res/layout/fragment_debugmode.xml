@@ -32,7 +32,8 @@
             android:ems="10"
             android:focusable="true"
             android:hint="@string/room"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/txt_sender"
@@ -42,7 +43,8 @@
             android:ems="10"
             android:focusable="true"
             android:hint="@string/sender"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -84,7 +86,8 @@
             android:maxLines="6"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/button_chatbox_send"

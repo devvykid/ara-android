@@ -22,11 +22,11 @@ class Bridge : ScriptableObject() {
 
                 return null
             }
-            try {
-                return ScriptsManager.container[scriptName]!!.getScope()
+            return try {
+                ScriptsManager.container[scriptName]!!.getScope()
             } catch (e: Throwable) {
                 Context.reportError(e.toString())
-                return null
+                null
             }
 
         }

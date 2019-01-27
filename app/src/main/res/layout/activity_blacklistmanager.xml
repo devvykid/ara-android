@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine"
-                tools:ignore="LabelFor" />
+                tools:ignore="LabelFor"
+                android:importantForAutofill="no" />
 
         </ScrollView>
     </LinearLayout>
@@ -63,7 +64,8 @@
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:singleLine="false"
-                tools:ignore="LabelFor" />
+                tools:ignore="LabelFor"
+                android:importantForAutofill="no" />
 
         </ScrollView>
 

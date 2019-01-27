@@ -9,8 +9,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import java.util.*
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
-
 
 
 class PublicSettingsScreen : AppCompatActivity() {

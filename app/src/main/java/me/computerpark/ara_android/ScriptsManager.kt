@@ -88,10 +88,10 @@ class ScriptsManager {
 
 
                 script_real.exec(parseContext, scope)
-                if (scope.has("response", scope)) {
-                    responder = scope.get("response", scope) as Function
+                responder = if (scope.has("response", scope)) {
+                    scope.get("response", scope) as Function
                 } else {
-                    responder = null
+                    null
                 }
                 var onStartCompile: Function? = null
                 var onCreate: Function? = null

@@ -22,7 +22,5 @@ class LoggerAdapter(val items: ArrayList<LogItem>, val context: Context) : Recyc
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-    }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

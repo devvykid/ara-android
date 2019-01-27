@@ -47,7 +47,8 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:hint="@string/ms"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 
@@ -92,7 +93,8 @@
                 android:ems="10"
                 android:hint="@string/public_settings_customPackages"
                 android:inputType="textMultiLine|textPersonName"
-                android:singleLine="false" />
+                android:singleLine="false"
+                android:importantForAutofill="no" />
 
             <Space
                 android:layout_width="match_parent"

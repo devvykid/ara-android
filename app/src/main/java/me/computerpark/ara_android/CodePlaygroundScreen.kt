@@ -19,13 +19,11 @@ import org.mozilla.javascript.Function
 import org.mozilla.javascript.ImporterTopLevel
 import org.mozilla.javascript.ScriptableObject
 import java.util.*
-import android.support.design.widget.Snackbar
-
 
 
 class CodePlaygroundScreen : AppCompatActivity() {
-    lateinit var mMessageRecycler: RecyclerView
-    lateinit var mMessageAdapter: MessageListAdapter
+    private lateinit var mMessageRecycler: RecyclerView
+    private lateinit var mMessageAdapter: MessageListAdapter
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

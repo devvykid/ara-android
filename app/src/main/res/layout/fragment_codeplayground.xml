@@ -45,7 +45,8 @@
             android:maxLines="6"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/sand_button_chatbox_send"

@@ -4,19 +4,18 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import android.widget.TextView
 
 class ShowAllActivity : AppCompatActivity() {
-    lateinit var vscroll: ScrollView
-    lateinit var hscroll: HorizontalScrollView
+    private lateinit var vscroll: ScrollView
+    private lateinit var hscroll: HorizontalScrollView
     lateinit var textView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var data = intent.getStringExtra("showAllData")
+        val data = intent.getStringExtra("showAllData")
 
         vscroll = ScrollView(this)
 
@@ -40,8 +39,8 @@ class ShowAllActivity : AppCompatActivity() {
         setContentView(vscroll)
     }
 
-    fun dpToPx(dp: Int): Int {
-        return (dp * Resources.getSystem().getDisplayMetrics().density).toInt()
+    private fun dpToPx(dp: Int): Int {
+        return (dp * Resources.getSystem().displayMetrics.density).toInt()
     }
 
 
@@ -60,7 +59,7 @@ class ShowAllActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setAdjust(b: Boolean) {
+    private fun setAdjust(b: Boolean) {
         if (b) {
             hscroll.removeAllViews()
             vscroll.removeAllViews()

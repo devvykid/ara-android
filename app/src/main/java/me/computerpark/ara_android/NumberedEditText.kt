@@ -21,14 +21,12 @@ import android.util.AttributeSet
 class NumberedEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
 
 
-    private val rect: Rect
+    private val rect: Rect = Rect()
 
     private val paint: Paint
 
 
     init {
-
-        rect = Rect()
 
         paint = Paint()
 

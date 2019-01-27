@@ -120,8 +120,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         basePath.mkdir()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         setContentView(R.layout.activity_scriptselect)
-        val activate: Switch
-        activate = findViewById(R.id.switch_activate)
+        val activate: Switch = findViewById(R.id.switch_activate)
         activate.isChecked = MainApplication.context!!.getSharedPreferences("bot", 0).getBoolean("activate", true)
         activate.setOnCheckedChangeListener { _, b ->
             applicationContext.getSharedPreferences("bot", 0).edit().putBoolean("activate", b).apply()
@@ -288,10 +287,8 @@ class ScriptSelectActivity : AppCompatActivity() {
                 }
                 edit.setOnClickListener {
                     val i = applicationContext.getSharedPreferences("tutorial", 0).getInt("openAnotherApp", 0)
-                    if (true) {
-                        applicationContext.getSharedPreferences("tutorial", 0).edit().putInt("openAnotherApp", i + 1).apply()
-                        Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_openAnotherApp), Toast.LENGTH_SHORT).show()
-                    }
+                    applicationContext.getSharedPreferences("tutorial", 0).edit().putInt("openAnotherApp", i + 1).apply()
+                    Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_openAnotherApp), Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, ScriptEditor::class.java)
                     intent.putExtra("scriptName", k.name)
                     startActivity(intent)
@@ -336,7 +333,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         val keySet = switchMap.keys
         var b = false
         for (k in keySet) {
-            b = switchMap[k]!!.isChecked;
+            b = switchMap[k]!!.isChecked
             if (b) {
                 noti(ctx)
                 break
@@ -372,7 +369,7 @@ class ScriptSelectActivity : AppCompatActivity() {
         when (requestCode) {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     initialize()
 
@@ -516,9 +513,9 @@ class ScriptSelectActivity : AppCompatActivity() {
         fun refreshProgressBar(scriptName: String, b: Boolean, changeColor: Boolean) {
             if (progressBarMap[scriptName] == null) return
             if (b) {
-                progressBarMap[scriptName]!!.setVisibility(View.VISIBLE)
+                progressBarMap[scriptName]!!.visibility = View.VISIBLE
             } else {
-                progressBarMap[scriptName]!!.setVisibility(View.GONE)
+                progressBarMap[scriptName]!!.visibility = View.GONE
                 if (changeColor && switchMap[scriptName] != null)
                     switchMap[scriptName]!!.setTextColor(MainApplication.context!!.resources.getColor(R.color.fully_compiled))
 

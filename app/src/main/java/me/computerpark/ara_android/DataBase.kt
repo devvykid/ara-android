@@ -20,7 +20,7 @@ class DataBase : ScriptableObject() {
     }
 
     companion object {
-        internal var dbDir = Environment.getExternalStorageDirectory().toString() + File.separator + "arabot" + File.separator + "Database"
+        private var dbDir = Environment.getExternalStorageDirectory().toString() + File.separator + "arabot" + File.separator + "Database"
         @JvmStatic
         @JSStaticFunction
         fun appendDataBase(fileName: String, data: String?): String? {
@@ -40,10 +40,10 @@ class DataBase : ScriptableObject() {
                         fileName += ".txt"
                     }
                 }
-                var f = File(dbDir + File.separator + fileName)
+                val f = File(dbDir + File.separator + fileName)
                 f.parentFile.mkdirs()
                 f.createNewFile()
-                var fw = FileWriter(f, true)
+                val fw = FileWriter(f, true)
 
                 fw.write(data)
                 fw.close()
@@ -98,7 +98,7 @@ class DataBase : ScriptableObject() {
             if (!fileName.contains(".")) {
                 fileName += ".txt"
             }
-            var f = File(dbDir + File.separator + fileName)
+            val f = File(dbDir + File.separator + fileName)
             f.parentFile.mkdirs()
 
             if (!f.exists()) return null

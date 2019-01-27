@@ -22,9 +22,9 @@ import java.util.*
  */
 
 class NotificationListener : NotificationListenerService() {
-    lateinit internal var context: android.content.Context
-    internal var photo: Bitmap? = null
-    internal var firstCompiling = false
+    internal lateinit var context: android.content.Context
+    private var photo: Bitmap? = null
+    private var firstCompiling = false
     override fun onCreate() {
 
         super.onCreate()
@@ -103,7 +103,7 @@ class NotificationListener : NotificationListenerService() {
             Log.d("actions", act.title.toString())
             Log.d("actionsExtra", act.extras.toString())
 
-            if (act.remoteInputs != null && act.remoteInputs.size > 0) {
+            if (act.remoteInputs != null && act.remoteInputs.isNotEmpty()) {
 
                 if (act.title.toString().toLowerCase().contains("reply") ||
                         act.title.toString().contains("답장") || act.title.toString().contains("返信") || act.title.toString().contains("답글")) {
@@ -233,7 +233,7 @@ class NotificationListener : NotificationListenerService() {
                             val imageDB = ImageDB(photo!!)
                             //  if(NotificationListener.threads[key]==null)NotificationListener.threads[key]=ArrayList<Thread?>()
                             //   val id=threads[key]!!.size
-                            var thr = Thread(Runnable {
+                            val thr = Thread(Runnable {
                                 callResponder(key, room, msg, sender, fisGroupChat, imageDB, packName, /*id,*/ act, false)
                                 //     threads[key]!![id]=null
                             })
@@ -264,14 +264,14 @@ class NotificationListener : NotificationListenerService() {
         var UIHandler: Handler? = Handler()
 
         lateinit var rootView: View
-        var SavedSessions: MutableMap<String?, Notification.Action?> = HashMap()
+        private var SavedSessions: MutableMap<String?, Notification.Action?> = HashMap()
         private val basePath = MainApplication.basePath
         // static File sessionsPath = new File(basePath + File.separator + "Sessions");
         private val banNameArr = HashMap<String, Array<String>>()
         private val banRoomArr = HashMap<String, Array<String>>()
 
 
-        public fun resetSession() {
+        fun resetSession() {
             try {
 
                 SavedSessions.clear()

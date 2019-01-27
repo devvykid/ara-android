@@ -13,7 +13,7 @@ class ImageDB(bitmap: Bitmap?) {
         return getProfileBase64()
     }
 
-    fun getProfileBase64(): String {
+    private fun getProfileBase64(): String {
         if (profilePic == null) return "[[NO_PROFILE_PICTURE]]"
         val byteArrayOutputStream = ByteArrayOutputStream()
 

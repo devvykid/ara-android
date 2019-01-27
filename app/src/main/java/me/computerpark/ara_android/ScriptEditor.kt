@@ -65,10 +65,8 @@ class ScriptEditor : AppCompatActivity() {
 
         fab.setOnClickListener {
             val i = applicationContext.getSharedPreferences("tutorial", 0).getInt("saveAndCompile", 0)
-            if (true) {
-                applicationContext.getSharedPreferences("tutorial", 0).edit().putInt("saveAndCompile", i + 1).apply()
-                Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_saveAndCompile), Toast.LENGTH_SHORT).show()
-            }
+            applicationContext.getSharedPreferences("tutorial", 0).edit().putInt("saveAndCompile", i + 1).apply()
+            Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.tutorial_saveAndCompile), Toast.LENGTH_SHORT).show()
             save()
             //Toast.makeText(MainApplication.context!!, R.string.snackbar_script_saved, Toast.LENGTH_SHORT).show()
             Snackbar.make(findViewById(R.id.scriptedit_root), R.string.snackbar_script_saved,Snackbar.LENGTH_SHORT).setAction(R.string.btn_dismiss, null).show()
@@ -170,7 +168,7 @@ Thread thr;
             }
             return null;
     }*/
-    fun save() {
+    private fun save() {
         script!!.setWritable(true)
 
         try {
@@ -216,7 +214,7 @@ Thread thr;
     }
 
 
-    fun getScript(): String {
+    private fun getScript(): String {
         return scriptEdit.text.toString()
     }
 
@@ -232,10 +230,10 @@ Thread thr;
             val str = FileManager.read(script!!)
             if (str!!.isEmpty()) {
                 val param: String
-                if (MainApplication.context!!.getSharedPreferences("settings" + scriptName!!, 0).getBoolean("useUnifiedParams", false)) {
-                    param = "params"
+                param = if (MainApplication.context!!.getSharedPreferences("settings" + scriptName!!, 0).getBoolean("useUnifiedParams", false)) {
+                    "params"
                 } else {
-                    param = "room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId"
+                    "room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId"
                 }
                 scriptEdit.setText("const scriptName=\"" + scriptName + "\";\n\n" +
                         "function response(" + param + "){\n" +

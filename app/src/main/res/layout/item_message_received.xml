@@ -19,7 +19,7 @@
         android:background="@drawable/rounded_rectangle_blue"
         android:maxWidth="320dp"
         android:padding="8dp"
-        android:text="long textlong textlong textlong textlong textlong textlong textlong textlong text"
+        android:text=""
         android:textColor="#ffffff"
         android:textColorLink="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"

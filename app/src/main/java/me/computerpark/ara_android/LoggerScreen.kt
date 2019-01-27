@@ -17,7 +17,7 @@ import android.widget.TextView
  */
 
 class LoggerScreen : AppCompatActivity() {
-    lateinit var goDownFab: FloatingActionButton
+    private lateinit var goDownFab: FloatingActionButton
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {

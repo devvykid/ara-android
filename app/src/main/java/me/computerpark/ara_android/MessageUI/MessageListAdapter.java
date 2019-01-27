@@ -21,11 +21,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     private final int LONG_MESSAGE_LENGTH = 500;
-    private Context mContext;
-    private List<UserMessage> mMessageList;
+    private final List<UserMessage> mMessageList;
 
     public MessageListAdapter(Context context, List<UserMessage> messageList) {
-        mContext = context;
         mMessageList = messageList;
     }
 
@@ -99,9 +97,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             public boolean onLongClick(View v) {
                 Context ctx = MainApplication.getContextForJava();
                 Toast.makeText(ctx, ctx.getResources().getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show();
-                String str = msgTxt;
                 ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText(str, str);
+                ClipData clip = ClipData.newPlainText(msgTxt, msgTxt);
                 clipboard.setPrimaryClip(clip);
                 return true;
             }
@@ -121,8 +118,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText;
-        TextView senderText;
+        final TextView messageText;
+        final TextView senderText;
 
         SentMessageHolder(View itemView) {
             super(itemView);
@@ -143,7 +140,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText;
+        final TextView messageText;
 
 
         ReceivedMessageHolder(View itemView) {

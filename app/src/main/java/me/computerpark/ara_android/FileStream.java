@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class FileStream extends ScriptableObject {
     @JSStaticFunction
-    public static String read(String path) {
+    private static String read(String path) {
         try {
             File f = new File(path);
             f.getParentFile().mkdirs();
@@ -42,7 +42,7 @@ public class FileStream extends ScriptableObject {
 
     @JSStaticFunction
     public static String write(String path, String data) {
-        BufferedWriter wr = null;
+        BufferedWriter wr;
         try {
 
             File f = new File(path);

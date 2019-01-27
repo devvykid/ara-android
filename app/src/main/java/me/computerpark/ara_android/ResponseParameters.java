@@ -3,38 +3,24 @@ package me.computerpark.ara_android;
 
 public class ResponseParameters {
 
-    public String room;
-
-    public String msg;
-
-    public String sender;
-
-    public boolean isGroupChat;
-
-    public SessionCacheReplier replier;
-
-    public ImageDB ImageDB;
-
-    public String packageName;
-
     public int threadId;
 
     public ResponseParameters(String room, String msg, String sender, boolean isGroupChat, SessionCacheReplier replier, ImageDB imageDB, String packName/*,int threadId*/) {
 
 
-        this.room = room;
+        String room1 = room;
 
-        this.msg = msg;
+        String msg1 = msg;
 
-        this.sender = sender;
+        String sender1 = sender;
 
-        this.isGroupChat = isGroupChat;
+        boolean isGroupChat1 = isGroupChat;
 
-        this.replier = replier;
+        SessionCacheReplier replier1 = replier;
 
-        this.ImageDB = imageDB;
+        me.computerpark.ara_android.ImageDB imageDB1 = imageDB;
 
-        this.packageName = packName;
+        String packageName = packName;
 //this.threadId=threadId;
     }
 

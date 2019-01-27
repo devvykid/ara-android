@@ -72,7 +72,7 @@ class DebugModeScreen : AppCompatActivity() {
             MainApplication.context!!.getSharedPreferences("debugSender", 0).edit().putString(scriptName, sender.text.toString()).apply()
             MainApplication.context!!.getSharedPreferences("debugRoom", 0).edit().putString(scriptName, room.text.toString()).apply()
 
-            messageList?.add(UserMessage(false, msgTxt.text.toString(), sender.text.toString()));
+            messageList?.add(UserMessage(false, msgTxt.text.toString(), sender.text.toString()))
             val newMsgPosition = mMessageAdapter.itemCount - 1
             //mMessageAdapter.notifyItemInserted(newMsgPosition);
             mMessageRecycler.scrollToPosition(newMsgPosition)
@@ -122,8 +122,8 @@ class DebugModeScreen : AppCompatActivity() {
 
         internal var savedMessageList: MutableMap<String?, MutableList<UserMessage>?> = HashMap()
         internal var messageList: MutableList<UserMessage>? = ArrayList()
-        lateinit internal var mMessageRecycler: RecyclerView
-        lateinit internal var mMessageAdapter: MessageListAdapter
+        internal lateinit var mMessageRecycler: RecyclerView
+        internal lateinit var mMessageAdapter: MessageListAdapter
 
         fun appendReply(value: String?) {
 
@@ -131,7 +131,7 @@ class DebugModeScreen : AppCompatActivity() {
 
             NotificationListener.UIHandler!!.post {
                 messageList?.add(UserMessage(true, value, "BOT"))
-                mMessageAdapter.notifyItemInserted(mMessageAdapter.getItemCount() - 1);
+                mMessageAdapter.notifyItemInserted(mMessageAdapter.itemCount - 1)
                 mMessageRecycler.scrollToPosition(messageList!!.size - 1)
             }
 
