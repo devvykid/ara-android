@@ -16,3 +16,5 @@ before_script:
  - chmod +x gradlew
 script:
 - ./gradlew build --stacktrace
+before_install:
+    - yes | sdkmanager "platforms;android-28"
