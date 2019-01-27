@@ -137,7 +137,7 @@
     <string name="sender" translatable="false">sender</string>
     <string name="line">LINE</string>
     <string name="telegram">Telegram</string>
-    <string name="moto">C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do it blows your whole leg off. ― Bjarne Stroustrup</string>
+    <string name="motto">C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do it blows your whole leg off. ― Bjarne Stroustrup</string>
     <string name="enter_message">Enter messege</string>
     <string name="reload_script">스크립트 리로드</string>
     <string name="editscript">Edit Script</string>

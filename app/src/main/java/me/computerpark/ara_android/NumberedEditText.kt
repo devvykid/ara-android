@@ -15,9 +15,7 @@ import android.util.AttributeSet
 
 /**
  * Author S Mahbub Uz Zaman on 5/9/15.
- *
- *
- * Lisence Under GPL2
+ * Licensed Under GPL2
  */
 
 class NumberedEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
