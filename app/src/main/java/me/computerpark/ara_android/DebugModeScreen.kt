@@ -63,10 +63,10 @@ class DebugModeScreen : AppCompatActivity() {
                 return@OnClickListener
             }
             if (room.text.toString().isEmpty()) {
-                room.setText("DEBUGROOM")
+                room.setText(getString(R.string.debug_room_1))
             }
             if (sender.text.toString().isEmpty()) {
-                sender.setText("DEBUGSENDER")
+                sender.setText(getString(R.string.debug_sender))
             }
             MainApplication.context!!.getSharedPreferences("debugGroupChat", 0).edit().putBoolean(scriptName, chk_groupchat.isChecked).apply()
             MainApplication.context!!.getSharedPreferences("debugSender", 0).edit().putString(scriptName, sender.text.toString()).apply()

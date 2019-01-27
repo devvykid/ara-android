@@ -1,5 +1,6 @@
 package me.computerpark.ara_android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -219,6 +220,7 @@ Thread thr;
         return scriptEdit.text.toString()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadScript(): Boolean {
         var changed = false
         if (script == null) {

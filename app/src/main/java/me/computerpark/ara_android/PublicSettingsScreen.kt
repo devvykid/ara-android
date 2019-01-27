@@ -1,5 +1,6 @@
 package me.computerpark.ara_android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -13,6 +14,7 @@ import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
 
 
 class PublicSettingsScreen : AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_settings)

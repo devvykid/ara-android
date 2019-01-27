@@ -51,7 +51,7 @@
                     android:id="@+id/chk_useLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="LINE" />
+                    android:text="@string/line" />
 
                 <CheckBox
                     android:id="@+id/chk_useParallelSpace"
@@ -65,7 +65,7 @@
                     android:id="@+id/chk_useTelegram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Telegram"
+                    android:text="@string/telegram"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -202,6 +202,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:srcCompat="@drawable/ic_done_white_24dp" />
+        app:srcCompat="@drawable/ic_done_white_24dp"
+        android:focusable="true" />
 
 </android.support.design.widget.CoordinatorLayout>

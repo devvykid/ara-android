@@ -130,5 +130,18 @@
     <string name="custom_packages">Custom Packages</string>
     <string name="script">Script</string>
     <string name="badscriptname">Script name is incorrect!</string>
+    <string name="arabot_logo_name">아라봇 로고</string>
+    <string name="ms">(ms)</string>
+    <string name="send">SEND</string>
+    <string name="room" translatable="false">room</string>
+    <string name="sender" translatable="false">sender</string>
+    <string name="line">LINE</string>
+    <string name="telegram">Telegram</string>
+    <string name="moto">C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do it blows your whole leg off. ― Bjarne Stroustrup</string>
+    <string name="enter_message">Enter messege</string>
+    <string name="reload_script">스크립트 리로드</string>
+    <string name="editscript">Edit Script</string>
+    <string name="debug_room_1">DEBUG_ROOM</string>
+    <string name="debug_sender">DEBUG_SENDER</string>
 
 </resources>

@@ -46,7 +46,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="center_horizontal"
-                    android:hint="(ms)"
+                    android:hint="@string/ms"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -110,6 +110,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:srcCompat="@drawable/ic_done_white_24dp" />
+        app:srcCompat="@drawable/ic_done_white_24dp"
+        android:focusable="true" />
 
 </android.support.design.widget.CoordinatorLayout>

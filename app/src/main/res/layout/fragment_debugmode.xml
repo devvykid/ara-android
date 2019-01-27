@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:focusable="true"
-            android:hint="room"
+            android:hint="@string/room"
             android:inputType="textPersonName" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:focusable="true"
-            android:hint="sender"
+            android:hint="@string/sender"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -78,7 +78,7 @@
 
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Enter message"
+            android:hint="@string/enter_message"
             android:inputType="text|textMultiLine|textLongMessage"
             android:maxHeight="200dp"
             android:maxLines="6"
@@ -95,7 +95,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:text="SEND"
+            android:text="@string/send"
             android:textSize="14sp" />
 
     </LinearLayout>

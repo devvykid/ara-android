@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
-        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:orientation="horizontal">
 
@@ -64,7 +64,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
                 android:tint="#000000"
-                app:srcCompat="@drawable/ic_refresh_black_24dp" />
+                app:srcCompat="@drawable/ic_refresh_black_24dp"
+                android:contentDescription="@string/reload_script" />
 
             <ImageButton
                 android:id="@+id/btn_editscript"
@@ -72,7 +73,8 @@
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
-                app:srcCompat="@drawable/ic_edit_black_24dp" />
+                app:srcCompat="@drawable/ic_edit_black_24dp"
+                android:contentDescription="@string/editscript" />
 
             <ImageButton
                 android:id="@+id/btn_debug"
@@ -81,7 +83,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
                 android:tint="#000000"
-                app:srcCompat="@drawable/ic_bug_report_black_24dp" />
+                app:srcCompat="@drawable/ic_bug_report_black_24dp"
+                android:contentDescription="@string/debugroom" />
 
             <ImageButton
                 android:id="@+id/btn_log"
@@ -90,7 +93,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
                 android:tint="#000000"
-                app:srcCompat="@drawable/ic_log_black_24dp" />
+                app:srcCompat="@drawable/ic_log_black_24dp"
+                android:contentDescription="@string/log" />
 
             <ImageButton
                 android:id="@+id/btn_manage"
@@ -99,7 +103,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
                 android:tint="#000000"
-                app:srcCompat="@drawable/ic_settings_black_24dp" />
+                app:srcCompat="@drawable/ic_settings_black_24dp"
+                android:contentDescription="@string/scriptsettings" />
 
             <ImageButton
                 android:id="@+id/btn_scriptActivity"
@@ -107,7 +112,8 @@
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"
                 android:minHeight="50dp"
-                app:srcCompat="@drawable/ic_menu_slideshow" />
+                app:srcCompat="@drawable/ic_menu_slideshow"
+                android:contentDescription="@string/scriptactivity" />
         </LinearLayout>
     </HorizontalScrollView>
 
