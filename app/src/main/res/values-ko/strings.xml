@@ -57,9 +57,10 @@
     -**Api.gc()**- : 가비지 컬렉팅을 강제로 시작합니다.\n
     -*Utils*-
     -**Utils.getWebText(url:String)**- : 웹사이트의 HTML을 가져옵니다.\n
-    -**Utils.parse(url:String)**- : 웹사이트 파싱 결과를 Jsoup Document로 반환합니다.\n\n
-    -**Utils.getJsonTextByPOST(url:String, json:String)**- : Api에 JSON으로 POST 요청을 보낸 결과를 가져옵니다.\n\n
-    -**Utils.decodeUnicode(str:String)**- : \\u 로 나타내어진 유니코드 데이터를 평문으로 디코드합니다.\n\n
+    -**Utils.parse(url:String)**- : 웹사이트 파싱 결과를 Jsoup Document로 반환합니다.\n
+    -**Utils.getJsonTextByPOST(url:String, json:String)**- : Api에 JSON으로 POST 요청을 보낸 결과를 가져옵니다.\n
+    -**Utils.decodeUnicode(str:String)**- : \\u 로 나타내어진 유니코드 데이터를 평문으로 디코드합니다.\n
+    -**Utils.getAppVersion(packname:String)**- : 해당 패키지명의 앱 버전을 가져옵니다.\n\n
     -*Log*-
     -**Log.error(string,viewToast=false)**- : 로그 화면에 에러 로그를 추가합니다. (viewToast가 true일경우, 토스트 팝업을 표시합니다.)\n
     -**Log.info(string)**- : 로그 화면에 정보를 추가합니다.\n

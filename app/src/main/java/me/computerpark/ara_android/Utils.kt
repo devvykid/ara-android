@@ -51,7 +51,17 @@ class Utils : ScriptableObject() {
             return StringEscapeUtils.unescapeJava(str)
         }
 
+        @JvmStatic
+        @JSStaticFunction
+        fun getAppVersion(packname: String): String? {
+            return try{
+                MainApplication.context!!.packageManager.getPackageInfo(packname, 0).versionCode.toString()
+            }catch (e: Exception) {
 
+                Context.reportError(e.toString())
+                null
+            }
+        }
 
         @JvmStatic
         @JSStaticFunction
