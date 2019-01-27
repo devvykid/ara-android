@@ -52,7 +52,7 @@
                 android:fillViewport="false"
                 android:scrollbars="horizontal">
 
-                <me.computerpark.ara_android.NumberedEditText
+                <kr.oror.arabot.NumberedEditText
                     android:id="@+id/JSCodeEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
