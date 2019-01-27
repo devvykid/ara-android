@@ -23,7 +23,7 @@ class HelpActivity : AppCompatActivity() {
         )
 
         helpTxt.append(Html.fromHtml("<br /><br /><h1> Changelog</h1><br />"))
-        helpTxt.append(Html.fromHtml(ScriptSelectActivity.getUpdateMessage(40, this.packageManager.getPackageInfo(packageName, 0).versionCode).toString()))
+        helpTxt.append(Html.fromHtml(ScriptSelectActivity.getUpdateMessage(50, this.packageManager.getPackageInfo(packageName, 0).versionCode).toString()))
 
     }
 
