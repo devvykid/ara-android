@@ -17,4 +17,4 @@ before_script:
 script:
 - ./gradlew build --stacktrace
 before_install:
-    - yes | sdkmanager "platforms;android-28"
+    - yes | sudo sdkmanager --licenses
