@@ -1,9 +1,10 @@
 ### 아라봇 프로젝트
 
-| [**ara.js**](https://github.com/computerpark/ara.js) (여기) | `ara-android` 에서 돌아가는 스크립트 |
+| 이름 | 역할 |
 |---|---|
+| [ara.js](https://github.com/computerpark/ara.js) | `ara-android` 에서 돌아가는 스크립트 |
 | [ara-rest](https://github.com/computerpark/ara-rest) | 아라봇 API 서버 |
-| [ara-android](https://github.com/computerpark/ara-android) | `ara.js`를 구동하는 플랫폼 |
+| [**ara-android**](https://github.com/computerpark/ara-android) (여기) | `ara.js`를 구동하는 플랫폼 |
 
 ### 아라봇 구현 정도  
 `(O)` - 구현 완료  
