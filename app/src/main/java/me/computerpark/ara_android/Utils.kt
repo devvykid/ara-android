@@ -9,15 +9,11 @@ import org.jsoup.nodes.Document
 import org.mozilla.javascript.Context
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.annotations.JSStaticFunction
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 
 /**
- * Created by XFL on 2/20/2018.
+ * Created by XFL, modified by 컴터박 on 2/20/2018.
  */
 
 class Utils : ScriptableObject() {

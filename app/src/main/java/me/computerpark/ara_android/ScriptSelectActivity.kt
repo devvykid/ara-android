@@ -497,8 +497,8 @@ class ScriptSelectActivity : AppCompatActivity() {
             msg.add(35, "<h3>아라봇 18.1007</h3> UI, 색, 아이콘 디자인을 대폭 수정하였습니다. (Material Design 대응)")
             msg.add(36, "<h3>아라봇 18.1110</h3> 어색한 번역을 모두 수정하고 영어로된 String을 번역하였습니다. 일본어 번역도 지움 ㅋ")
             msg.add(37, "<h3>아라봇 18.1223</h3> <s>개같은</s>UI 여백과 색을 수정하였습니다.")
-            msg.add(38, "<h3>아라봇 18.1224</h3><br>** 18/12/24 메신저봇의 소스가 내려갔습니다. 시발 Violet님에게 크리스마스 빅엿을 선물합니다^^ ㅗㅗ **")
-            msg.add(39, "<h3>아라봇 19.0127</h3><br>Utils.getJsonTextByPOST() 함수와 Utils.decodeUnicode()함수, Utils.getAppVersion()함수를 추가했습니다. 자세한 내용은 도움말을 참고하세요.")
+            msg.add(38, "<h3>아라봇 18.1224</h3>** 18/12/24 메신저봇의 소스가 내려갔습니다. 시발 Violet 개새키^^ ㅗㅗ **")
+            msg.add(39, "<h3>아라봇 19.0127</h3>Utils.getJsonTextByPOST() 함수와 Utils.decodeUnicode()함수, Utils.getAppVersion()함수를 추가했습니다. 자세한 내용은 도움말을 참고하세요.")
 
             val result = StringBuilder()
             for (i in lastVersion + 1 - 21..version - 21) {

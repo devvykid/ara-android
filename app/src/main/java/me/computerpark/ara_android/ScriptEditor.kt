@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
 
 
 /**
- * Created by XFL on 2/19/2018.
+ * Created by XFL, modified by 컴터박 on 2/19/2018.
  */
 
 class ScriptEditor : AppCompatActivity() {

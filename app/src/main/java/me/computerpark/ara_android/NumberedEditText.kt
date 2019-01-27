@@ -1,7 +1,7 @@
 package me.computerpark.ara_android
 
 /**
- * Created by XFL on 2/25/2018.
+ * Created by XFL, modified by 컴터박 on 2/25/2018.
  */
 
 import android.content.Context

@@ -13,7 +13,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 
 /**
- * Created by XFL on 2/19/2018.
+ * Created by XFL, modified by 컴터박 on 2/19/2018.
  */
 
 class LoggerScreen : AppCompatActivity() {

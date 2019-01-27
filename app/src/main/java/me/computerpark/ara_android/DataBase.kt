@@ -9,7 +9,7 @@ import java.io.FileWriter
 import java.io.IOException
 
 /**
- * Created by XFL on 2/20/2018.
+ * Created by XFL, modified by 컴터박 on 2/20/2018.
  */
 
 class DataBase : ScriptableObject() {

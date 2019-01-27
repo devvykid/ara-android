@@ -7,7 +7,7 @@ import android.text.method.LinkMovementMethod
 import kotlinx.android.synthetic.main.activity_help.*
 
 /**
- * Created by XFL on 2/26/2018.
+ * Created by XFL, modified by 컴터박 on 2/26/2018.
  */
 
 class HelpActivity : AppCompatActivity() {
