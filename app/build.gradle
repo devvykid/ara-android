@@ -6,10 +6,10 @@ apply plugin: 'kotlin-android'
 android {
     signingConfigs {
         config {
-            keyAlias 'key'
-            keyPassword 'whatever'
-            storeFile file('D:/computerpark_andy_key.jks')
-            storePassword 'whatever'
+            keyAlias 'key0'
+            keyPassword 'whatthefuck'
+            storeFile file('D:/key.jks')
+            storePassword 'whatthefuck'
         }
     }
     compileSdkVersion 28
@@ -17,8 +17,8 @@ android {
         applicationId "me.computerpark.ara_android"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 181214
-        versionName "18.1214"
+        versionCode 190127
+        versionName "19.0127"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
@@ -70,9 +70,11 @@ dependencies {
     compile 'org.mozilla:rhino:1.7.9'
     compile 'com.faendir.rhino:rhino-android:1.5'
     compile 'org.jsoup:jsoup:1.10.1'
+    compile 'commons-lang:commons-lang:2.6'
     implementation 'com.android.support:support-annotations:28.0.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     apply plugin: 'kotlin-android-extensions'
+    implementation 'org.apache.commons:commons-text:1.6'
 }
 repositories {
     mavenCentral()

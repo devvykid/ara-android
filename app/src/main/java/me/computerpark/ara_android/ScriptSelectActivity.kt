@@ -493,11 +493,12 @@ class ScriptSelectActivity : AppCompatActivity() {
             msg.add(31, "<h3>3.04</h3> (긴급) 첫 컴파일중 컴파일에러 발생시 앱이 튕기는 문제를 해결했습니다.")
             msg.add(32, "<h3>3.05</h3> 디버그룸에서 replier.reply에 메시지값으로 null전달시 튕기는 문제를 해결했습니다.")
             msg.add(33, "<h2>--- 아라봇 포크 ---</h2>")
-            msg.add(34, "<h3>아라봇 18.1006</h3> Messenger봇 관련된 것들을 모두 제거 <s>광고좆까^^</s>, 레이아웃을 소폭 개편하였습니다. 이제부터는 오픈소스 GPLv3 라이센스로 배포됩니다.")
+            msg.add(34, "<h3>아라봇 18.1006</h3> Messenger봇 관련된 것들을 모두 제거 <s>광고좆까^^</s>, 레이아웃 및 메뉴를 대폭 개편하였습니다. 이제부터는 오픈소스 GPLv3 라이센스로 배포됩니다.")
             msg.add(35, "<h3>아라봇 18.1007</h3> UI, 색, 아이콘 디자인을 대폭 수정하였습니다. (Material Design 대응)")
             msg.add(36, "<h3>아라봇 18.1110</h3> 어색한 번역을 모두 수정하고 영어로된 String을 번역하였습니다. 일본어 번역도 지움 ㅋ")
             msg.add(37, "<h3>아라봇 18.1223</h3> <s>개같은</s>UI 여백과 색을 수정하였습니다.")
             msg.add(38, "<h3>아라봇 18.1224</h3><br>** 18/12/24 메신저봇의 소스가 내려갔습니다. 시발 Violet님에게 크리스마스 빅엿을 선물합니다^^ ㅗㅗ **")
+            msg.add(38, "<h3>아라봇 19.0127</h3><br>Utils.getJsonTextByPOST() 함수와 Utils.decodeUnicode()함수를 추가했습니다. 자세한 내용은 도움말을 참고하세요.")
 
             val result = StringBuilder()
             for (i in lastVersion + 1 - 21..version - 21) {

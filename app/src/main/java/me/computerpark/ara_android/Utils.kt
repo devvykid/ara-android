@@ -1,13 +1,19 @@
 package me.computerpark.ara_android
 
-
 import android.os.Build
+import org.apache.commons.lang.StringEscapeUtils
 
 import org.jsoup.Jsoup
+import org.jsoup.Connection
 import org.jsoup.nodes.Document
 import org.mozilla.javascript.Context
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.annotations.JSStaticFunction
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -23,7 +29,6 @@ class Utils : ScriptableObject() {
 
     companion object {
 
-
         @JvmStatic
         @JSStaticFunction
         fun getWebText(str: String): String? {
@@ -32,6 +37,37 @@ class Utils : ScriptableObject() {
                 Jsoup.connect(str).ignoreContentType(true).timeout(timeout).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
                         .referrer("http://www.google.com")
                         .get().toString()
+            } catch (e: Exception) {
+
+                Context.reportError(e.toString())
+                null
+            }
+
+        }
+
+        @JvmStatic
+        @JSStaticFunction
+        fun decodeUnicode(str: String): String? {
+            return StringEscapeUtils.unescapeJava(str)
+        }
+
+
+
+        @JvmStatic
+        @JSStaticFunction
+        fun getJsonTextByPOST(str: String, param: String): String? {
+            val timeout = MainApplication.context!!.getSharedPreferences("publicSettings", 0).getInt("jsoupTimeout", 10000)
+            return try {
+                Jsoup.connect(str)
+                        .ignoreContentType(true)
+                        .timeout(timeout)
+                        .header("Content-Type", "application/json;charset=UTF-8")
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+                        .referrer("http://www.google.com")
+                        .method(Connection.Method.POST)
+                        .requestBody(param)
+                        .execute().parse().text().toString()
+
             } catch (e: Exception) {
 
                 Context.reportError(e.toString())

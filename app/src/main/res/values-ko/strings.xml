@@ -31,7 +31,8 @@
     <string name="wait_for_ad">광고 로딩중입니다. 잠시만 기다려주세요…</string>
     <string name="thanks_for_helping">도와주셔서 감사합니다!</string>
     <string name="btn_help">도움말</string>
-    <string name="help">당신만의 카카오톡 봇을 만들어 보세요!\n
+    <string name="help">-**아라봇에 오신 것을 환영합니다!**-\n
+    당신만의 카카오톡 봇을 만들어 보세요!\n
     시작하기 전에, 당신은 JavaScript로 코딩하는 방법을 아셔야 합니다.\n
     response 함수 내에서 replier.reply(String)을 호출하는것으로 답장할수 있습니다.\n\n
     -*Api*-
@@ -57,6 +58,8 @@
     -*Utils*-
     -**Utils.getWebText(url:String)**- : 웹사이트의 HTML을 가져옵니다.\n
     -**Utils.parse(url:String)**- : 웹사이트 파싱 결과를 Jsoup Document로 반환합니다.\n\n
+    -**Utils.getJsonTextByPOST(url:String, json:String)**- : Api에 JSON으로 POST 요청을 보낸 결과를 가져옵니다.\n\n
+    -**Utils.decodeUnicode(str:String)**- : \\u 로 나타내어진 유니코드 데이터를 평문으로 디코드합니다.\n\n
     -*Log*-
     -**Log.error(string,viewToast=false)**- : 로그 화면에 에러 로그를 추가합니다. (viewToast가 true일경우, 토스트 팝업을 표시합니다.)\n
     -**Log.info(string)**- : 로그 화면에 정보를 추가합니다.\n
