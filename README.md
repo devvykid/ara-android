@@ -1,4 +1,5 @@
 # 안드로이드 Arabot Agent
+[![Travis CI Build](https://travis-ci.com/ComputerPark/ara-android.svg?branch=master)](https://travis-ci.com/ComputerPark/ara-android)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 라이센스: GPL v3. 즉, 소스 먹튀 금지.
 
