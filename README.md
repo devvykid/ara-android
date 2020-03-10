@@ -1,3 +1,6 @@
+### Note: Deprecated.
+Superseded by [Mealworm](https://github.com/ComputerPark/mealworm5)
+
 ### 아라봇 프로젝트
 
 | 이름 | 역할 |
